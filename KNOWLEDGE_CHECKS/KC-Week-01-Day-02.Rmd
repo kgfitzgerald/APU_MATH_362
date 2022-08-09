@@ -1,0 +1,52 @@
+---
+title: "Week 01 Day 02"
+subtite: "Knowledge Check"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## Recall Activity Instructions
+
+Consider the 268 words in the speech below to be our population of interest. 
+
+> *“Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.*
+
+> *"Now we are engaged in a great civil war, testing whether that nation or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.*
+
+> *"But, in a larger sense, we can not dedicate—we can not consecrate—we can not hallow—this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us—that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion—that we here highly resolve that these dead shall not have died in vain—that this nation, under God, shall have a new birth of freedom—and that government of the people, by the people, for the people, shall not perish from the earth.”*
+
+Together in class, each person did the following steps:
+
++ Circled ten words as a representative sample from this population.
++ For each word in your sample, recorded how many letters are in the word.
++ Calculated the average (mean) number of letters per word in your sample.
++ Plotted your sample average on a dotplot on the board, along with the sample averages of your classmates.
+
+## Knowledge Check
+
+1. What is this speech and who wrote it? 
+
+2. What were the observational units and variable, first in your sample and then for the graph on the board.
+
+3. How did we use the dotplot on the board to tell whether this sampling method (my telling students to circle ten words) was any good? 
+
+4. Was this sampling method (my asking students to circle ten words) is biased?  If so, in which direction?  How could you tell from the dotplot?
+
+5. Suggest some reasons for why this sampling method turned out to be biased in this way.  
+
+6. Would asking people to circle twenty words (rather than ten) eliminate, or at least reduce, the sampling bias?
+
+7. Suppose that I ask you to close your eyes and point at the page ten times in order to select words for your sample.  Would this sampling method be unbiased?  (After all, doesn’t closing your eyes guarantee a lack of bias?)  Explain.
+
+8. Suggest a different sampling method that would be unbiased.
+
+9. What does it mean to select a random sample of words in this situation? 

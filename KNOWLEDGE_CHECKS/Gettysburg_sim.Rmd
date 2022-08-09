@@ -1,0 +1,119 @@
+---
+title: "Problem Set 01"
+subtitle: "Week 01 Day 02"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+## Learning objectives
+
++ Visualize a population distribution
++ Draw a random sample and visualize the sample distribution
++ Conduct a simulation analysis by drawing repeated random samples from a population
++ Use simulation data to visualize a sampling distribution
++ Articulate the difference between a population distribution, sample distribution, and sampling distribution
++ Investigate via simulations whether an estimator is biased or unbiased
++ Explore and articulate the relationship between sample size and sampling distributions
+
+In the following exercises you will conduct simulations using the Gettysburg data. The following code loads the necessary packages and data.
+
+```{r message = FALSE, warning = FALSE}
+library(readxl)
+library(infer)
+library(tidyverse)
+
+gettysburg <- read_excel("./data/gettysburg.xlsx")
+```
+
+We can confirm that the population mean is `r round(mean(gettysburg$Length),2)`.
+
+```{r}
+gettysburg %>% 
+  summarise(mu = mean(Length))
+```
+
+1. Produce a plot of the distribution of length of words in the population. This is the *population distribution*. Describe this distribution.
+
+```{r, eval = FALSE}
+ggplot(data = ___, aes(x = ___)) +
+  geom_bar()
+```
+
+2. Select a random sample of 10 words and plot the distribution of word lengths in your sample. This is the *sample distribution*. Compute the average word length in your sample. Describe this distribution. How do you expect it to compare to the population distribution? 
+
+```{r, eval = FALSE}
+sample <- gettysburg %>% 
+  sample_n(___)
+
+ggplot(data = ___, aes(x = ___)) +
+  geom_bar()
+
+___ %>% 
+  summarise(avg_length = mean(___))
+```
+
+3. Select 10000 random samples of 10 words
+
+```{r, eval = FALSE}
+sims <- rep_sample_n(gettysburg, size = ___, 
+                            reps = ___, replace = TRUE)
+```
+
+4. Compute the mean word length in each sample
+
+```{r, eval = FALSE}
+sample_means <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(___ = mean(___))
+```
+
+5. Plot the *sampling distribution* of the sample mean. Describe this distribution. How does it compare to the population distribution and the sample distribution? Describe in words what a sampling distribution is/shows. 
+
+```{r, eval = FALSE}
+ggplot(data = ___, aes(x = ___)) +
+  ___
+```
+
+6. Does the distribution of sample means indicate sampling bias or unbiasedness of this random sampling method?  What aspect of the distribution leads you to this conclusion?
+
+7. Consider the following sentence: "The mean of the sample means is the population mean" and the mathematical statement $E(\overline{X}) = \mu$. Explain in words what the three different "means" mean (hah!) and what each of the mathematical symbols means. 
+
+8. Consider taking random samples of size 40 words per sample, rather than 10 words per sample.  How (if at all) would you expect the distribution of sample means to change, in terms of center, variability, and shape?
+
+9. Below are two graphs of the sampling distributions of $\overline{X}$ for samples of size $n=10$ and of $n=40$. What’s the most striking difference between these two distributions?
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+set.seed(437)
+means10 <- rep_sample_n(gettysburg, size = 10, 
+                            reps = 1000, replace = TRUE) %>% 
+  summarise(xbar = mean(Length)) %>% 
+  mutate(n = 10)
+
+means40 <- rep_sample_n(gettysburg, size = 40, 
+                            reps = 1000, replace = TRUE)  %>% 
+  summarise(xbar = mean(Length)) %>% 
+  mutate(n = 40)
+
+means <- rbind(means10, means40) %>% 
+  mutate(text = case_when(n == 10 ~ "Mean: 4.29 \n SD: 0.70",
+                          n == 40 ~ "Mean: 4.29 \n SD: 0.34"))  
+
+ggplot(means, aes(x = xbar)) +
+  facet_grid(.~n, scales = "free_y") +
+  geom_histogram(color = "white") +
+  geom_text(aes(x = 3, y = 150, label = text))
+```
+
+
+10. How many times larger is the standard deviation on the left than the one on the right? By how many times must the sample size increase in order to cut the standard deviation of the sample mean in half?
+
+11. Recall that $SD(\overline{X}) = \frac{\sigma}{\sqrt{n}}$. Explain the difference between $SD(\overline{X})$ and $\sigma$.
+
+12. Describe in words the differences between a population distribution, a sample distribution, and a sampling distribution. 
+
+13. Which do you suspect varies less: averages or individual values? Suppose that every class on campus calculates the average height of students in the class.  Which would vary less: the heights of individual students on campus, or the average heights in these classes?  Explain your answer.

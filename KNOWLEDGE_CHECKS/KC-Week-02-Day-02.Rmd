@@ -1,0 +1,26 @@
+---
+title: "Week 02 Day 02"
+subtite: "Knowledge Check"
+output: 
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## Knowledge Check
+
+For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples.
+
+1. How is $\overline{X} - \overline{Y}$ distributed?
+1. How is $\frac{(\overline{X} - \overline{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{\sigma^2}{n} + \frac{\sigma^2}{m}}}$ distributed?
+1. How are $\frac{(n-1)S_x^2}{\sigma^2}$  and $\frac{(m-1)S_y^2}{\sigma^2}$ distributed?
+1. How is $\frac{(n-1)S_x^2}{\sigma^2} + \frac{(m-1)S_y^2}{\sigma^2}$ distributed?
+1. If $Z \sim N(0,1)$ and $U \sim \chi^2_{df}$, how is $\frac{Z}{\sqrt{U/df}}$ distributed? 
+
+1. When should you use Welch's t-interval? 
+1. When should you use a paired t-interval?

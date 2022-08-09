@@ -1,0 +1,133 @@
+---
+title: "Problem Set 02"
+author: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{r load-pkgs}
+#load necessary packages
+library(tidyverse)
+```
+
+
+## Exercise 1
+
+Text...
+
+## Exercise 2
+
+Text...
+
+## Exercise 3
+
+```{r ex3, eval = FALSE}
+# pseudo-code
+
+```
+
+Text...
+
+## Exercise 4
+
+Text...
+
+```{r ex4-sims}
+# simulation code
+
+```
+
+```{r ex4-viz}
+# visualizations
+
+```
+
+
+## Exercise 5
+
+Text...
+
+
+## Exercise 6
+
+```{r ex6}
+# calculate margin of error
+
+# calculate confidence interval
+
+```
+
+
+## Exercise 7
+
+Text...
+
+```{r ex7}
+#simulation code
+```
+
+Text...
+
+## Exercise 8
+
+Text...
+
+## Exercise 9
+
+```{r ex9}
+
+```
+
+
+## Exercise 10
+
+Text...
+
+
+## Exercise 11
+
+```{r ex11-scatterplot}
+
+```
+
+*(You may want to do the following exercises with pen(cil) and paper, but you don't need to type up all the math here; just enough so someone else can follow your logic)*
+
+## Exericse 12
+
+Text...
+
+## Exercise 13
+
+Text...
+
+## Exercise 14
+
+Text... 
+
+## Exercise 15
+
+```{r ex15}
+# graph probability as function of w
+
+```
+
+## Exercise 16
+
+Text...
+
+## Exercise 17
+
+Text...
+
+
+
+

@@ -1,0 +1,72 @@
+---
+title: "Week 02 Day 01"
+subtite: "Knowledge Check"
+output: 
+  tufte::tufte_html:
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## Knowledge Check
+
+1. How is $\overline{X}$ distributed? What conditions does this depend on? 
+1. How is $\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}$ distributed? What symbol do we use for this expression?
+
+1. Draw a picture that illustrates what $z_{\alpha/2}$ stands for.
+
+1. Why is it incorrect to say "The probability $\mu$ falls between L (lower bound) and U (upper bound) is $1-\alpha$"?
+
+1. What percentage of 80% confidence intervals will "fail"? What does it mean to fail? 
+
+1. What is the difference between $\overline{X}$ and $\mu$? 
+
+1. What does $s$ mean? How does it differ from $\sigma$? 
+
+1. When should we use the t-distribution? Why? 
+
+1. How is $\frac{\overline{X} - \mu}{s/\sqrt{n}}$ distributed? What symbol do we use for this expression?
+
+1. How many *parameters* does the normal distribution have? What are they called/how are they denoted? What about the t-distribution? 
+
+1. What is the difference between a point estimate and a parameter? Give three examples of point estimates and their corresponding parameters. 
+
+1. What is the difference between standard deviation, standard error, and margin of error? How are they related to one another? 
+
+1. Explain the notation $t_{\alpha/2, n-1}$. Draw a picture to illustrate it. 
+
+## Simulation exploration
+
+For this section, use the [Rossman/Chance applet](https://www.rossmanchance.com/applets/2021/confsim/ConfSim.html) for Confidence Intervals. To begin, assume that the population has a normal distribution with mean 50 and standard deviation 10.  Use a very small sample size of 5, a confidence level of 95%, and simulate selecting 500 random samples from the population. Select "z with s" for the Method dropdown. 
+
+1. What problem with the “z with s” confidence interval procedure does this simulation analysis reveal?
+
+1. In order to solve this problem, do we need the intervals to get a bit narrower or wider?
+
+1. Which of the four terms in the formula – x-bar, z*, s, or n – can we alter to produce a narrower/wider interval?  In other words, which one does not depend on the data?
+
+1. Do we want to use a larger or smaller multiplier than z*?
+
+1. Use the `qt()` function in R to find the appropriate t-multiplier. How does this multiplier compare to the value of $z^*$ for 95% confidence? 
+
+```{r, echo = FALSE, eval = FALSE}
+qt(0.975, df = 4)
+```
+
+6. How can we tell whether this t* adjustment is the right amount to produce 95% confidence?
+
+1. Change the Method to "t" in the applet. How do these intervals compare to the previous ones? Do more of them succeed in capturing the parameter value?
+
+1. What happens with larger sample sizes? Conduct more simulations with larger sample sizes, and compare "z with s" and "t" for each. What do you notice? 
+
+1. Does t* work equally well with other confidence levels?
+
+1. Why do the widths of these intervals vary from sample to sample? 
+
+1. Change the Distribution to Uniform. Choose an upper and lower limit so that the mean is 50. Run 500 simulations with a sample size of 5. What percent capture the mean using "t" and "z with s"? Do the same for sample size of 20. What do these 4 percentages suggest? 
+
+1. Explore trends when the data come from an Exponential distribution, using samples sizes of 5, 20, 40, 100. What do you notice? What conclusions can you draw? 

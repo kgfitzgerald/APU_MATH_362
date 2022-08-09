@@ -1,0 +1,146 @@
+---
+title: "Problem Set 02"
+subtitle: "Week 02 Day 01"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(cowplot)
+```
+
+## Learning objectives
+
++ Formulate a simulation analysis to answer a real-world probability problem
++ Write R code to conduct a simulation analysis
++ Create visualizations using `ggplot` to investigate simulation results
++ Utilize simulation results to find approximate probabilities
++ Compute simulation error, margin of error, and confidence interval 
++ Utilize geometry to compute exact (theoretical) probabilities
+
+## The Problem
+
+Suppose that two people plan to meet for lunch at a certain restaurant.  (Let’s call them Eponine and Cosette, in memory of the author's two cats.)  They are both very busy professionals, so they cannot know for sure what time they will arrive.  Let’s assume that their arrival times are independent random variables with each uniformly distributed between 0 and 60, measured in minutes after noon.  Eponine and Cosette agree in advance that the first to arrive will only wait 15 minutes for the other to arrive.  The driving question is: *How likely is it that they will successfully meet?*
+
+## Getting Started - Plan your logic
+
+1. Do you think they are more likely to meet or not, or do you think it’s 50/50 for whether they meet or not?  Make a guess for the probability that they successfully meet.  In other words, if they were to repeat this random process for a very large number of days, on what percentage of days do you think they would successfully meet?
+
+2. What steps would be needed to conduct a simulation analysis to investigate our research question? Describe the process in words.
+
+3. Write some pseudo-code for conducting the simulation analysis you described. Recall, you want to end up with a percentage of times the two women successfully meet. Describe one or more visualizations that would be useful at various steps of your code to verify if your simulations ran correctly. 
+
+## Conduct Simulations
+
+4. Write R code to try out your simulation analysis. Document any changes you need to make to your logic in order to get executable code. Create the visualizations you proposed in Step 3 to check your simulations. 
+
+5. Based on your simulation, what is the probability the two women meet successfully?
+
+## Simulation error
+
+Because this is a simulation analysis, it is subject to *simulation error*. We can compute the *margin of error* for a simulated estimate by computing $\frac{1}{\sqrt{N}}$, where $N$ is the number of simulations. Recall that a confidence interval is computed as:
+
+$$\text{estimate } \pm \text{ margin of error}$$
+
+6. Calculate the margin-of-error associated with your approximate probability.  Use the margin-of-error to determine a confidence interval for the actual long-run probability.
+
+7. How could you improve the approximate probability from #5? What does it mean to "improve" in this case? Conduct a new "improved" simulation analysis and compute the approximate probability they meet, the margin of error, and a confidence interval. How does it compare to your answer in #6? 
+
+## 50% chance of meeting
+
+Eponine and Cosette might be disheartened to learn that they are more likely not to meet than to meet.  Suppose that they want to change their waiting time to produce a 50% chance of meeting.
+
+8. Do they need to increase or decrease their waiting time to achieve this 50% goal?  Make a guess for how long they need to wait to have a 50% chance of successfully meeting.
+
+9. Use the simulation results to approximate how long they need to wait to produce a 50% chance of successfully meeting? *Hint: Which of the variables that you created is most relevant to this question?  What aspect of that variable will approximate a 50% probability?*
+
+
+## Using geometry for exact probability
+
+10. Consider a scatterplot that visualizes the relationship between Eponine's waiting times and Cosette's waiting times. Imagine you color the times where they successfully meet yellow, and the times where they do not meet purple. Before creating this scatterplot, what do you expect the colored scatterplot to look like?  In other words, where in the 60×60 square do you expect to see the yellow dots (where they successfully meet), and where do you expect to see the purple dots (where they do not meet)? 
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+
+#Set number of iterations/simulations
+N <- 100000
+
+#Generate random arrival times
+time1 <- runif(N, 0, 60)
+time2 <- runif(N, 0, 60)
+
+#create data frame for plotting
+df2 <- data.frame(time1, time2)
+
+df2 <- df2 %>% 
+  mutate(diff = time1-time2,
+         absdiff = abs(diff))
+
+wait <- 15
+
+df2 <- df2 %>% 
+  mutate(meet = if_else(absdiff < wait, TRUE, FALSE))
+
+# ggplot(data = df2, aes(x = time1, y = time2, color = meet)) +
+#   geom_point() +
+#   scale_color_viridis_d() +
+#   theme_minimal() +
+#   coord_fixed()
+
+ggplot(data = df2, aes(x = time1, y = time2)) +
+  geom_point() +
+  #scale_color_viridis_d() +
+  theme_minimal() +
+  coord_fixed()
+```
+
+
+11. Create the colored scatterplot described above. Use a *scale_color_viridis_d()* layer to color the points yellow and purple. 
+
+There should be many yellow and purple dots in this graph such that you cannot see the individual dots, but you can see a clear image of the (yellow) region for which a successfully meeting occurs.  This region provides the key to using geometry to calculate the exact probability.
+
+12. Use the shaded areas of the scatterplot to calculate (via geometry) the (exact, theoretical) probability that Eponine and Cosette successfully meet. 
+
+13. Are the approximate probabilities from your two simulation analyses above within the margin-of-error of the exact probability?
+
+Now let’s use geometry and algebra to determine how many minutes they must agree to wait, in order to have a 50% chance of successfully meeting.
+
+14. Express the probability of a successful meeting as a function of the number of minutes that each person agrees to wait. *Hint: Use $P(S)$ to denote the probability of a successful meeting, and let $w$ represent the number of minutes that each person agrees to wait. Start with a sketch of the 60×60 square.  Then sketch the region where they meet, much like before, but using $w$ rather than 15 as the number of minutes that they wait.*
+
+15. Graph this probability as a function of $w$, for values of $w$ from 0 to 60 minutes. Describe the behavior of this function. Verify that the probability for a 15-minute wait looks to be consistent with what you calculated earlier.
+
+```{r, eval = FALSE}
+#create vector of wait times from 0 to 60 minutes, by 0.01 minutes
+w <- seq(0, 60, by = 0.01)
+
+#put w in a new dataframe and compute the probability of meeting as a function of w
+new <- data.frame(w) %>% 
+  mutate(probmeet = ___)
+
+#plot the probability as a function of w
+ggplot(new, aes(x = w, y = probmeet)) +
+  geom_line() +
+  theme_minimal()
+``` 
+
+```{r, eval = FALSE, echo = FALSE}
+#create vector of wait times from 0 to 60 minutes, by 0.01 minutes
+w <- seq(0, 60, by = 0.01)
+
+#put w in dataframe and compute the probability of meeting as a function of w
+df3 <- data.frame(w) %>% 
+  mutate(probmeet = 1 - (60-w)^2/3600)
+
+ggplot(df3, aes(x = w, y = probmeet)) +
+  geom_line()
+```
+
+16. Use your expression in #14 to determine how long the women must wait in order to have a 50% chance of meeting.   
+
+17. How do these exact probabilities compare to the approximate probabilities from the simulations? 
