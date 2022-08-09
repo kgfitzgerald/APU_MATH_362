@@ -1,6 +1,6 @@
 ---
-title: "Problem Set 02"
-subtitle: "Week 02 Day 01"
+title: "Problem Set 01"
+subtitle: "Week 01 Day 02"
 output: 
   html_document:
     toc: true
