@@ -14,11 +14,18 @@ output:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
 ```{r load-pkgs}
 #load necessary packages
 library(tidyverse)
 ```
-
 
 ## Exercise 1
 

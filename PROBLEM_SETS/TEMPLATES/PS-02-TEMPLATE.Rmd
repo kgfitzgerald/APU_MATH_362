@@ -14,6 +14,16 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+*RP4: Describe 2-3 insights highlighted in the simulation exploration activity*
+
 ## Exercise 1
 
 ## Exercise 2
