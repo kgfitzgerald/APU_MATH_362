@@ -38,7 +38,7 @@ Suppose that two people plan to meet for lunch at a certain restaurant.  (Let’
 
 ## Conduct Simulations
 
-4. Write R code to try out your simulation analysis. Document any changes you need to make to your logic in order to get executable code. Create the visualizations you proposed in Step 3 to check your simulations. 
+4. Write R code to try out your simulation analysis. Document any changes you need to make to your logic in order to get executable code (that is, comment on your evolving reasoning/strategy). Create the visualizations you proposed in Step 3 to check your simulations. 
 
 5. Based on your simulation, what is the probability the two women meet successfully?
 

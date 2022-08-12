@@ -1,0 +1,37 @@
+---
+title: "Week 03 Day 01"
+subtitle: "Knowledge Check"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+1. What  formula do you use to compute the sample size needed for estimating $\mu$? 
+
+1. What is the hardest part about using the above formula? Why? 
+
+1. Comment on what each symbol in the formula in #1 means and how you obtain values to plug in.
+
+1. When estimating a mean, will increasing your level of confidence require more or less necessary sample size? Why? 
+
+1. When estimating a mean, does a random variable with a larger variance require more or less necessary sample size? Why? 
+
+1. When estimating a mean, will increasing your margin of error require more or less necessary sample size? Why? 
+
+1. What  formula do you use to compute the sample size needed for estimating $p$? 
+
+1. What is the hardest part about using the above formula? Why? 
+
+1. Comment on what each symbol in the formula in #7 means and how you obtain values to plug in.
+
+1. Comment on how and why the formulas in #1 and #7 relate to one another.
+
+1. When estimating $p$, what happens to the necessary sample size as $\hat{p}$ changes?

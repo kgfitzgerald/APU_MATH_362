@@ -1,18 +1,18 @@
 ---
 title: "Week 02 Day 02"
-subtite: "Knowledge Check"
+subtitle: "Knowledge Check"
 output: 
-  tufte::tufte_html:
-    tufte_variant: "envisioned"
-    highlight: pygments
-link-citations: yes
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
-
-## Knowledge Check
 
 For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples.
 

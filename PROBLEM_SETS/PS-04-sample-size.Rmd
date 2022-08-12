@@ -1,0 +1,365 @@
+---
+title: "Problem Set 04"
+subtitle: "Week 03 Day 01"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Learning objectives
+
++ Visualize a population distribution, sample distribution, and sampling distribution
++ Articulate the difference between a population distribution, sample distribution, and sampling distribution
++ Conduct a simulation analysis by drawing repeated random samples from a population
++ Investigate via simulations whether an estimator is biased or unbiased
++ Investigate the coverage probability of various confidence interval procedures via simulations
++ Determine necessary sample sizes for various estimation tasks
++ Apply statistical reasoning to recommend and justify a sampling plan
+
+# Exercises
+
+## Population, sample, and sampling distributions
+
+This Problem Set utilizes the `movies` dataset from the `ggplot2movies` package. 
+
+```{r}
+library(tidyverse)
+library(infer)
+library(ggplot2movies)
+```
+
+
+1. What type of variable is `rating`? Produce a visualization to explore the *population distribution* of `rating`. Describe the distribution.
+
+```{r, echo = FALSE, eval = FALSE}
+ggplot(movies, aes(x = rating)) +
+  geom_histogram(color = "white")
+```
+
+2. Select a random sample of 50 movies and plot the distribution of ratings in your sample. This is the *sample distribution*. Compute the average rating in your sample. Describe this distribution. How do you expect it to compare to the population distribution?  
+
+```{r, eval = FALSE}
+n <- ___
+
+sample <- movies %>% 
+  sample_n(n)
+
+ggplot(data = ___, aes(x = ___)) +
+  geom_bar()
+
+___ %>% 
+  summarise(avg_rating = mean(___))
+```
+
+3. Select 10000 random samples of 50 movies. Inspect the new object `sims` and describe briefly what it contains.
+
+```{r, eval = FALSE}
+sims <- rep_sample_n(movies, size = ___, 
+                            reps = ___, replace = TRUE)
+```
+
+4. Compute the mean rating in each sample. Inspect the new object `sample_means` and describe briefly what it contains. 
+
+```{r, eval = FALSE}
+sample_means <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(___ = mean(___))
+```
+
+5. Plot the *sampling distribution* of the sample mean. Describe this distribution. How does it compare to the population distribution and the sample distribution? Describe in words what a sampling distribution is/shows.
+
+6. Does the distribution of sample means indicate sampling bias or unbiasedness of this random sampling method?  What aspect of the distribution leads you to this conclusion?
+
+7. Consider the following sentence: "The mean of the sample means is the population mean" and the mathematical statement $E(\overline{X}) = \mu$. Explain in words what the three different "means" mean (hah!) and what each of the mathematical symbols means. 
+
+8. Describe in words the differences between a population distribution, a sample distribution, and a sampling distribution. 
+
+## Coverage probabilities
+
+When developing confidence interval procedures (formulas), statisticians are interested in the **coverage probability** of their procedure. The coverage probability is the long-run probability that a confidence interval procedure will capture the true parameter. A good procedure will have a coverage probability that is close to the *nominal* $(1-\alpha)*100\%$ level. That is, we want a 95% confidence interval procedure to have a 95% coverage probability. 
+
+9. Write out psuedo-code for how to use your simulation results to determine the coverage probability of the following three confidence interval procedures:
+
+$$\bar{x} \pm z_{\alpha/2}\frac{s}{\sqrt{n}}$$
+
+$$\bar{x} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$$
+
+$$\bar{x} \pm t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}$$
+
+10. Before writing and executing the code, what do you expect the three coverage probabilities to be? How do you expect them to compare to one another? Why? 
+
+11. Write code to compute the three coverage probabilities above. Document any changes you need to make to your logic in order to get executable code (that is, comment on your evolving reasoning/strategy).
+
+## Proportions
+
+Suppose you are also interested in the proportion of movies that are `Animated`. 
+
+12. Write code that utilizes your same simulation results to explore the sampling distribution of $\hat{p} = \frac{\text{# of Animation movies in sample}}{\text{n}}$. Plot the sampling distribution of $\hat{p}$. Is $\hat{p}$ unbiased? What aspect of the distribution leads you to this conclusion?
+
+13. Write code to compute the coverage probability of the confidence interval procedure $\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$. 
+
+14. What went wrong in #13? Explain as best you can.
+
+## Plus-4 Method
+
+An alternative, simple method to remedy the above problem is called the "plus 4" method, which assumes you observed two more successes and two more failures than you actually did. That is, define $\tilde{p} = \frac{x + 2}{n + 4}$ and use the procedure $$\tilde{p} \pm z_{\alpha/2}\sqrt{\frac{\tilde{p}(1 - \tilde{p})}{n + 4}}$$
+
+15. How does $\tilde{p}$ compare to $\hat{p}$? *Hint: consider what happens to $\tilde{p}$ when $\hat{p}$ is less than 0.5, equal to 0.5, and greater than 0.5*
+
+16. Write code to investigate the coverage probability of the above procedure.
+
+17. When choosing between two procedures, do you think statisticians prefer procedures with coverage probabilities that are above or below the nominal level? Explain. 
+
+## Sample Size
+
+```{r, echo = FALSE}
+set.seed(437)
+sample <- movies %>% 
+  sample_n(10)
+
+sd <- sd(sample$rating)
+```
+
+18. Determine the sample size necessary to obtain a maximum margin of error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
+
+```{r, echo = FALSE}
+e <- 0.5
+
+z <- qnorm(.95)
+n <- z^2*sd^2/(e^2)
+
+z <- qnorm(.975)
+n <- z^2*sd^2/(e^2)
+
+z <- qnorm(.995)
+n <- z^2*sd^2/(e^2)
+```
+
+19. Determine the sample size necessary to obtain a maximum margin of error of $\pm 3\%$ when estimating the proportion of movies that are Animated using a 90%, 95%, and 99% confidence interval. Comment on what value you use for $\hat{p}$ and why.
+
+```{r, echo = FALSE}
+e <- .03
+phat <- 0.1
+
+z <- qnorm(.95)
+n <- z^2*phat*(1-phat)/(e^2)
+
+z <- qnorm(.975)
+n <- z^2*phat*(1-phat)/(e^2)
+
+z <- qnorm(.995)
+n <- z^2*phat*(1-phat)/(e^2)
+```
+
+20. Suppose you are a statistician advising a research team on their sampling design and budget. What questions would you ask them about their priorities and constraints to help them develop their plan? 
+
+21. Provide a brief write-up with a final recommended sample size and justification for your choices.
+
+
+```{r, eval = FALSE, echo = FALSE}
+movies %>% 
+  summarize(mean(rating))
+
+n <- 50
+
+sample <- movies %>% 
+  sample_n(n)
+
+ggplot(sample, aes(x = rating)) +
+  geom_histogram(bins = 10)
+
+sample %>% 
+  summarise(mean(rating))
+
+sims <- movies %>% 
+  rep_sample_n(size = n, reps = 10000)
+
+sample_means <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(s = sd(rating),
+            xbar = mean(rating))
+
+ggplot(sample_means, aes(x = xbar)) +
+  geom_histogram()
+
+z <- qnorm(0.975)
+t <- qt(0.975, df = n-1)
+n <- nrow(sample)
+N <- nrow(movies)
+mu <- movies %>% 
+  summarise(mu = mean(rating)) %>% 
+  pull(mu)
+
+sample_means <- sample_means %>% 
+  mutate(lower_CI = xbar - t*s/sqrt(n),
+         upper_CI = xbar + t*s/sqrt(n),
+         successful_CI = if_else(mu > lower_CI & mu < upper_CI, 1, 0),
+         lower_CI2 = xbar - z*s/sqrt(n),
+         upper_CI2 = xbar + z*s/sqrt(n),
+         successful_CI2 = if_else(mu > lower_CI2 & mu < upper_CI2, 1, 0))
+
+sample_means %>% 
+  summarize(coverage = sum(successful_CI)/n(),
+            coverage2 = sum(successful_CI2)/n())
+
+sample_props <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(n = n(),
+            phat = sum(Animation)/n())
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram()
+
+p <- movies %>% 
+  summarize(p = sum(Animation)/n()) %>% 
+  pull()
+
+sample_props <- sample_props %>% 
+  mutate(lower_CI = phat - z*sqrt(phat*(1-phat)/n),
+         upper_CI = phat + z*sqrt(phat*(1-phat)/n),
+         successful_CI = if_else(p > lower_CI & p < upper_CI, 1, 0))
+
+sample_props %>% 
+  summarise(coverage = sum(successful_CI)/n())
+
+sample_props <- sample_props %>% 
+  mutate(x = phat*n,
+         ptilde = (x + 2)/(n + 4),
+         lower_CI = phat - z*sqrt(phat*(1-phat)/n),
+         upper_CI = phat + z*sqrt(phat*(1-phat)/n),
+         successful_CI = if_else(p > lower_CI & p < upper_CI, 1, 0),
+         lower_CI2 = ptilde - z*sqrt(ptilde*(1-ptilde)/n),
+         upper_CI2 = ptilde + z*sqrt(ptilde*(1-ptilde)/n),
+         successful_CI2 = if_else(p > lower_CI2 & p < upper_CI2, 1, 0),
+         lower_CI3 = (phat + z^2/(2*n) - z*sqrt(phat*(1-phat)/n + z^2/(4*n^2)))/(1 + z^2/n),
+         upper_CI3 = (phat + z^2/(2*n) + z*sqrt(phat*(1-phat)/n + z^2/(4*n^2)))/(1 + z^2/n),
+         successful_CI3 = if_else(p > lower_CI3 & p < upper_CI3, 1, 0))
+
+sample_props %>% 
+  summarise(coverage = sum(successful_CI)/n(),
+            coverage2 = sum(successful_CI2)/n(),
+            coverage3 = sum(successful_CI3)/n())
+
+long <- sample_props %>% 
+  select(replicate, phat, ptilde) %>% 
+  pivot_longer(cols = 2:3, names_to = "estimator", values_to = "value")
+
+ggplot(data = long, aes(x = value)) +
+  facet_wrap(~estimator, nrow = 2) +
+  geom_histogram()
+```
+
+
+```{r, eval = FALSE, echo = FALSE}
+gettysburg_orig <- gettysburg
+
+gettysburg <- gettysburg %>% 
+  slice(rep(1:n(), each = 10))
+
+gettysburg %>% 
+  summarise(p = sum(HasE == "Yes")/n())
+
+ggplot(data = gettysburg, aes(y = 1, fill = HasE)) +
+  geom_bar(position = "fill") +
+  theme_minimal()
+
+sample %>% 
+  summarise(phat = sum(HasE == "Yes")/n())
+
+n <- 30
+
+sample <- gettysburg %>% 
+  sample_n(n)
+
+sims <- rep_sample_n(gettysburg, size = n, 
+                            reps = 100000, replace = TRUE)
+
+sample_props <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(phat = sum(HasE == "Yes")/n())
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram()
+
+z <- qnorm(0.975)
+n <- nrow(sample)
+N <- nrow(gettysburg)
+p <- gettysburg %>% 
+  summarise(p = sum(HasE == "Yes")/n()) %>% 
+  pull(p)
+
+sample_props <- sample_props %>% 
+  mutate(lower_CI = phat - z*sqrt(phat*(1-phat)/n),
+         upper_CI = phat + z*sqrt(phat*(1-phat)/n),
+         successful_CI = if_else(p > lower_CI & p < upper_CI, 1, 0),
+         lower_CI2 = phat - z*sqrt(phat*(1-phat)/n*(N-n)/(N-1)),
+         upper_CI2 = phat + z*sqrt(phat*(1-phat)/n*(N-n)/(N-1)),
+         successful_CI2 = if_else(p > lower_CI2 & p < upper_CI2, 1, 0))
+
+sample_props %>% 
+  summarize(coverage = sum(successful_CI)/n(),
+            coverage2 = sum(successful_CI2)/n())
+
+Ephat <- sample_props %>% 
+  summarize(mean(phat)) %>% 
+  pull()
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram() +
+  geom_vline(xintercept = Ephat, color = "blue") +
+  geom_vline(xintercept = p, color = "green")
+```
+
+```{r, eval = FALSE, echo = FALSE}
+data <- data.frame(x = rbinom(1000, 1, 0.5))
+
+data %>% 
+  summarise(p = sum(x)/n())
+
+ggplot(data = data, aes(y = 1, fill = factor(x))) +
+  geom_bar(position = "fill") +
+  theme_minimal()
+
+n <- 30
+
+sample <- data %>% 
+  sample_n(n)
+
+sims <- rep_sample_n(data, size = n, 
+                            reps = 100000, replace = FALSE)
+
+sample_props <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(phat = sum(x)/n())
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram()
+
+z <- qnorm(0.975)
+n <- nrow(sample)
+N <- nrow(data)
+p <- data %>% 
+  summarise(p = sum(x)/n()) %>% 
+  pull(p)
+
+sample_props <- sample_props %>% 
+  mutate(lower_CI = phat - z*sqrt(phat*(1-phat)/n),
+         upper_CI = phat + z*sqrt(phat*(1-phat)/n),
+         successful_CI = if_else(p > lower_CI & p < upper_CI, 1, 0),
+         lower_CI2 = phat - z*sqrt(phat*(1-phat)/n*(N-n)/(N-1)),
+         upper_CI2 = phat + z*sqrt(phat*(1-phat)/n*(N-n)/(N-1)),
+         successful_CI2 = if_else(p > lower_CI2 & p < upper_CI2, 1, 0))
+
+sample_props %>% 
+  summarize(coverage = sum(successful_CI)/n(),
+            coverage2 = sum(successful_CI2)/n())
+```
+
