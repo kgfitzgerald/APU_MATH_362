@@ -1,0 +1,31 @@
+---
+title: "Week 03 Day 02"
+subtitle: "Knowledge Check"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+1. What are the two possible conclusions from a hypothesis test?
+
+1. Describe in words what a **null hypothesis** is. What notation do we use it?
+
+1. Describe the difference between a population parameter and sample statistic. Which one is a hypothesis test about? Which one is observed? 
+
+1. Describe in words what a **critical value** is and how it's used in a hypothesis test. 
+
+1. Describe in words what a **test statistic** is and how it's used in a hypothesis test.
+
+1. Describe in words the two possible errors that can be made in a hypothesis test. 
+
+1. Describe in words what a **significance level** is. What notation do we use for it?
+
+1. If $\alpha = 0.10$, what is the probability of making a Type I error?

@@ -1,0 +1,63 @@
+---
+title: "Problem Set 05"
+subtite: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+## Exercise 1
+
+Text...
+
+```{r ex-1}
+
+```
+
+Text...
+
+## Exercise 2
+
+a. 
+
+b.
+
+c.
+
+d.
+
+e.
+
+f.
+
+g.
+
+
+## Exercise 3
+
+a.
+
+b.
+
+## Exercise 4
+
+
+
+## Exercise 5
+

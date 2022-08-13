@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Hypothesis Testing</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Katie Fitzgerald" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Hypothesis Testing
+]
+.author[
+### Dr. Katie Fitzgerald
+]
+
+---
+
+
+
+
+
+
+# Duke legend
+
+There is a campus legend at Duke about two students who miss an exam due to excessive partying, but they tell their professor that they had a flat tire.  They realize that this sounds like a flimsy excuse, so they are pleasantly surprised when the professor accepts their explanation and offers a make-up exam on the following morning.  
+
+When they arrive for the make-up exam, they are sent to two separate rooms.  They find question 1, worth 5 points, to be quite straight-forward.  Then they turn the page to find question 2, worth 95 points: *Which tire was it?*
+
+---
+
+# Do people disproportionately choose the right front tire?
+
+In a previous semester, 17 out of 44 students chose the right front tire. 
+
+1. Identify the observational units and variable. Is the variable categorical or numeric?
+
+--
+
+2. Calculate the proportion of these students who selected the right front tire.  Is this a parameter or a statistic?  Explain.
+
+--
+
+3. Write a sentence describing the parameter of interest
+
+--
+
+4. State (in words) the null and alternative hypotheses to be tested.
+
+--
+
+5. How might we determine if this constitutes sufficient evidence that people disproportionately choose the right front tire? 
+
+---
+
+# Simulation logic
+
+Write out how you could use simulations to determine how (un)likely the observed result it.
+
+---
+
+# Simulation applet
+
+[https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm)
+
+---
+
+# Using test-statistic/critical region
+
+1. Calculate and interpret the value of the test statistic. 
+
+2. How is this test statistic distributed?
+
+3. Determine an appropriate critical region if you want your probability of making a Type I error to be no larger than 1%. 
+
+4. Draw a picture to illustrate your critical region and your test statistic.
+
+5. Summarize your conclusion, and provide justification based on the test statistic
+
+---
+
+# "Which tire?" example continued
+
+At a recent workshop for college professors, 8 of 36 workshop participants selected the right front tire.
+
+1. Explain why it’s not necessary to carry out calculations for a hypothesis test of whether the sample data provide strong evidence that people select the right front tire more often than would be expected by random chance.
+
+2. Without performing an analysis, what can you say about how the critical value/test statistic would turn out? 
+
+3. Based on this sample result, would you reject the null hypothesis?  Explain.
+
+4. Based on this sample result, would you accept the null hypothesis?  Explain.
+
+---
+
+# Modus Tollens
+
++ If P then Q
++ Not Q
++ Therefore not P
+
+--
+
+Example: the Constitution of the United States stipulates that if a person is eligible to be elected President in the year 2024 (call this P), then that person must have been born in the U.S. (call this Q).
+
+*Queen Elizabeth was born outside the U.S. What can we know about whether she is eligible to be elected president in 2024?*
+
+--
+
+*Zendaya was born inside the U.S. What can we know about whether she is eligible to be elected president in 2024?*
+
+---
+
+# For right tire... `\(\hat{p} = 8/36 = 0.22\)`
+
+P = null hypothesis that people choose randomly (no preference for right tire)
+
+--
+
+Q = test statistic is less than `pnorm(.99) = 2.326`. Or equivalently, `\(\hat{p} &lt; .305\)`
+
+--
+
+Here we have an *absence of evidence* that people disproportionately prefer right tire, but...
+
+--
+
+ABSENCE OF EVIDENCE DOES NOT CONSTITUTE EVIDENCE OF ABSENCE
+
+--
+
+*Many different hypotheses are consistent with the observed data, so it’s not appropriate to accept any ONE of these hypotheses.*
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+---
+title: "Problem Set 05"
+subtitle: "Week 03 Day 02"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+# Learning objectives
+
+
+
+# Exercises
+
+1. Return to the first "Which tire?" example where 17/44 students chose the right tire. Use R to conduct simulations to investigate how (un)likely the observed result is. 
+
+    + For completeness, start by writing out the hypotheses being tested. 
+    + In your answer, include your code as well as a two visualizations of your simulation results: one of the $\hat{p}$ values and one of the corresponding test-statistics $Z$. 
+    + On both visualizations, make sure to include lines for the critical value and the observed statistic. 
+    + Include a brief description of what your simulations show and what conclusion you draw as a result. 
+    + Compute the proportion of simulated $\hat{p}$ values that are "more extreme" than the one observed (17/44). What does this tell you about the plausability of the null hypothesis? Explain your reasoning.
+
+```{r, eval = FALSE, echo = FALSE}
+n <- 44
+N <- 10000
+stat_obs <- 17/44
+p <- 0.25
+
+set.seed(437)
+data <- data.frame(x = rbinom(N, size = n, p = 0.25))
+data <- data %>% 
+  mutate(phat = x/n)
+
+
+ggplot(data, aes(x = phat)) +
+  geom_histogram() +
+  geom_vline(xintercept = phat, color = "blue")
+
+data %>% 
+  summarize(sum(phat > stat_obs)/N)
+
+data <- data %>% 
+  mutate(Z = (phat-0.25)/sqrt(p*(1-p)/n))
+
+test_stat <- (stat_obs-0.25)/sqrt(p*(1-p)/n)
+
+ggplot(data, aes(x = Z)) +
+  geom_histogram() +
+  geom_vline(xintercept = qnorm(.95), color = "red") +
+  geom_vline(xintercept = test_stat, color = "blue")
+```
+
+
+2. Suppose that 30% of the people in a random sample from a population select the right front tire. 
+
+    a. Is 30% a population parameter, sample statistic, test statistic, or critical value? Explain.
+    b. What more information do you need to conduct a hypothesis test and determine a confidence interval?
+    c. Write out the hypotheses being tested. 
+    d. Suppose that the sample size is n = 100.  Determine the value of the test statistic and a 95% confidence interval.
+    e. What critical value is needed for a significance level of 0.05 in this case? What conclusion do you draw from the hypothesis test? Explain your reasoning.
+    f. Repeat d & e for a sample size of n = 500.
+    g. Summarize the role of sample size on these hypothesis tests and confidence intervals.  How are hypothesis tests and confidence intervals related?
+
+3. Let $Y$ be $b(1000, p)$. To test $H_0: p = 0.3$ against $H_A: p < 0.3$, we reject $H_0$ and accept $H_A$ if and only if $Y \leq 270$. For parts a & b, use the binomial distribution (of $Y$) directly, and then use the normal approximation (of $\hat{p}$).
+
+    a. Determine the significance level $\alpha$ of the test.
+    b. Find the probability of the Type II error if, in fact, $p = 0.26$. 
+    
+```{r, echo = FALSE, eval = FALSE}
+set.seed(437)
+N <- 100000
+n <- 1000
+p0 <- 0.3
+p_reject <- 0.27
+Y_reject <- p_reject*n
+
+#generate from binomial distribution
+data <- data.frame(Y = rbinom(N, n, p0))
+
+#compute proportions
+data <- data %>% 
+  mutate(phat = Y/n)
+
+#plot sampling distribution of phat, with critical region marked
+ggplot(data, aes(x = phat)) +
+  geom_histogram() +
+  geom_vline(xintercept = p_reject, color = "blue")
+
+#compute the significance level
+data %>% 
+  summarize(sum(Y <= Y_reject)/100000,
+            sum(phat <= p_reject)/100000)
+
+#theoretical sig level - normal approx
+Z <- (p_reject - p0)/sqrt(p0*(1-p0)/n)
+pnorm(Z)
+
+#compute type II error (theoretical)
+p1 <- .26
+q <- (p_reject - p1)/sqrt(p1*(1-p1)/n)
+pnorm(q, lower.tail = FALSE)
+pbinom(Y_reject, n, p1, lower.tail = FALSE)
+
+#sims for type II error
+data2 <- data.frame(Y = rbinom(N, n, p1))
+data2 <- data2 %>% 
+  mutate(phat = Y/n)
+data2 %>% 
+  summarize(sum(Y > Y_reject)/100000,
+            sum(phat > p_reject)/100000)
+```
+
+4. How would you conduct simulations to demonstrate the Type I and Type II error rates you determined above? Start by writing psuedo-code to work out your logic (and maybe sketch some by-hand graphs), then write R code. Comment on what your simulations show.
+
+    + *Hint: Start by generating 100,000 $Y$ values using `rbinom()`. You will generate another 100,000 for part b.*
+
+5. Describe what Type I and Type II error mean in your own words. Don't use any mathematical symbols, and try to avoid statistical jargon as much as possible. 
+
+```{r, eval = FALSE, echo = FALSE}
+library(infer)
+NHANES %>% 
+  summarize(sum(Smoke100 == "Yes", na.rm=TRUE)/n())
+
+samples <- rep_sample_n(NHANES, 1000, replace = TRUE, 
+                        reps = 10000)
+
+sample_props <- samples %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(Smoke100 == "Yes", na.rm=TRUE)/n())
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram()
+
+sample_props %>% 
+  summarize(sum(phat < 0.33)/n())
+```
+

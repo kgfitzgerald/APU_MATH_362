@@ -1,0 +1,132 @@
+---
+title: "Hypothesis Testing"
+author: "Dr. Katie Fitzgerald"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+      highlightStyle: solarized-light
+      countIncrementalSlides: false
+    chalkboard: true
+---
+
+```{r child = "setup.Rmd", eval = FALSE}
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rvest)
+```
+
+# Duke legend
+
+There is a campus legend at Duke about two students who miss an exam due to excessive partying, but they tell their professor that they had a flat tire.  They realize that this sounds like a flimsy excuse, so they are pleasantly surprised when the professor accepts their explanation and offers a make-up exam on the following morning.  
+
+When they arrive for the make-up exam, they are sent to two separate rooms.  They find question 1, worth 5 points, to be quite straight-forward.  Then they turn the page to find question 2, worth 95 points: *Which tire was it?*
+
+---
+
+# Do people disproportionately choose the right front tire?
+
+In a previous semester, 17 out of 44 students chose the right front tire. 
+
+1. Identify the observational units and variable. Is the variable categorical or numeric?
+
+--
+
+2. Calculate the proportion of these students who selected the right front tire.  Is this a parameter or a statistic?  Explain.
+
+--
+
+3. Write a sentence describing the parameter of interest
+
+--
+
+4. State (in words) the null and alternative hypotheses to be tested.
+
+--
+
+5. How might we determine if this constitutes sufficient evidence that people disproportionately choose the right front tire? 
+
+---
+
+# Simulation logic
+
+Write out how you could use simulations to determine how (un)likely the observed result it.
+
+---
+
+# Simulation applet
+
+[https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm)
+
+---
+
+# Using test-statistic/critical region
+
+1. Calculate and interpret the value of the test statistic. 
+
+2. How is this test statistic distributed?
+
+3. Determine an appropriate critical region if you want your probability of making a Type I error to be no larger than 1%. 
+
+4. Draw a picture to illustrate your critical region and your test statistic.
+
+5. Summarize your conclusion, and provide justification based on the test statistic
+
+---
+
+# "Which tire?" example continued
+
+At a recent workshop for college professors, 8 of 36 workshop participants selected the right front tire.
+
+1. Explain why it’s not necessary to carry out calculations for a hypothesis test of whether the sample data provide strong evidence that people select the right front tire more often than would be expected by random chance.
+
+2. Without performing an analysis, what can you say about how the critical value/test statistic would turn out? 
+
+3. Based on this sample result, would you reject the null hypothesis?  Explain.
+
+4. Based on this sample result, would you accept the null hypothesis?  Explain.
+
+---
+
+# Modus Tollens
+
++ If P then Q
++ Not Q
++ Therefore not P
+
+--
+
+Example: the Constitution of the United States stipulates that if a person is eligible to be elected President in the year 2024 (call this P), then that person must have been born in the U.S. (call this Q).
+
+*Queen Elizabeth was born outside the U.S. What can we know about whether she is eligible to be elected president in 2024?*
+
+--
+
+*Zendaya was born inside the U.S. What can we know about whether she is eligible to be elected president in 2024?*
+
+---
+
+# For right tire... $\hat{p} = 8/36 = 0.22$
+
+P = null hypothesis that people choose randomly (no preference for right tire)
+
+--
+
+Q = test statistic is less than `pnorm(.99) = 2.326`. Or equivalently, $\hat{p} < .305$
+
+--
+
+Here we have an *absence of evidence* that people disproportionately prefer right tire, but...
+
+--
+
+ABSENCE OF EVIDENCE DOES NOT CONSTITUTE EVIDENCE OF ABSENCE
+
+--
+
+*Many different hypotheses are consistent with the observed data, so it’s not appropriate to accept any ONE of these hypotheses.*
