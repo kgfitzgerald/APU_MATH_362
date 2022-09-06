@@ -11,7 +11,7 @@
 
 
 
-<title>Problem Set 05</title>
+<title>Problem Set 08</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1591,8 +1591,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Problem Set 05</h1>
-<h3 class="subtitle">Week 03 Day 02</h3>
+<h1 class="title toc-ignore">Problem Set 08</h1>
+<h3 class="subtitle">Week 05 Day 01</h3>
 
 </div>
 
@@ -1600,81 +1600,76 @@ div.tocify {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <div id="learning-objectives" class="section level1">
 <h1>Learning objectives</h1>
+</div>
+<div id="cohens-d" class="section level1">
+<h1>Cohen’s d</h1>
+<p>In many different research contexts, the parameter of interest is a
+mean difference. For example we are interested in the difference between
+the mean in the treatment group <span class="math inline">\(\mu_T\)</span> and the mean in the control group
+<span class="math inline">\(\mu_C\)</span>. It is common practice to
+standardize this difference by the population standard deviation. That
+is, the parameter of interest is <span class="math display">\[\delta =
+\frac{\mu_T - \mu_C}{\sigma}\]</span>. We estimate <span class="math inline">\(\delta\)</span> by <span class="math display">\[d
+= \frac{\overline{Y}_T - \overline{Y}_C}{S_p^2}\]</span></p>
+<p>Under some standard assumptions (that aren’t too hard to meet in many
+research contexts), <span class="math inline">\(d \sim N(0,1)\)</span>.
+The estimator <span class="math inline">\(d\)</span> above, is commonly
+known as Cohen’s <span class="math inline">\(d\)</span>, named after
+psychologist and statistician Jacob Cohen.</p>
+<p>When designing a study, you want to determine:</p>
 <ul>
-<li>Develop and execute simulation logic using R to investigate how
-(un)likely an observed sample statistic is</li>
-<li>Articulate the role sample size plays in hypothesis testing</li>
-<li>Articulate how hypothesis tests and confidence intervals are
-related</li>
-<li>Determine the significance level and Type II error rate of a
-test</li>
-<li>Demonstrate Type I and Type II errors via simulations in R</li>
+<li>What is a practically meaningful value of <span class="math inline">\(\delta\)</span> in my research context?</li>
+<li>What sample size do I need to be able to detect that effect?</li>
+</ul>
+<p>Or alternatively,</p>
+<ul>
+<li>What is the largest sample size I can afford with my budget?</li>
+<li>What is the minimal detectable effect size (MDES) with that sample
+size?</li>
 </ul>
 </div>
-<div id="exercises" class="section level1">
-<h1>Exercises</h1>
+<div id="simulation-exploration-in-app" class="section level1">
+<h1>Simulation exploration (in app)</h1>
+<p>Go to the following app: <a href="https://rpsychologist.com/d3/nhst/">https://rpsychologist.com/d3/nhst/</a></p>
 <ol style="list-style-type: decimal">
-<li><p>Return to the first “Which tire?” example where 17/44 students
-chose the right tire. Use R to conduct simulations to investigate how
-(un)likely the observed result is.</p>
-<ul>
-<li>For completeness, start by writing out the hypotheses being
-tested.</li>
-<li>In your answer, include your code as well as a two visualizations of
-your simulation results: one of the <span class="math inline">\(\hat{p}\)</span> values and one of the
-corresponding test-statistics <span class="math inline">\(Z\)</span>.</li>
-<li>On both visualizations, make sure to include lines for the critical
-value and the observed statistic.</li>
-<li>Include a brief description of what your simulations show and what
-conclusion you draw as a result.</li>
-<li>Compute the proportion of simulated <span class="math inline">\(\hat{p}\)</span> values that are “more extreme”
-than the one observed (17/44). What does this tell you about the
-plausability of the null hypothesis? Explain your reasoning.</li>
-</ul></li>
-<li><p>Suppose that 30% of the people in a random sample from a
-population select the right front tire.</p>
+<li><p>Assume that you want to detect an effect size of d = 0.1. How
+large of a sample do you need for the following scenarios:</p>
 <ol style="list-style-type: lower-alpha">
-<li>Is 30% a population parameter, sample statistic, test statistic, or
-critical value? Explain.</li>
-<li>What more information do you need to conduct a hypothesis test and
-determine a confidence interval?</li>
-<li>Write out the hypotheses being tested.</li>
-<li>Suppose that the sample size is n = 100. Determine the value of the
-test statistic and a 95% confidence interval.</li>
-<li>What critical value is needed for a significance level of 0.05 in
-this case? What conclusion do you draw from the hypothesis test? Explain
-your reasoning.</li>
-<li>Repeat d &amp; e for a sample size of n = 500.</li>
-<li>Summarize the role of sample size on these hypothesis tests and
-confidence intervals. How are hypothesis tests and confidence intervals
-related?</li>
+<li>Type I error of 0.05 and power of 0.80</li>
+<li>Type I error of 0.01 and power of 0.80</li>
+<li>Type I error of 0.01 and power of 0.90</li>
 </ol></li>
-<li><p>Let <span class="math inline">\(Y\)</span> be <span class="math inline">\(b(1000, p)\)</span>. To test <span class="math inline">\(H_0: p = 0.3\)</span> against <span class="math inline">\(H_A: p &lt; 0.3\)</span>, we reject <span class="math inline">\(H_0\)</span> and accept <span class="math inline">\(H_A\)</span> if and only if <span class="math inline">\(Y \leq 270\)</span>. For parts a &amp; b, use the
-binomial distribution (of <span class="math inline">\(Y\)</span>)
-directly, and then use the normal approximation (of <span class="math inline">\(\hat{p}\)</span>).</p>
+<li><p>Let’s say you want to power your test at 80% and restrict your
+Type I error to 0.01 and can only afford a sample size of 50. What’s the
+smallest Cohen’s d you will be able to detect under these
+constraints?</p></li>
+<li><p>Let’s say the value you determined in #2 is unrealistically large
+for your research context, and you really need to be able to detect an
+effect size of 0.3. However, you don’t have access to any more money -
+<span class="math inline">\(n = 50\)</span> is still all that you can
+afford.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Determine the significance level <span class="math inline">\(\alpha\)</span> of the test.</li>
-<li>Find the probability of the Type II error if, in fact, <span class="math inline">\(p = 0.26\)</span>.</li>
+<li>What could you change about your design to be able to detect 0.3?
+Come up with at least two alternative designs.</li>
+<li>Comment on the tradeoffs in your designs.</li>
 </ol></li>
-<li><p>How would you conduct simulations to demonstrate the Type I and
-Type II error rates you determined above? Start by writing psuedo-code
-to work out your logic (and maybe sketch some by-hand graphs), then
-write R code. Comment on what your simulations show.</p>
-<ul>
-<li><em>Hint: Start by generating 100,000 <span class="math inline">\(Y\)</span> values using <code>rbinom()</code>. You
-will generate another 100,000 for part b.</em></li>
-</ul></li>
-<li><p>Describe what Type I and Type II error mean in your own words.
-Don’t use any mathematical symbols, and try to avoid statistical jargon
-as much as possible.</p></li>
-<li><p><em>In PS-03 you constructed a one-sided 99% CI for this
-scenario. Now, conduct the corresponding hypothesis test: </em> Public
-health officials in a large city decided that if compelling evidence
-could be presented that less than 90% of children under six years of age
-in the city had received the DPT vaccine, then they would carry out an
-expensive immunization program throughout the city. A random sample was
-taken of 537 children under six years of age in the city; of these 460
-had been immunized for DPT.</p></li>
+<li><p>Suppose you want to power your study at 80% and need to detect an
+effect of 0.5. What happens to the necessary sample size as alpha
+decreases? Describe why this happens. Describe the trade-off here in
+practical terms.</p></li>
+<li><p>Suppose a Type I error is relatively risky in your context and
+therefore you set <span class="math inline">\(\alpha = 0.01\)</span>.
+You need to detect an effect of 0.5. What happens to the necessary
+sample size as power decreases? Describe why this happens. Describe the
+trade-off here in practical terms.</p></li>
+<li><p>Suppose you decide to power your study at 80% and are okay with a
+Type I error of 5%. What happens to the necessary sample size as <span class="math inline">\(d\)</span> changes? Describe why this happens.
+Describe the trade-off here in practical terms.</p></li>
+<li><p>Suppose you’re serving as a statistical consultant and your
+client says they have budgeted for a sample size of <span class="math inline">\(n = 50\)</span>. They mention that in a pilot
+study they estimated their treatment improved outcomes by about d = 0.1.
+Explain how you would go about articulating to them that this research
+design is not set up for success.</p></li>
 </ol>
 <div id="submission" class="section level2">
 <h2>Submission</h2>

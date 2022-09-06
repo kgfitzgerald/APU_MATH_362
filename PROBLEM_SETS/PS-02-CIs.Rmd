@@ -32,25 +32,31 @@ library(broom)
 
 ## By hand or typed
 
-1. [HTZ 7.1-16] Let $\overline{X}$ be the mean of a random sample of size $n$ from $N(\mu, 9)$. Find $n$ such that $P(\overline{X} - 1 < \mu < \overline{X} + 1) = 0.9$ 
+### Exericse 1
 
-2. Choose the Theorem from 2.5 (that $T \sim t_{(n-1)}$) or the Theorem from 5.2 (CI for two proportions) and provide an annotated proof. 
+[HTZ 7.3-13] Based on telephone interviews in October 2017 of a random sample of 1028 adults, Gallup News Service reported that 617 favored stricter gun control laws. Interviews of 1041 adults in March 2018 showed that 694 favored stricter gun control laws. Let $p_1$ and $p_2$ be the respective proportions in 2017 and 2018 who favored stricter gun control laws. 
 
-3. [HTZ 7.3-13] Based on telephone interviews in October 2017 of a random sample of 1028 adults, Gallup News Service reported that 617 favored stricter gun control laws. Interviews of 1041 adults in March 2018 showed that 694 favored stricter gun control laws. Let $p_1$ and $p_2$ be the respective proportions in 2017 and 2018 who favored stricter gun control laws. 
+  a) Find point estimates of $p_1$ and $p_2$
+  b) Find an approximate 95% confidence interval for $p_1 - p_2$
 
-    a) Find point estimates of $p_1$ and $p_2$
-    b) Find an approximate 95% confidence interval for $p_1 - p_2$
+### Exericse 2
 
-4. [HTZ 7.1-2] A random sample of size 8 from $N(\mu, 72)$ yielded $\overline{X} = 85$. Find the following confidence intervals for $\mu$:
+[HTZ 7.1-2] A random sample of size 8 from $N(\mu, 72)$ yielded $\overline{X} = 85$. Find the following confidence intervals for $\mu$:
 
-    a)  99%
-    b) 95%
-    c) 90%
-    d) 80%
+  a)  99%
+  b) 95%
+  c) 90%
+  d) 80%
+
+### Exericse 3
+
+[HTZ 7.1-16] Let $\overline{X}$ be the mean of a random sample of size $n$ from $N(\mu, 9)$. Find $n$ such that $P(\overline{X} - 1 < \mu < \overline{X} + 1) = 0.9$ 
 
 ## Typed
 
-5. Suppose that a region has two hospitals.  Hospital A has about 10 births per day, and hospital B has about 50 births per day.  About 50% of all babies are boys, but the percentage who are boys varies at each hospital from day to day.  Over the course of a year, which hospital will have more days on which 60% or more of the births are boys – A, B, or negligible difference between A and B?
+### Exericse 4
+
+Suppose that a region has two hospitals.  Hospital A has about 10 births per day, and hospital B has about 50 births per day.  About 50% of all babies are boys, but the percentage who are boys varies at each hospital from day to day.  Over the course of a year, which hospital will have more days on which 60% or more of the births are boys – A, B, or negligible difference between A and B?
 
 ```{r, echo = FALSE}
 set.seed(437)
@@ -58,10 +64,12 @@ docs <- movies %>%
   filter(Documentary == 1, !is.na(length)) 
 ```
 
-6. Suppose we want to estimate the average runtime of a feature film in the thriller genre.  I selected a simple random sample of 50 documentary films from the population of `r nrow(docs)` documentaries listed at IMDb ([here](http://www.imdb.com/)).
+### Exericse 5
+
+Suppose we want to estimate the average runtime of a feature film in the documentary genre.  I selected a simple random sample of 50 documentary films from the population of `r nrow(docs)` documentaries listed at IMDb ([here](http://www.imdb.com/)).
 
 
-```{r}
+```{r, warning = FALSE}
 sample <- docs %>% 
   sample_n(50)
 
@@ -73,7 +81,7 @@ ggplot(sample, aes(x = length)) +
        title = "Random sample of 50 Documentaries from IMDB") +
   theme(axis.text.y = element_blank())
 
-tidy(summary(sample$length))
+tidy(c(summary(sample$length), StDev = sd((sample$length))))
   
 ```
 
@@ -84,29 +92,39 @@ tidy(summary(sample$length))
   d) Are the technical conditions for this procedure satisfied?  Explain.
   e) Calculate a 95% confidence interval for the population mean.
   f) Interpret this interval.
-  g) What percentage of the films in the sample have times that fall within this interval?
+  g) Approximately what percentage of the films in the sample have times that fall within this interval?
   h) Is this percentage close to 95%?  Should it be?  Explain what went wrong, or explain that nothing went wrong.
 
-7. Consider the population of thriller movies from the IMDB database, and assume we computed a 95% CI for average runtime to be [94.5, 108.9]. Identify which of the following statements are *correct* interpretations of the confidence interval. For incorrect interpretations, explain *why* they are incorrect.
+### Exericse 6
 
-    (A) We are 95% confident that a thriller film in the IMDb list runs for between 94.5 and 108.9 minutes.
-    (A) There’s a 95% chance that a thriller film in the IMDb list runs for between 94.5 and 108.9 minutes.
-    (A) We are 95% confident that the population mean is between 94.5 and 108.9 minutes.
-    (A) We are 95% confident that the population mean runtime of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
-    (A) About 95% of all thriller films in the IMDb list run for between 94.5 and 108.9 minutes.
-    (A) We are 95% confident that the mean runlength of a thriller film in this sample from the IMDb list was between 94.5 and 108.9 minutes.
-    (A) We are 95% confident that the mean runlength of a thriller film in a new random sample from the IMDb list would be between 94.5 and 108.9 minutes.
-    (A) We are 95% confident that the population mean runtime of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
-    (A) There’s a 95% chance (or a 0.95 probability) that the population mean runlength of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
+Consider the population of thriller movies from the IMDB database, and assume we computed a 95% CI for average runtime to be [94.5, 108.9]. Identify which of the following statements are *correct* interpretations of the confidence interval. For incorrect interpretations, explain *why* they are incorrect.
 
-8. Birthweights of babies in the U.S. can be modeled by a normal distribution with mean 3300 grams and standard deviation 500 grams.  Consider selecting a random sample of 400 newborns from this population. Which is larger: the probability that a single randomly selected newborn weighs between 3200 and 3400 grams, or the probability that the sample mean birthweight in the random sample of 400 newborns is between 3200 and 3400 grams?  Explain your answer.
+  (A) We are 95% confident that a thriller film in the IMDb list runs for between 94.5 and 108.9 minutes.
+  (A) There’s a 95% chance that a thriller film in the IMDb list runs for between 94.5 and 108.9 minutes.
+  (A) We are 95% confident that the population mean is between 94.5 and 108.9 minutes.
+  (A) We are 95% confident that the population mean runtime of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
+  (A) About 95% of all thriller films in the IMDb list run for between 94.5 and 108.9 minutes.
+  (A) We are 95% confident that the mean runlength of a thriller film in this sample from the IMDb list was between 94.5 and 108.9 minutes.
+  (A) We are 95% confident that the mean runlength of a thriller film in a new random sample from the IMDb list would be between 94.5 and 108.9 minutes.
+  (A) We are 95% confident that the population mean runtime of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
+  (A) There’s a 95% chance (or a 0.95 probability) that the population mean runlength of a thriller film in the IMDb list is between 94.5 and 108.9 minutes.
 
-9. State a research question where a confidence interval for each of the following parameters would be of interest:
+### Exericse 7
 
-   (a) one mean
-   (b) one proportion
-   (c) a difference in proportions
+Birthweights of babies in the U.S. can be modeled by a normal distribution with mean 3300 grams and standard deviation 500 grams.  Consider selecting a random sample of 400 newborns from this population. Which is larger: the probability that a single randomly selected newborn weighs between 3200 and 3400 grams, or the probability that the sample mean birthweight in the random sample of 400 newborns is between 3200 and 3400 grams?  Explain your answer.
 
+### Exericse 8
+
+State a research question where a confidence interval for each of the following parameters would be of interest:
+
+  (a) one mean
+  (b) one proportion
+  (c) a difference in proportions
+
+
+## BONUS / Stretch Exercise
+
+Choose the Theorem from 2.5 (that $T \sim t_{(n-1)}$) or the Theorem from 5.2 (CI for two proportions) and type up an annotated proof (using LaTeX in RMarkdown). 
 
 ## Submission
 
@@ -118,9 +136,7 @@ Once you have completed all Exercises and written up your results in the Templat
 
 + (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
-+ (RP4): *Describe 2-3 insights highlighted in the simulation exploration activity*
-
-Knit your document one final time, then upload your .html file to Problem Set 01 on Canvas. 
+Knit your document one final time, then upload your .html file to Problem Set 02 on Canvas. 
 
 ## Grading (50pts)
 
@@ -129,6 +145,5 @@ Knit your document one final time, then upload your .html file to Problem Set 01
 | RP1      | 5      |
 | RP2      | 5    |
 | RP3      | 5    |
-| RP4      | 5    |
 | Formatting & Clarity | 5 |
-| Exercise completion | 25 |
+| Exercise completion | 30 |

@@ -1502,6 +1502,40 @@ div.tocify {
 </div>
 
 
+<div id="reading-annotation-qa" class="section level2">
+<h2>Reading Annotation Q/A</h2>
+<ol style="list-style-type: decimal">
+<li><p>Where does <span class="math inline">\(\alpha\)</span> come from,
+why is it over 2?</p></li>
+<li><p>When <span class="math inline">\(X_1, X_2, ... X_n \sim N(\mu,
+\sigma^2),\)</span> then <span class="math inline">\(\bar{X} \sim N(\mu,
+\frac{\sigma^2}{n})\)</span> and CI is given by <span class="math inline">\(\bar{X} \pm
+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\)</span>. Is normality assumption
+necessary here? Doesn’t CLT tell us this is true even if underlying
+distribution is not Normal?</p></li>
+<li><p>Why would we ever use the method above, when it requires that
+<span class="math inline">\(\sigma^2\)</span> is known, and that’s
+unrealistic? Would we ever know <span class="math inline">\(\sigma^2\)</span>?</p></li>
+<li><p>WON’T BE USING MINITAB - feel free to skip those sections
+:)</p></li>
+<li><p>Book: “In reality we only take one random sample”. Student: “Is
+one sample enough to test if an interval is correct or incorrect? If so,
+why only one when usually we take so many samples?”</p></li>
+<li><p>“This reminds me of the two different types of errors, which I am
+sure we will review later in this class because type 1 and type 2 errors
+can give some insight into our possible incorrectness. I find it
+troubling despite our use of statistics to find an unknown, the
+correctness of our answer can still be unknown. Whenever I use
+confidence intervals in research, I tend to struggle with determining
+confidence percentage to ensure a higher likeliness that my resulting
+interval contains the population mean”</p></li>
+<li><p>Its necessary to find the balance between efficiency and
+accuracy. How can we determine the largest sample “we can
+afford”?</p></li>
+<li><p>How large is large enough? <span class="math inline">\(n \geq
+30\)</span> if not skewed, but what about when data is skewed?</p></li>
+</ol>
+</div>
 <div id="knowledge-check" class="section level2">
 <h2>Knowledge Check</h2>
 <ol style="list-style-type: decimal">
@@ -1533,46 +1567,6 @@ error, and margin of error? How are they related to one
 another?</p></li>
 <li><p>Explain the notation <span class="math inline">\(t_{\alpha/2,
 n-1}\)</span>. Draw a picture to illustrate it.</p></li>
-</ol>
-</div>
-<div id="simulation-exploration" class="section level2">
-<h2>Simulation exploration</h2>
-<p>For this section, use the <a href="https://www.rossmanchance.com/applets/2021/confsim/ConfSim.html">Rossman/Chance
-applet</a> for Confidence Intervals. To begin, assume that the
-population has a normal distribution with mean 50 and standard deviation
-10. Use a very small sample size of 5, a confidence level of 95%, and
-simulate selecting 500 random samples from the population. Select “z
-with s” for the Method dropdown.</p>
-<ol style="list-style-type: decimal">
-<li><p>What problem with the “z with s” confidence interval procedure
-does this simulation analysis reveal?</p></li>
-<li><p>In order to solve this problem, do we need the intervals to get a
-bit narrower or wider?</p></li>
-<li><p>Which of the four terms in the formula – x-bar, z*, s, or n – can
-we alter to produce a narrower/wider interval? In other words, which one
-does not depend on the data?</p></li>
-<li><p>Do we want to use a larger or smaller multiplier than
-z*?</p></li>
-<li><p>Use the <code>qt()</code> function in R to find the appropriate
-t-multiplier. How does this multiplier compare to the value of <span class="math inline">\(z^*\)</span> for 95% confidence?</p></li>
-<li><p>How can we tell whether this t* adjustment is the right amount to
-produce 95% confidence?</p></li>
-<li><p>Change the Method to “t” in the applet. How do these intervals
-compare to the previous ones? Do more of them succeed in capturing the
-parameter value?</p></li>
-<li><p>What happens with larger sample sizes? Conduct more simulations
-with larger sample sizes, and compare “z with s” and “t” for each. What
-do you notice?</p></li>
-<li><p>Does t* work equally well with other confidence levels?</p></li>
-<li><p>Why do the widths of these intervals vary from sample to
-sample?</p></li>
-<li><p>Change the Distribution to Uniform. Choose an upper and lower
-limit so that the mean is 50. Run 500 simulations with a sample size of
-5. What percent capture the mean using “t” and “z with s”? Do the same
-for sample size of 20. What do these 4 percentages suggest?</p></li>
-<li><p>Explore trends when the data come from an Exponential
-distribution, using samples sizes of 5, 20, 40, 100. What do you notice?
-What conclusions can you draw?</p></li>
 </ol>
 </div>
 

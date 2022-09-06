@@ -363,3 +363,24 @@ sample_props %>%
             coverage2 = sum(successful_CI2)/n())
 ```
 
+## Submission
+
+Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
+
++ (RP1): *What were the main concepts covered in this assignment?*
+
++ (RP2): *What's one thing you understand better after completing these problems?*
+
++ (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+Knit your document one final time, then upload your .html file to Problem Set 04 on Canvas. 
+
+## Grading (50pts)
+
+| Component | Points |
+|:----------|:-------|
+| RP1      | 5      |
+| RP2      | 5    |
+| RP3      | 5    |
+| Formatting & Clarity | 5 |
+| Exercise completion | 30 |

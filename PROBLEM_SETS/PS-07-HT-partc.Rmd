@@ -1,0 +1,244 @@
+---
+title: "Problem Set 07"
+subtitle: "Week 04 Day 02"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(NHANES)
+library(infer)
+library(cowplot)
+```
+
+
+# Learning objectives
+
++ Determine appropriate hypothesis tests based on research scenarios
++ Determine appropriate test statistics and critical values based on research scenarios and desired Type I error rates
++ Conduct hypothesis tests for means and variances by hand
++ Conduct hypothesis tests for means using R
++ Use simulations to explore the distribution of a sample variance, and a ratio of sample variances
++ Use simulations to compare simulated and theoretical distributions
+
+# Exercises
+
+1. [From PS-03] Independent random samples of heights of adult males living in two countries yielded the following results: $n_X = 12$, $\overline{X} = 65.7$ inches, $s_X = 4$ inches and $n_Y = 15$, $\overline{Y} = 68.2$ inches, $s_Y = 3$ inches. In PS-03 you found an approximate 98% confidence interval for the difference $\mu_X - \mu_Y$ of the means of the populations of heights. Set up and conduct the corresponding hypothesis test for this scenario. Assume that $\sigma_X^2 = \sigma_Y^2$.
+
+2. [HTZ 8.3-4] In May, the fill weights of six-pound boxes of laundry soap had a mean of 6.13 pounds with a standard deviation of 0.095. The goal was to decrease the standard deviation. The company decided to adjust the filling machines and then test $H_0: \sigma = 0.095$ against $H_A: \sigma < 0.095$. In June, a random sample of size $n = 20$ yielded $\bar{x} = 6.10$ and $s = 0.065$
+
+    a. At an $\alpha = 0.05$ significance level, was the company successful?
+    b. What is the approximate p-value of your test?
+    
+3. Let $X$ and $Y$ equal the times in days required for maturation of Guardiola seeds from narrow-leaved and broad-leaved parents, respectively. Assume that $X$ is $N(\mu_x, \sigma^2_x)$ and $Y$ is $N(\mu_y, \sigma^2_y)$ and that $X$ and $Y$ are independent. Test the hypothesis that $H_0: \sigma^2_x = \sigma^2_y$ vs. $H_A: \sigma^2_x > \sigma^2_y$ if a sample size $n_x = 13$ yielded $\bar{x} = 18.97, s_x^2 = 9.88$ and a sample of size $n_y = 9$ yielded $\bar{y} = 23.2, s_y^2 = 4.08$. Let $\alpha = 0.05$.
+
+For the next 5 questions, return to #7 - #11 in PS-03. For each one, 
+
+  a. State an appropriate set of hypotheses to test
+  b. State the appropriate test statistic and how it is distributed
+  c. Determine the appropriate critical value(s) for the corresponding confidence level provided
+  d. Use `t.test()` to conduct the hypothesis test
+  e. Report the test statistic, p-value, and conclusion
+
+4. PS-03 #7
+
+5. PS-03 #8
+
+6. PS-03 #9
+
+7. PS-03 #10
+
+8. PS-03 #11
+
+
+# Simulation exploration
+
+## Population Context
+
+Let's return to the `NHANES` dataset, this time considering two different populations: adult females and adult males. Our variable of interest this time will be `Height`, so for convenience, in both cases we will restrict our populations to only observations for which `Height` is not missing. There are 3590 adults females in the `NHANES` dataset who meet this criteria and 3451 adult males who meet this criteria. That is, our populations are of size $N = 3590$ and $M = 3451$ respectively. 
+
+```{r}
+females <- NHANES %>% 
+  filter(Age > 20, 
+         Gender == "female",
+         !is.na(Height))
+
+males <- NHANES %>% 
+  filter(Age > 20, 
+         Gender == "male",
+         !is.na(Height))
+
+p1 <- ggplot(females, aes(Height)) +
+  geom_histogram() +
+  xlim(130, 210) +
+  ylim(0, 600) +
+  labs(title = "Population Distribution of Female Heights") +
+  theme_minimal()
+
+p2 <- ggplot(males, aes(Height)) +
+  geom_histogram() +
+  xlim(130, 210) +
+  ylim(0, 600) +
+  labs(title = "Population Distribution of Male Heights") +
+  theme_minimal()
+
+plot_grid(p1, p2, nrow = 2)
+```
+
+```{r}
+mu_f <- mean(females$Height)
+sigma2_f <- var(females$Height)
+
+mu_m <- mean(males$Height)
+sigma2_m <- var(males$Height)
+```
+
+The true mean `Height`s for females and males are $\mu_f = `r round(mu_f, 2)`$ and $\mu_m = `r round(mu_m, 2)`$ respectively; the true variances are  $\sigma^2_f = `r round(sigma2_f, 2)`$ and $\sigma^2_m = `r round(sigma2_m, 2)`$
+
+## One Variance
+
+First, we will consider only the population of adult females. We will conduct simulations to convince ourselves that $\frac{(n_f-1)S_f^2}{\sigma_{f0}^2}$ is distributed as chi-squared under the null hypothesis. 
+
+The following code generates 10,000 random samples of size 100 from this adult female population and computes the sample mean and sample variance in each. 
+
+```{r}
+n <- 100
+samples_f <- females %>% 
+  rep_sample_n(size = n, reps = 10000)
+
+sample_stats_f <- samples_f %>% 
+  group_by(replicate) %>%  
+  summarize(xbar_f = mean(Height),
+            s2_f = var(Height))
+```
+
+9. Plot the sampling distribution of $S^2_f$. Describe the distribution.
+
+10. What is the appropriate test statistic to test the hypothesis $H_0: \sigma_f^2 = \sigma_{f0}^2$ vs. $H_A: \sigma_f^2 > \sigma_{f0}^2$?
+
+11. How is the above test statistic distributed when the null hypothesis is true? In this case, that means when $\sigma_{f0}^2 = `r round(sigma2_f, 2)`$
+
+12. Write code to compute the relevant test statistic for each of the 10,000 samples, then plot the distribution of the test-statistic. Name your test statistic `X2_f`. 
+
+```{r, echo = FALSE}
+sample_stats_f <- sample_stats_f %>% 
+  mutate(X2_f = (n-1)*s2_f/sigma2_f)
+
+# ggplot(sample_stats_f, aes(X2_f)) +
+#   geom_histogram()
+```
+
+13. Eye-balling the test-statistic distribution above, what do you think is a reasonable critical value if you want to control your Type I error rate at 5%? Write psuedo-code for how you might find an approximate $\alpha = 0.05$ critical value using these simulations.
+
+14. Use the appropriate R function to find the theoretical critical value (not based on simulations). What proportion of simulated test statistics exceed the theoretical critical value?
+
+```{r echo = FALSE, eval = FALSE}
+crit <- qchisq(.95, 99)
+```
+
+Below is some code to check how well the simulated critical values (quantiles) match the theoretical ones for a few different values of $\alpha$. *Note: these are based on my simulations, yours may differ slightly*
+
+```{r}
+qchisq(.9, df = n - 1)
+quantile(sample_stats_f$X2_f, .9)
+
+qchisq(.8, df = n - 1)
+quantile(sample_stats_f$X2_f, .8)
+
+qchisq(.99, df = n - 1)
+quantile(sample_stats_f$X2_f, .99)
+
+```
+
+
+Note, that because `Height` is approximately normally distributed, statistical theory tells us that the test statistic $\frac{(n_f-1)S_f^2}{\sigma_{f0}^2}$ should be distributed as $\chi^2_{n-1}$. There is some simulation error involved (and `Height` may not be *exactly* normal distributed), but we should expect the critical values determined from the simulated values to match the theoretical ones pretty closely. In fact, in real life when we don't have the population data to simulate from, we're banking on the fact that the theory can help us model pretty closely the behavior of all the random samples we don't observe! 
+
+That is, even though in real life we only observe one $S_f^2$ (from one sample, as opposed to 10,000), the theory - knowing that $\frac{(n_f-1)S_f^2}{\sigma_{f0}^2} \sim \chi^2_{n-1}$ - allows us to know how much our estimate *might have varied* if we had observed a different random sample. And importantly, for any given decision-rule/critical region based on a chosen $\alpha$, it allows us to know the probability that our one observed sample might be a false positive (or negative). 
+
+## Two Variances
+
+Now, back to the two populations - of females and males. We're going to conduct simulations to convince ourselves that $\frac{S_f^2}{S_m^2}$ has an F distribution. 
+
+The following code conducts the same simulations for the male population. That is, we draw 10,000 random samples of size n = 100 and compute the sample mean and sample variance in each. 
+
+```{r}
+samples_m <- males %>% 
+  rep_sample_n(size = n, reps = 10000)
+
+sample_stats_m <- samples_m %>% 
+  group_by(replicate) %>%  
+  summarize(xbar_m = mean(Height),
+            s2_m = var(Height))
+```
+
+Let's combine the female and male simulated values into one dataset.
+
+```{r}
+combined <- left_join(sample_stats_f, sample_stats_m)
+```
+
+15. What is the appropriate test statistic to test the hypothesis $H_0: \sigma_f^2 = \sigma_m^2$ vs $H_A: \sigma_f^2 < \sigma_m^2$
+
+16. How should the above test statistic be distributed, according to theory?
+
+17. Write code to compute the relevant test statistic for each of the 10,000 pairs of samples, then plot the distribution of the test-statistic. Name your test statistic `F`. 
+
+```{r, echo = FALSE, eval = FALSE}
+combined <- combined %>% 
+  mutate(F = s2_f/s2_m)
+
+ggplot(combined, aes(x = F)) + 
+  geom_histogram()
+```
+
+18. What critical value - based on the simulated test statistics - would result in a Type I error rate of 1%? *Hint: adapt the `quantile()` code provided above.* Verify your answer by computing the proportion of test statistics that exceed your chosen critical value. 
+
+```{r, echo = FALSE, eval = FALSE}
+quantile(combined$F, .99)
+
+combined %>% 
+  summarize(sum(F > quantile(combined$F, .99))/n())
+```
+
+19. Use the appropriate R function to find the theoretical critical value (not based on simulations).
+
+```{r, echo = FALSE, eval = FALSE}
+crit_F <- qf(.99, n - 1, n - 1)
+combined %>% 
+  summarize(sum(F > crit_F)/n())
+```
+
+
+
+
+## Submission
+
+Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
+
++ (RP1): *What were the main concepts covered in this assignment?*
+
++ (RP2): *What's one thing you understand better after completing these problems?*
+
++ (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+Knit your document one final time, then upload your .html file to Problem Set 05 on Canvas. 
+
+## Grading (50pts)
+
+| Component | Points |
+|:----------|:-------|
+| RP1      | 5      |
+| RP2      | 5    |
+| RP3      | 5    |
+| Formatting & Clarity | 5 |
+| Exercise completion | 30 |

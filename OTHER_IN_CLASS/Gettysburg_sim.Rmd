@@ -1,0 +1,77 @@
+---
+title: "Gettysburg simulation"
+output: 
+  html_document:
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r message = FALSE, warning = FALSE}
+library(readxl)
+library(infer)
+library(tidyverse)
+library(broom)
+
+set.seed(43)
+gettysburg <- read_excel("./data/gettysburg.xlsx")
+glimpse(gettysburg)
+``` 
+
+We can confirm that the population mean is `r round(mean(gettysburg$Length),2)`.
+
+```{r}
+gettysburg %>% 
+  summarise(mu = mean(Length))
+```
+
+The plot below shows the distribution of length of words in the population. This is the *population distribution*. 
+
+```{r}
+ggplot(data = gettysburg, aes(x = Length)) +
+  geom_bar() +
+  geom_vline(xintercept = 4.29, color = "blue")
+```
+
+We can select a random sample of 10 words and plot the distribution of word lengths in our sample. 
+
+```{r}
+sample <- gettysburg %>% 
+  sample_n(10)
+sample
+
+ggplot(data = sample, aes(x = Length)) +
+  geom_bar()
+
+sample %>% 
+  summarise(avg_length = mean(Length))
+```
+
+We then select 10000 random samples of 10 words...
+
+```{r}
+sims <- rep_sample_n(gettysburg, size = 10, 
+                            reps = 10000, replace = TRUE)
+sims %>% print(n = 15)
+```
+
+... and compute the mean word length in each sample
+
+```{r}
+sample_means <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(xbar = mean(Length))
+
+sample_means %>% print(n = 15)
+```
+
+We can then plot the *sampling distribution* of the sample mean.  
+
+```{r}
+Exbar <- mean(sample_means$xbar)
+
+ggplot(data = sample_means, aes(x = xbar)) +
+  geom_histogram(binwidth = 0.1) +
+  geom_vline(xintercept = 4.29, color = "blue") +
+  geom_vline(xintercept = Exbar, color = "green")
+```
+

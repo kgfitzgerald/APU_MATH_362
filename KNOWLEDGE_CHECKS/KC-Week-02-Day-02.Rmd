@@ -24,3 +24,35 @@ For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\
 
 1. When should you use Welch's t-interval? 
 1. When should you use a paired t-interval?
+
+## Simulation exploration
+
+For this section, use the [Rossman/Chance applet](https://www.rossmanchance.com/applets/2021/confsim/ConfSim.html) for Confidence Intervals. To begin, assume that the population has a normal distribution with mean 50 and standard deviation 10.  Use a very small sample size of 5, a confidence level of 95%, and simulate selecting 500 random samples from the population. Select "z with s" for the Method dropdown. 
+
+1. What problem with the “z with s” confidence interval procedure does this simulation analysis reveal?
+
+1. In order to solve this problem, do we need the intervals to get a bit narrower or wider?
+
+1. Which of the four terms in the formula – x-bar, z*, s, or n – can we alter to produce a narrower/wider interval?  In other words, which one does not depend on the data?
+
+1. Do we want to use a larger or smaller multiplier than z*?
+
+1. Use the `qt()` function in R to find the appropriate t-multiplier. How does this multiplier compare to the value of $z^*$ for 95% confidence? 
+
+```{r, echo = FALSE, eval = FALSE}
+qt(0.975, df = 4)
+```
+
+6. How can we tell whether this t* adjustment is the right amount to produce 95% confidence?
+
+1. Change the Method to "t" in the applet. How do these intervals compare to the previous ones? Do more of them succeed in capturing the parameter value?
+
+1. What happens with larger sample sizes? Conduct more simulations with larger sample sizes, and compare "z with s" and "t" for each. What do you notice? 
+
+1. Does t* work equally well with other confidence levels?
+
+1. Why do the widths of these intervals vary from sample to sample? 
+
+1. Change the Distribution to Uniform. Choose an upper and lower limit so that the mean is 50. Run 500 simulations with a sample size of 5. What percent capture the mean using "t" and "z with s"? Do the same for sample size of 20. What do these 4 percentages suggest? 
+
+1. Explore trends when the data come from an Exponential distribution, using samples sizes of 5, 20, 40, 100. What do you notice? What conclusions can you draw? 

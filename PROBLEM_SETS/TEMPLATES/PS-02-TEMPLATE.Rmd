@@ -22,9 +22,8 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 *RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
-*RP4: Describe 2-3 insights highlighted in the simulation exploration activity*
-
 ## Exercise 1
+
 
 ## Exercise 2
 
@@ -32,42 +31,13 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 ## Exercise 4
 
-a)
-
-b)
-
-c)
-
-d)
-
 ## Exercise 5
 
 ## Exercise 6
-
-a) 
-
-b)
-
-c)
-
-d)
-
-e)
-
-f)
-
-g)
-
-h)
 
 ## Exercise 7
 
 ## Exercise 8
 
-## Exercise 9
+## BONUS
 
-a) 
-
-b) 
-
-c) 

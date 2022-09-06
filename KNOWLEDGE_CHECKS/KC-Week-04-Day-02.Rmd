@@ -1,0 +1,51 @@
+---
+title: "Week 04 Day 02"
+subtitle: "Knowledge Check"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+1. Describe what each symbol in $t = \frac{\bar{d} - \mu_0}{s_D/\sqrt{n}}$ stands for, and how this expression is used in a hypothesis test.
+
+1. What is the distribution of $t$ as defined above?
+
+1. What is the distribution of $\bar{d}$?
+
+1. What's the difference between a pooled two-sample t-test and Welch's t-test? When should you use one vs. the other? 
+
+1. Describe what each symbol in $|t| \geq t_{\alpha/2, n + m -2}$ means, and how this expression is used in a hypothesis test. 
+
+1. Describe what each symbol in $\chi^2 = \frac{(n-1)S^2}{\sigma_0^2}$ means, and how this expression is used in a hypothesis test. 
+
+1. How is $\chi^2$ above distributed? 
+
+1. Assume you're conducting a one-sided hypothesis test for $\sigma^2$ with a sample size of 50. What should you set your $\chi^2$ cutoff value to be if you want to: 
+
+    a) control Type I error rate to be 0.10
+    a) control Type I error rate to be 0.05
+    a) control Type I error rate to be 0.01
+
+1. Describe how the above cutoff values would change if you instead had a sample size of 100. You don't actually need to compute new values.
+
+1. If $U \sim \chi^2_{n-1}$ and $V \sim \chi^2_{m-1}$, how is $\frac{U/(n-1)}{V/(m-1)}$ distributed?
+
+1. Explain why the test statistic for the hypothesis test $H_0: \sigma^2_X = \sigma^2_Y$ is $F = \frac{S_X^2}{S_Y^2}$ and not $F = \frac{S_X^2}{S_Y^2}\frac{\sigma_Y^2}{\sigma_X^2}$.
+
+1. How many parameters does the F distribution have? 
+
+1. Describe what each symbol in $F_{1 - \alpha/2}(n-1, m-1)$ stands for, and how this expression is used in a hypothesis test.
+
+1. Assume you're conducting a one-sided hypothesis test for $\sigma_X^2 = \sigma_Y^2$ with a sample size of n_X = n_Y = 50. What should you set your $F$ cutoff value to be if you want to: 
+
+    a) control Type I error rate to be 0.10
+    a) control Type I error rate to be 0.05
+    a) control Type I error rate to be 0.01

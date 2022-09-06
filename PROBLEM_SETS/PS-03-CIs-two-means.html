@@ -1612,21 +1612,30 @@ research scenarios</li>
 <h1>Exercises</h1>
 <div id="by-hand-or-typed" class="section level2">
 <h2>By hand or typed</h2>
-<ol style="list-style-type: decimal">
-<li><p>Independent random samples of heights of adult males living in
-two countries yielded the following results: <span class="math inline">\(n_X = 12\)</span>, <span class="math inline">\(\overline{X} = 65.7\)</span> inches, <span class="math inline">\(s_X = 4\)</span> inches and <span class="math inline">\(n_Y = 15\)</span>, <span class="math inline">\(\overline{Y} = 68.2\)</span> inches, <span class="math inline">\(s_Y = 3\)</span> inches. Find an approximate 98%
+<div id="exercise-1" class="section level3">
+<h3>Exercise 1</h3>
+<p>Independent random samples of heights of adult males living in two
+countries yielded the following results: <span class="math inline">\(n_X
+= 12\)</span>, <span class="math inline">\(\overline{X} = 65.7\)</span>
+inches, <span class="math inline">\(s_X = 4\)</span> inches and <span class="math inline">\(n_Y = 15\)</span>, <span class="math inline">\(\overline{Y} = 68.2\)</span> inches, <span class="math inline">\(s_Y = 3\)</span> inches. Find an approximate 98%
 confidence interval for the difference <span class="math inline">\(\mu_X
 - \mu_Y\)</span> of the means of the populations of heights. Assume that
-<span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>.</p></li>
-<li><p>Let <span class="math inline">\(X_1, X_2, \dots X_n \sim N(\mu_X,
+<span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>.</p>
+</div>
+<div id="exercise-2" class="section level3">
+<h3>Exercise 2</h3>
+<p>Let <span class="math inline">\(X_1, X_2, \dots X_n \sim N(\mu_X,
 \sigma^2)\)</span> and <span class="math inline">\(Y_1, Y_2, \dots Y_n
 \sim N(\mu_Y, \sigma^2)\)</span> be independent random samples. Show
 that <span class="math inline">\(S_p^2 = \frac{(n-1)S_x^2 +
-(m-1)S_y^2}{n + m - 2}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.</p></li>
-<li><p>Suppose a randomized control trial (RCT) was conducted to
-evaluate the effectiveness of a curriculum in improving students’
-reading comprehension. Reading comprehension scores for students who
-received the treatment (new curriculum) are denoted by <span class="math inline">\(Y^T_1, Y^T_{2}, \dots Y^T_{n_T}\)</span> and
+(m-1)S_y^2}{n + m - 2}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div id="exercise-3" class="section level3">
+<h3>Exercise 3</h3>
+<p>Suppose a randomized control trial (RCT) was conducted to evaluate
+the effectiveness of a curriculum in improving students’ reading
+comprehension. Reading comprehension scores for students who received
+the treatment (new curriculum) are denoted by <span class="math inline">\(Y^T_1, Y^T_{2}, \dots Y^T_{n_T}\)</span> and
 scores for students who received the control (“business as usual”
 curriculum) are denoted by <span class="math inline">\(Y^C_1, Y^C_{2},
 \dots Y^C_{n_C}\)</span> where <span class="math inline">\(n_T\)</span>
@@ -1636,39 +1645,14 @@ distributed with means <span class="math inline">\(\mu_T\)</span> and
 <span class="math inline">\(\mu_C\)</span> respectively, and a common
 variance <span class="math inline">\(\sigma^2\)</span>. Develop an
 estimator for <span class="math inline">\(\mu_T - \mu_C\)</span> and a
-formula for constructing a confidence interval.</p></li>
-<li><p>Let <span class="math inline">\(\overline{X}\)</span>, <span class="math inline">\(\overline{Y}\)</span>, <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span> be the respective sample means and
-unbiased estimates of the variances obtained from independent samples of
-sizes <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> from the normal distributions <span class="math inline">\(N(\mu_X, \sigma_X^2)\)</span> and <span class="math inline">\(N(\mu_Y, \sigma_Y^2)\)</span>, where <span class="math inline">\(\mu_X, \mu_Y, \sigma_X^2, \sigma_Y^2\)</span> are
-unknown. If <span class="math inline">\(d =
-\frac{\sigma^2_X}{\sigma_Y^2}\)</span> is a known constant:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Argue that <span class="math inline">\(\frac{(\overline{X} -
-\overline{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{d\sigma_Y^2}{n_X} +
-\frac{\sigma_Y^2}{n_Y}}}\)</span> is <span class="math inline">\(N(0,1)\)</span></p></li>
-<li><p>Argue that <span class="math inline">\(\frac{(n_X-1)S_X^2}{d\sigma_Y^2} +
-\frac{(n_Y-1)S_Y^2}{\sigma_Y^2}\)</span> is <span class="math inline">\(\chi^2_{n_X + n_Y - 2}\)</span></p></li>
-<li><p>Argue that the two random variables in (a) and (b) are
-independent</p></li>
-<li><p>With these results, construct a random variable (not depending on
-<span class="math inline">\(\sigma_Y^2\)</span>) that has a <span class="math inline">\(t\)</span> distribution and that can be used to
-construct a confidence interval for <span class="math inline">\(\mu_X -
-\mu_Y\)</span></p></li>
-</ol></li>
-</ol>
+formula for constructing a confidence interval.</p>
+</div>
 </div>
 <div id="typed" class="section level2">
 <h2>Typed</h2>
-<ol start="5" style="list-style-type: decimal">
-<li><p>State a research question where you would use each of the
-following procedures to estimate a confidence interval for two
-means.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Two-sample Pooled-t interval</li>
-<li>Welch’s t-interval</li>
-<li>Paired t-interval</li>
-</ol></li>
-<li><p>In each of the following scenarios, determine if the data are
+<div id="exercise-4" class="section level3">
+<h3>Exercise 4</h3>
+<p>In each of the following scenarios, determine if the data are
 paired</p>
 <ol style="list-style-type: upper-alpha">
 <li><p>Compare pre- (beginning of semester) and post-test (end of
@@ -1685,9 +1669,8 @@ days.</p></li>
 difference in average SAT scores for students at one high school versus
 another high school in the district. To check, they take a simple random
 sample of 100 students from each high school.</p></li>
-</ol></li>
 </ol>
-<p>For each of the following scenarios in Questions 7 - 13,</p>
+<p>For each of the following scenarios in Questions 5 - 11,</p>
 <ol style="list-style-type: lower-alpha">
 <li>State a research question relevant to the data that can be
 investigated via a confidence interval</li>
@@ -1707,80 +1690,117 @@ documentation for these functions by running <code>?t.test</code> and
 <code>?prop.test</code> in your console. Make sure to pay attention to
 default arguments and change them as necessary to fit your desired
 analysis.</p>
-<ol start="7" style="list-style-type: decimal">
-<li>[HTZ 7.1-5] As a clue to the amount of organic waste in Lake
+</div>
+<div id="exercise-5" class="section level3">
+<h3>Exercise 5</h3>
+<p>[HTZ 7.1-5] As a clue to the amount of organic waste in Lake
 Macatawa, a count was made of the number of bacteria colonies in 100
 milliliters of water. The number of colonies, in hundreds, for <span class="math inline">\(n=30\)</span> samples of water from the east basin
-yielded the following data. Use confidence level of 90%.</li>
-</ol>
+yielded the following data. Use confidence level of 90%.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">93</span>, <span class="dv">140</span>, <span class="dv">8</span>, <span class="dv">120</span>, <span class="dv">3</span>, <span class="dv">120</span>, <span class="dv">33</span>, <span class="dv">70</span>, <span class="dv">91</span>, <span class="dv">61</span>, <span class="dv">7</span>, <span class="dv">100</span>, <span class="dv">19</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       <span class="dv">98</span>, <span class="dv">119</span>, <span class="dv">23</span>, <span class="dv">14</span>, <span class="dv">94</span>, <span class="dv">57</span>, <span class="dv">9</span>, <span class="dv">66</span>, <span class="dv">53</span>, <span class="dv">28</span>, <span class="dv">76</span>, <span class="dv">58</span>, <span class="dv">9</span>, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">73</span>, <span class="dv">49</span>, <span class="dv">37</span>, <span class="dv">92</span>)</span></code></pre></div>
-<ol start="8" style="list-style-type: decimal">
-<li>[HTZ 7.2-4] Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> equal, respectively, the blood volumes
+</div>
+<div id="exercise-6" class="section level3">
+<h3>Exercise 6</h3>
+<p>[HTZ 7.2-4] Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> equal, respectively, the blood volumes
 in milliliters for a male who is a paraplegic and participates in
 vigorous physical activities and for a male who is able-bodied and
 participates in everyday, ordinary activities. Assume that <span class="math inline">\(X \sim N(\mu_X, \sigma^2_X)\)</span> and <span class="math inline">\(Y \sim N(\mu_Y, \sigma_Y^2)\)</span>. The
-following are the <span class="math inline">\(n_X = 7\)</span> and <span class="math inline">\(n_Y = 10\)</span> observations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Use confidence level of 95%.</li>
-</ol>
+following are the <span class="math inline">\(n_X = 7\)</span> and <span class="math inline">\(n_Y = 10\)</span> observations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Use confidence level of 95%.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1612</span>, <span class="dv">1352</span>, <span class="dv">1456</span>, <span class="dv">1222</span>, <span class="dv">1560</span>, <span class="dv">1456</span>, <span class="dv">1924</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1082</span>, <span class="dv">1300</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">910</span>, <span class="dv">1248</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">1092</span>, <span class="dv">1288</span>)</span></code></pre></div>
-<ol start="9" style="list-style-type: decimal">
-<li>[HTZ 7.2-7] An automotive supplier is considering changing its
-electrical wire harness to save money. The idea is to replace a current
-20-gauge wire with a 22-gauge wire. Because not all wires in the harness
-can be changed, the new wire must work with the current wire splice
-process. To determine whether the new wire is compatible, random samples
-were selected and measured with a pull test. A pull test measures the
-force required to pull the spliced wires apart. The minimum pull force
-required by the customer is 20 pounds. Twenty observations of the forces
-needed for the current wire and new wire are given below. Use confidence
-level of 90%. <em>(BONUS: Construct a side-by-side boxplot of the two
-sets of data)</em></li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">28.8</span>, <span class="fl">24.4</span>, <span class="fl">30.1</span>, <span class="fl">25.6</span>, <span class="fl">26.4</span>, <span class="fl">23.9</span>, <span class="fl">22.1</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="fl">22.5</span>, <span class="fl">27.6</span>, <span class="fl">28.1</span>, <span class="fl">20.8</span>, <span class="fl">27.7</span>, <span class="fl">24.4</span>, <span class="fl">25.1</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="fl">24.6</span>, <span class="fl">26.3</span>, <span class="fl">28.2</span>, <span class="fl">22.2</span>, <span class="fl">26.3</span>, <span class="fl">24.4</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>new <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">14.1</span>, <span class="fl">12.2</span>, <span class="dv">14</span>, <span class="fl">14.6</span>, <span class="fl">8.5</span>, <span class="fl">12.6</span>, <span class="fl">13.7</span>, <span class="fl">14.8</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="fl">14.1</span>, <span class="fl">13.2</span>, <span class="fl">12.1</span>, <span class="fl">11.4</span>, <span class="fl">10.1</span>, <span class="fl">14.2</span>, <span class="fl">13.6</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="fl">13.1</span>, <span class="fl">11.9</span>, <span class="fl">14.8</span>, <span class="fl">11.1</span>, <span class="fl">13.5</span>)</span></code></pre></div>
-<ol start="10" style="list-style-type: decimal">
-<li>[HTZ 7.2-9] Students in a semester-long health-fitness program have
+</div>
+<div id="exercise-7" class="section level3">
+<h3>Exercise 7</h3>
+<p>[HTZ 7.2-9] Students in a semester-long health-fitness program have
 their percentage of body fat measured at the beginning of the semester
 and at the end of the semester. The following measurements give these
-percentages for ten males in the class. Use confidence level of
-90%.</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.1</span>, <span class="fl">19.5</span>, <span class="dv">14</span>, <span class="fl">8.3</span>, <span class="fl">12.4</span>, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="fl">7.89</span>, <span class="fl">12.1</span>, <span class="fl">8.3</span>, <span class="fl">12.31</span>, <span class="dv">10</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.97</span>, <span class="fl">15.8</span>, <span class="fl">13.02</span>, <span class="fl">9.28</span>, <span class="fl">11.51</span>, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="fl">7.4</span>, <span class="fl">10.7</span>, <span class="fl">10.4</span>, <span class="fl">11.4</span>, <span class="fl">11.95</span>)</span></code></pre></div>
-<ol start="11" style="list-style-type: decimal">
-<li>[HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were
+percentages for ten males in the class. Use confidence level of 90%.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.1</span>, <span class="fl">19.5</span>, <span class="dv">14</span>, <span class="fl">8.3</span>, <span class="fl">12.4</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="fl">7.89</span>, <span class="fl">12.1</span>, <span class="fl">8.3</span>, <span class="fl">12.31</span>, <span class="dv">10</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.97</span>, <span class="fl">15.8</span>, <span class="fl">13.02</span>, <span class="fl">9.28</span>, <span class="fl">11.51</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="fl">7.4</span>, <span class="fl">10.7</span>, <span class="fl">10.4</span>, <span class="fl">11.4</span>, <span class="fl">11.95</span>)</span></code></pre></div>
+</div>
+<div id="exercise-8" class="section level3">
+<h3>Exercise 8</h3>
+<p>[HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were
 put on an ultraheavy rope-jumping program. The following data give the
 time difference in seconds for each girl (“before program time” minus
 “after program time”) for the 40 yard dash. Use confidence level of
-95%.</li>
-</ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>time_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.28</span>, <span class="fl">0.01</span>, <span class="fl">0.13</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.03</span>, <span class="fl">0.07</span>, <span class="sc">-</span><span class="fl">0.18</span>, <span class="sc">-</span><span class="fl">0.14</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.33</span>, <span class="fl">0.01</span>, <span class="fl">0.22</span>, <span class="fl">0.29</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.23</span>, <span class="fl">0.08</span>, <span class="fl">0.04</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.30</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.09</span>, <span class="fl">0.70</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.34</span>, <span class="fl">0.50</span>, <span class="fl">0.06</span>)</span></code></pre></div>
-<ol start="12" style="list-style-type: decimal">
-<li><p>[HTZ 7.3-11]For developing countries in Asia (excluding China)
-and Africa, random samples of <span class="math inline">\(n_1 =
+95%.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>time_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.28</span>, <span class="fl">0.01</span>, <span class="fl">0.13</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.03</span>, <span class="fl">0.07</span>, <span class="sc">-</span><span class="fl">0.18</span>, <span class="sc">-</span><span class="fl">0.14</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.33</span>, <span class="fl">0.01</span>, <span class="fl">0.22</span>, <span class="fl">0.29</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.23</span>, <span class="fl">0.08</span>, <span class="fl">0.04</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.30</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.09</span>, <span class="fl">0.70</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.34</span>, <span class="fl">0.50</span>, <span class="fl">0.06</span>)</span></code></pre></div>
+</div>
+<div id="exercise-9" class="section level3">
+<h3>Exercise 9</h3>
+<p>[HTZ 7.3-11] For developing countries in Asia (excluding China) and
+Africa, random samples of <span class="math inline">\(n_1 =
 1300\)</span> and <span class="math inline">\(n_2 = 1100\)</span>
 yielded <span class="math inline">\(y_1 = 520\)</span> and <span class="math inline">\(y_2 = 385\)</span> children with chronic
-malnutrition, respectively. Use confidence level of 95%.</p></li>
-<li><p>Public health officials in a large city decided that if
-compelling evidence could be presented that less than 90% o children
-under six years of age in the city had received the DPT vaccine, then
-they would carry out an expensive immunization program throughout the
-city. A random sample was taken of 537 children under six years of age
-in the city; of these 460 had been immunized for DPT. Use a one-sided
-99% confidence interval.</p></li>
-</ol>
+malnutrition, respectively. Use confidence level of 95%.</p>
+</div>
+<div id="exercise-10" class="section level3">
+<h3>Exercise 10</h3>
+<p>Public health officials in a large city decided that if compelling
+evidence could be presented that less than 90% of children under six
+years of age in the city had received the DPT vaccine, then they would
+carry out an expensive immunization program throughout the city. A
+random sample was taken of 537 children under six years of age in the
+city; of these 460 had been immunized for DPT. Use a one-sided 99%
+confidence interval.</p>
+</div>
+</div>
+<div id="submission" class="section level2">
+<h2>Submission</h2>
+<p>Once you have completed all Exercises and written up your results in
+the Template .Rmd provided, take about 5-10 minutes to respond to the
+reflection prompts (RP) at the top of the Template:</p>
+<ul>
+<li><p>(RP1): <em>What were the main concepts covered in this
+assignment?</em></p></li>
+<li><p>(RP2): <em>What’s one thing you understand better after
+completing these problems?</em></p></li>
+<li><p>(RP3): <em>What problems gave you the most trouble? What was
+difficult about them/where did you get stuck?</em></p></li>
+</ul>
+<p>Knit your document one final time, then upload your .html file to
+Problem Set 03 on Canvas.</p>
+</div>
+<div id="grading-50pts" class="section level2">
+<h2>Grading (50pts)</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Component</th>
+<th align="left">Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">RP1</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">RP2</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">RP3</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">Formatting &amp; Clarity</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Exercise completion</td>
+<td align="left">30</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

@@ -11,7 +11,7 @@
 
 
 
-<title>Problem Set 05</title>
+<title>Problem Set 06</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1591,8 +1591,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Problem Set 05</h1>
-<h3 class="subtitle">Week 03 Day 02</h3>
+<h1 class="title toc-ignore">Problem Set 06</h1>
+<h3 class="subtitle">Week 04 Day 01</h3>
 
 </div>
 
@@ -1600,82 +1600,206 @@ div.tocify {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <div id="learning-objectives" class="section level1">
 <h1>Learning objectives</h1>
-<ul>
-<li>Develop and execute simulation logic using R to investigate how
-(un)likely an observed sample statistic is</li>
-<li>Articulate the role sample size plays in hypothesis testing</li>
-<li>Articulate how hypothesis tests and confidence intervals are
-related</li>
-<li>Determine the significance level and Type II error rate of a
-test</li>
-<li>Demonstrate Type I and Type II errors via simulations in R</li>
-</ul>
 </div>
 <div id="exercises" class="section level1">
 <h1>Exercises</h1>
 <ol style="list-style-type: decimal">
-<li><p>Return to the first “Which tire?” example where 17/44 students
-chose the right tire. Use R to conduct simulations to investigate how
-(un)likely the observed result is.</p>
-<ul>
-<li>For completeness, start by writing out the hypotheses being
-tested.</li>
-<li>In your answer, include your code as well as a two visualizations of
-your simulation results: one of the <span class="math inline">\(\hat{p}\)</span> values and one of the
-corresponding test-statistics <span class="math inline">\(Z\)</span>.</li>
-<li>On both visualizations, make sure to include lines for the critical
-value and the observed statistic.</li>
-<li>Include a brief description of what your simulations show and what
-conclusion you draw as a result.</li>
-<li>Compute the proportion of simulated <span class="math inline">\(\hat{p}\)</span> values that are “more extreme”
-than the one observed (17/44). What does this tell you about the
-plausability of the null hypothesis? Explain your reasoning.</li>
-</ul></li>
-<li><p>Suppose that 30% of the people in a random sample from a
-population select the right front tire.</p>
+<li><p>Assume you are testing the hypotheses <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span> and that <span class="math inline">\(\sigma\)</span> is known. Define a critical region
+<span class="math inline">\(C\)</span> such that if <span class="math inline">\(\overline{X} \in C\)</span>, you reject <span class="math inline">\(H_0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. That is, define an expression for
+a critical value that will result in a Type I error rate of <span class="math inline">\(\alpha\)</span>. Or stated yet another way, your
+region <span class="math inline">\(C\)</span> should be defined such
+that <span class="math inline">\(P(\overline{X} \in C |H_0 \text{ true})
+= \alpha\)</span>. <em>Hint: Start with the following probability
+statement are rearrange</em> <span class="math display">\[P\left(\frac{\overline{X} -
+\mu}{\sigma/\sqrt{n}}&gt;z_{\alpha}\right) = \alpha\]</span></p></li>
+<li><p>Do the same thing as in #1 (define an appropriate critical
+region) for the following hypothesis tests:</p>
 <ol style="list-style-type: lower-alpha">
-<li>Is 30% a population parameter, sample statistic, test statistic, or
-critical value? Explain.</li>
-<li>What more information do you need to conduct a hypothesis test and
-determine a confidence interval?</li>
-<li>Write out the hypotheses being tested.</li>
-<li>Suppose that the sample size is n = 100. Determine the value of the
-test statistic and a 95% confidence interval.</li>
-<li>What critical value is needed for a significance level of 0.05 in
-this case? What conclusion do you draw from the hypothesis test? Explain
-your reasoning.</li>
-<li>Repeat d &amp; e for a sample size of n = 500.</li>
-<li>Summarize the role of sample size on these hypothesis tests and
-confidence intervals. How are hypothesis tests and confidence intervals
-related?</li>
+<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> known</li>
+<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> known</li>
+<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> unknown</li>
 </ol></li>
-<li><p>Let <span class="math inline">\(Y\)</span> be <span class="math inline">\(b(1000, p)\)</span>. To test <span class="math inline">\(H_0: p = 0.3\)</span> against <span class="math inline">\(H_A: p &lt; 0.3\)</span>, we reject <span class="math inline">\(H_0\)</span> and accept <span class="math inline">\(H_A\)</span> if and only if <span class="math inline">\(Y \leq 270\)</span>. For parts a &amp; b, use the
-binomial distribution (of <span class="math inline">\(Y\)</span>)
-directly, and then use the normal approximation (of <span class="math inline">\(\hat{p}\)</span>).</p>
+<li><p>[HTZ: 8.1-5] The mean birth weight in the United States is <span class="math inline">\(\mu = 3315\)</span>, with a standard deviation of
+<span class="math inline">\(\sigma = 575\)</span>. Let <span class="math inline">\(X\)</span> equal the birth weight in grams in
+Jerusalem. Conduct a hypothesis test to investigate whether the average
+birth weight in Jerusalem is lower than in the U.S.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Determine the significance level <span class="math inline">\(\alpha\)</span> of the test.</li>
-<li>Find the probability of the Type II error if, in fact, <span class="math inline">\(p = 0.26\)</span>.</li>
+<li>State the null and alternative hypotheses</li>
+<li>Define a critical region that has a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</li>
+<li>If the random sample of <span class="math inline">\(n = 30\)</span>
+yielded <span class="math inline">\(\overline{X} = 3189\)</span> and
+<span class="math inline">\(s = 488\)</span>, what would be your
+conclusion?</li>
+<li>What is the p-value of your test?</li>
 </ol></li>
-<li><p>How would you conduct simulations to demonstrate the Type I and
-Type II error rates you determined above? Start by writing psuedo-code
-to work out your logic (and maybe sketch some by-hand graphs), then
-write R code. Comment on what your simulations show.</p>
-<ul>
-<li><em>Hint: Start by generating 100,000 <span class="math inline">\(Y\)</span> values using <code>rbinom()</code>. You
-will generate another 100,000 for part b.</em></li>
-</ul></li>
-<li><p>Describe what Type I and Type II error mean in your own words.
-Don’t use any mathematical symbols, and try to avoid statistical jargon
-as much as possible.</p></li>
-<li><p><em>In PS-03 you constructed a one-sided 99% CI for this
-scenario. Now, conduct the corresponding hypothesis test: </em> Public
-health officials in a large city decided that if compelling evidence
-could be presented that less than 90% of children under six years of age
-in the city had received the DPT vaccine, then they would carry out an
-expensive immunization program throughout the city. A random sample was
-taken of 537 children under six years of age in the city; of these 460
-had been immunized for DPT.</p></li>
+<li><p>[From PS-03]. For developing countries in Asia (excluding China)
+and Africa, random samples of <span class="math inline">\(n_1 =
+1300\)</span> and <span class="math inline">\(n_2 = 1100\)</span>
+yielded <span class="math inline">\(y_1 = 520\)</span> and <span class="math inline">\(y_2 = 385\)</span> children with chronic
+malnutrition, respectively. Set up and conduct an appropriate hypothesis
+test for this data. Make sure to state the hypotheses, the <span class="math inline">\(\alpha\)</span> level, the critical region, the
+relevant point estimates, the test statistic, the p-value, and your
+conclusion.</p></li>
+<li><p>[HTZ: 8.4-10] Because of tourism in the state, it was proposed
+that public schools in Michigan begin after Labor Day. To determine
+whether support for this change was greater than 65%, a public poll was
+taken. Let <span class="math inline">\(p\)</span> equal the proportion
+of Michigan adults who favor a post-Labor Day start.</p>
+<ol style="list-style-type: lower-alpha">
+<li>State the null and alternative hypotheses</li>
+<li>Define a test statistic and a <span class="math inline">\(\alpha =
+0.025\)</span> critical region.</li>
+<li>Given that 414 out of a sample of 600 favor a post-Labor Day start,
+calculate the value of the test statistic.</li>
+<li>Find the p-value and state your conclusion.</li>
+<li>Find a one-sided 95% confidence interval that gives a lower bound
+for <span class="math inline">\(p\)</span>.</li>
+<li>Use <code>prop.test()</code> in R to conduct this hypothesis test
+and check your work. <em>Note: instead of the normal approximation
+(which is easy to do by-hand), R uses a more complicated (but more
+precise) procedure that relies on the chi-square distribution. However,
+the p-value and the confidence interval should still be similar to your
+“by-hand” work</em></li>
+</ol></li>
+<li><p>Use <code>prop.test()</code> to conduct the hypothesis test in
+#4.</p></li>
 </ol>
+</div>
+<div id="simulation-exploration" class="section level1">
+<h1>Simulation exploration</h1>
+<p>The <code>NHANES</code> dataset in the <code>NHANES</code> package
+contains data collected by the US National Center for Health Statistics
+(NCHS) on 10,000 individuals from 2009 - 2012. For the purposes of this
+exercise, we will treat this as a <strong>population</strong>
+dataset.</p>
+<p>Our variable of interest is <code>Smoke100</code>, which is a
+categorical variable for whether or not the individual has smoked 100
+cigarettes in their lifetime. This question was asked only of those age
+20 and older, so we will subset the data to this sub-population.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>adults <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div>
+<p>The proportion of US adults (in 2009 - 2012) who had smoked 100
+cigarettes in their lifetime was 44.4%. That is <span class="math inline">\(p = 0.44\)</span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> adults <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p =</span> <span class="fu">sum</span>(Smoke100 <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)<span class="sc">/</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  pull</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<pre><code>## [1] 0.4438148</code></pre>
+<p>Note, not every random sample from this population will produce a
+sample statistic of <span class="math inline">\(\hat{p} = 0.44\)</span>;
+there will be sampling variability. The following code draws 10,000
+random samples of size 100 and computes <span class="math inline">\(\hat{p}\)</span> in each.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">rep_sample_n</span>(adults, n, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">reps =</span> <span class="dv">10000</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sample_props <span class="ot">&lt;-</span> samples <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat =</span> <span class="fu">sum</span>(Smoke100 <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)<span class="sc">/</span><span class="fu">n</span>()) </span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li><p>Use the simulated values to visualize the sampling distribution
+of <span class="math inline">\(\hat{p}\)</span>. Describe the
+distribution.</p></li>
+<li><p>Consider the hypothesis test <span class="math inline">\(H_0: p =
+0.44\)</span> vs. <span class="math inline">\(H_A: p \neq 0.44\)</span>
+with <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Is the null hypothesis true in this case?</li>
+<li>Recall the test statistic is given by <span class="math inline">\(Z
+= \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\)</span>, where
+<span class="math inline">\(\hat{p}\)</span> is the proportion observed
+in the sample, <span class="math inline">\(p_0\)</span> is the value of
+the parameter hypothesized in <span class="math inline">\(H_0\)</span>,
+and <span class="math inline">\(n\)</span> is the sample size. What
+proportion of the random samples drawn from the <code>adults</code>
+population do you expect to result in a test statistic <span class="math inline">\(|Z| &gt; 1.96\)</span>? Why? What about <span class="math inline">\(|Z| &gt; 1.5\)</span>?</li>
+<li>What is the appropriate critical region for this test? That is, for
+which values of the test statistic <span class="math inline">\(Z\)</span> should <span class="math inline">\(H_0\)</span> be rejected?</li>
+<li>Will a test statistic that falls in the critical region lead to a
+correct or incorrect conclusion to the hypothesis test in this
+case?</li>
+</ol></li>
+<li><p>Write code that utilizes the simulated values to investigate what
+proportion of simulated values fall in the critical region. <em>Hint:
+create a new variable that computes the Z-statistic for each <span class="math inline">\(\hat{p}\)</span> as well as an indicator variable
+for whether the Z-statistic falls in the critical region.</em> Comment
+on what you find.</p></li>
+<li><p>What is the critical region (on the scale of <span class="math inline">\(\hat{p}\)</span>) that corresponds to <span class="math inline">\(|Z| &gt; 1.96\)</span>. Re-create the plot from #7
+but add vertical lines that mark the critical region. Comment on the
+proportion of values that fall in the critical region.</p></li>
+<li><p>Still considering the hypothesis test <span class="math inline">\(H_0: p = 0.44\)</span> vs. <span class="math inline">\(H_A: p \neq 0.44\)</span> and your current set of
+simulations: how often do you expect to get a p-value &lt; 0.05? Why?
+Will p-value &lt; 0.05 lead to a correct or incorrect conclusion to the
+hypothesis test in this case?</p></li>
+<li><p>Write code that utilizes the simulated values to investigate the
+above question. Comment on what you find. What are the connections
+between what you find here and what you found in #9 - 10?</p></li>
+<li><p>What type of error were #8 - #12 demonstrating? Explain. If you
+wanted to reduce this error, what would you do? Explain.</p></li>
+<li><p>What proportion would you expect to fall in the critical region
+if you instead use a Z-cutoff of 2.576? Why? What would be the
+appropriate corresponding p-value cutoff in this case? Comment on how
+critical values and p-value cutoffs relate to one another.</p></li>
+<li><p>Still within the context of the <code>NHANES</code> adult
+population (where we happen to know the true <span class="math inline">\(p = 0.44\)</span>), consider a group of
+researchers (who don’t have the omniscience we have) who test the
+hypothesis <span class="math inline">\(H_0: p = 0.5\)</span> vs. <span class="math inline">\(H_A: p &lt; 0.5\)</span>. What type of error is
+possible in this scenario? Why?</p></li>
+<li><p>Define an appropriate critical region - in terms of <span class="math inline">\(\hat{p}\)</span> and in terms of <span class="math inline">\(Z\)</span> - for an <span class="math inline">\(\alpha\)</span> level of 0.05 for the hypothesis
+test in #15. That is, what should the researchers set as their cut-off
+values if they want to reject their null hypothesis at most 5% of the
+time if it is in fact true? <em>Hint: your work from #10 may be useful
+here</em></p></li>
+<li><p>Find the probability that the researchers analysis in #15 will
+result in a Type II error, knowing what we know about the
+<code>NHANES</code> population. That is, find the probability that you
+fail to reject <span class="math inline">\(H_0: p = 0.5\)</span> (and
+claim <span class="math inline">\(p&lt;0.5\)</span>) when in fact the
+true <span class="math inline">\(p = 0.44\)</span>. Find this
+probability mathematically, then, use the simulated values to
+demonstrate/verify this probability.</p></li>
+</ol>
+<!-- 19. Re-run the simulations again, this time with samples of size $n = 500$. Plot the sampling distribution of $\hat{p}$ again, adding vertical lines for the critical region determined in #11. What do you notice? Comment on what happened and why. -->
+<!-- ```{r, eval = FALSE, echo = FALSE} -->
+<!-- n <- 500 -->
+<!-- samples2 <- rep_sample_n(adults, n,  -->
+<!--                         replace = TRUE,  -->
+<!--                         reps = 10000) -->
+<!-- sample_props2 <- samples2 %>%  -->
+<!--   group_by(replicate) %>%  -->
+<!--   summarize(phat = sum(Smoke100 == "Yes")/n())  -->
+<!-- ggplot(sample_props2, aes(x = phat)) + -->
+<!--   geom_histogram() + -->
+<!--   geom_vline(xintercept = lb, color = "blue") + -->
+<!--   geom_vline(xintercept = ub, color = "blue") -->
+<!-- ``` -->
+<!-- 20. Determine the appropriate critical region (in terms of $\hat{p}$) for a significance level of $\alpha$ when testing $H_0: p = 0.44$ vs $H_A: p \neq 0.44$ (still assuming $n = 500$). Comment on how and why this critical region is different from the one you found in #11. What is the appropriate critical region in terms of $Z$? Comment on how and why this relates to the previous critical regions you found in terms of Z.  -->
+<!-- 21. Use the simulated values (with samples of size 500) to compute the proportion that fall into the rejection region in #14. What type of error rate is this demonstrating?  -->
+<!-- 22. Consider again the hypothesis test $H_0: p = 0.5$ vs. $H_A: p < 0.5$. Determine the appropriate critical region (in terms of $\hat{p}$) for a significance level of $\alpha$. Comment on how and why this is different from the critical region in #20 and #16.  -->
+<!-- 23. Find the probability of a Type II error in this scenario. That is, find the probability that you fail to reject $H_0: p = 0.5$ when the true $p = 0.44$. Find this probability mathematically, then, use the simulated values to demonstrate/verify this probability.   -->
+<!-- 24. Comment on how sample size relates to Type I and Type II error rates.  -->
+<!-- ```{r, eval = FALSE} -->
+<!-- %>%  -->
+<!--   mutate(Z = (phat - p)/sqrt(phat*(1-phat)/n), -->
+<!--          Z_reject = if_else((Z < qnorm(alpha/2) | Z > qnorm(1-alpha/2)), 1, 0), -->
+<!--          p_value = 2*pnorm(abs(Z), lower.tail = FALSE), -->
+<!--          p_reject = if_else(p_value < alpha, 1, 0)) -->
+<!-- sample_props %>%  -->
+<!--   summarize(sum(Z_reject)/n(), -->
+<!--             sum(p_reject)/n()) -->
+<!-- ggplot(sample_props, aes(x = phat)) + -->
+<!--   geom_histogram() -->
+<!-- ggplot(sample_props, aes(x = Z)) + -->
+<!--   geom_histogram() -->
+<!-- ggplot(sample_props, aes(x = p_value)) + -->
+<!--   geom_histogram(binwidth = 0.05) -->
+<!-- sample_props %>%  -->
+<!--   summarize(sum(phat < 0.33)/n()) -->
+<!-- ``` -->
 <div id="submission" class="section level2">
 <h2>Submission</h2>
 <p>Once you have completed all Exercises and written up your results in

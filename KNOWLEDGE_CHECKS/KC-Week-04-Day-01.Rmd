@@ -1,0 +1,39 @@
+---
+title: "Week 04 Day 01"
+subtitle: "Knowledge Check"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+1. Draw a picture that illustrates what a p-value is. Make sure to include adequate labels for $\alpha$, the center of the distribution, and the critical value. 
+
+2. Describe how a p-value is used to define a critical/rejection region.
+
+3. Describe how to use a p-value and an $\alpha$ level to make a decision about a hypothesis test.
+
+4. Describe what each symbol in $Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$ stands for.
+
+5. What is the difference between $p$, $p_0$, and a p-value in the context of a hypothesis test about a proportion? 
+
+6. Articulate what's going on with the two x-axes in the following figure.
+
+```{r}
+knitr::include_graphics("./images/z-phat-dist.png")
+```
+
+7. Describe how $\alpha$ and Type I error are related. 
+
+8. Assume you're conducting a two-sided hypothesis test. What should you set your Z cutoff value to be if you want to: 
+
+    a) control Type I error rate to be 0.10
+    a) control Type I error rate to be 0.05
+    a) control Type I error rate to be 0.01

@@ -14,6 +14,24 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
+## Reading Annotation Q/A
+
+1. Where does $\alpha$ come from, why is it over 2?
+
+2. When $X_1, X_2, ... X_n \sim N(\mu, \sigma^2),$ then $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$ and CI is given by $\bar{X} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$. Is normality assumption necessary here? Doesn't CLT tell us this is true even if underlying distribution is not Normal? 
+
+3. Why would we ever use the method above, when it requires that $\sigma^2$ is known, and that's unrealistic? Would we ever know $\sigma^2$?
+
+4. WON'T BE USING MINITAB - feel free to skip those sections :)
+
+5. Book: "In reality we only take one random sample". Student: "Is one sample enough to test if an interval is correct or incorrect? If so, why only one when usually we take so many samples?" 
+
+6. "This reminds me of the two different types of errors, which I am sure we will review later in this class because type 1 and type 2 errors can give some insight into our possible incorrectness. I find it troubling despite our use of statistics to find an unknown, the correctness of our answer can still be unknown. Whenever I use confidence intervals in research, I tend to struggle with determining confidence percentage to ensure a higher likeliness that my resulting interval contains the population mean"
+
+7. Its necessary to find the balance between efficiency and accuracy. How can we determine the largest sample "we can afford"? 
+
+8. How large is large enough? $n \geq 30$ if not skewed, but what about when data is skewed? 
+
 ## Knowledge Check
 
 1. How is $\overline{X}$ distributed? What conditions does this depend on? 
@@ -41,34 +59,3 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 1. Explain the notation $t_{\alpha/2, n-1}$. Draw a picture to illustrate it. 
 
-## Simulation exploration
-
-For this section, use the [Rossman/Chance applet](https://www.rossmanchance.com/applets/2021/confsim/ConfSim.html) for Confidence Intervals. To begin, assume that the population has a normal distribution with mean 50 and standard deviation 10.  Use a very small sample size of 5, a confidence level of 95%, and simulate selecting 500 random samples from the population. Select "z with s" for the Method dropdown. 
-
-1. What problem with the “z with s” confidence interval procedure does this simulation analysis reveal?
-
-1. In order to solve this problem, do we need the intervals to get a bit narrower or wider?
-
-1. Which of the four terms in the formula – x-bar, z*, s, or n – can we alter to produce a narrower/wider interval?  In other words, which one does not depend on the data?
-
-1. Do we want to use a larger or smaller multiplier than z*?
-
-1. Use the `qt()` function in R to find the appropriate t-multiplier. How does this multiplier compare to the value of $z^*$ for 95% confidence? 
-
-```{r, echo = FALSE, eval = FALSE}
-qt(0.975, df = 4)
-```
-
-6. How can we tell whether this t* adjustment is the right amount to produce 95% confidence?
-
-1. Change the Method to "t" in the applet. How do these intervals compare to the previous ones? Do more of them succeed in capturing the parameter value?
-
-1. What happens with larger sample sizes? Conduct more simulations with larger sample sizes, and compare "z with s" and "t" for each. What do you notice? 
-
-1. Does t* work equally well with other confidence levels?
-
-1. Why do the widths of these intervals vary from sample to sample? 
-
-1. Change the Distribution to Uniform. Choose an upper and lower limit so that the mean is 50. Run 500 simulations with a sample size of 5. What percent capture the mean using "t" and "z with s"? Do the same for sample size of 20. What do these 4 percentages suggest? 
-
-1. Explore trends when the data come from an Exponential distribution, using samples sizes of 5, 20, 40, 100. What do you notice? What conclusions can you draw? 
