@@ -27,19 +27,19 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ### Exercise 1
 
-Independent random samples of heights of adult males living in two countries yielded the following results: $n_X = 12$, $\overline{X} = 65.7$ inches, $s_X = 4$ inches and $n_Y = 15$, $\overline{Y} = 68.2$ inches, $s_Y = 3$ inches. Find an approximate 98% confidence interval for the difference $\mu_X - \mu_Y$ of the means of the populations of heights. Assume that $\sigma_X^2 = \sigma_Y^2$.
+<!-- Independent random samples of heights of adult males living in two countries yielded the following results: $n_X = 12$, $\overline{X} = 65.7$ inches, $s_X = 4$ inches and $n_Y = 15$, $\overline{Y} = 68.2$ inches, $s_Y = 3$ inches. Find an approximate 98% confidence interval for the difference $\mu_X - \mu_Y$ of the means of the populations of heights. Assume that $\sigma_X^2 = \sigma_Y^2$. -->
 
-### Exercise 2
+<!-- ### Exercise 2 -->
 
 Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples. Show that $S_p^2 = \frac{(n-1)S_x^2 + (m-1)S_y^2}{n + m - 2}$ is an unbiased estimator of $\sigma^2$. 
 
-### Exercise 3
+### Exercise 2
 
 Suppose a randomized control trial (RCT) was conducted to evaluate the effectiveness of a curriculum in improving students' reading comprehension. Reading comprehension scores for students who received the treatment (new curriculum) are denoted by $Y^T_1, Y^T_{2}, \dots Y^T_{n_T}$ and scores for students who received the control ("business as usual" curriculum) are denoted by $Y^C_1, Y^C_{2}, \dots Y^C_{n_C}$ where $n_T$ is the sample size in the treatment group and $n_C$ is the sample size in the control group. You can assume the two samples are independent and normally distributed with means $\mu_T$ and $\mu_C$ respectively, and a common variance $\sigma^2$. Develop an estimator for $\mu_T - \mu_C$ and a formula for constructing a confidence interval. 
 
 ## Typed
 
-### Exercise 4
+### Exercise 3
 
 In each of the following scenarios, determine if the data are paired
 
@@ -54,20 +54,19 @@ In each of the following scenarios, determine if the data are paired
   (E) A school board would like to determine whether there is a difference in average SAT scores for students at one high school versus another high school in the district. To check, they take a simple random sample of 100 students from each high school.
 
 
-For each of the following scenarios in Questions 5 - 11,
+For each of the following scenarios in Questions 4 - 9,
 
-  (a) State a research question relevant to the data that can be investigated via a confidence interval
-  (b) State the parameter of interest using appropriate notation
-  (c) Obtain a relevant point estimate - use appropriate notation to state your result (e.g. $\overline{X} = 4)$
-  (d) Obtain a confidence interval for your parameter of interest. Interpret your confidence in context. 
-  (e) State what assumptions your confidence interval relies on
-  (f) What conclusion do you draw about your research question in (a)? 
+  (a) State the parameter of interest using appropriate notation
+  (b) Obtain a relevant point estimate - use appropriate notation to state your result (e.g. $\overline{X} = 4)$
+  (c) Obtain a confidence interval for your parameter of interest. Interpret your confidence in context. 
+  (d) State what assumptions your confidence interval relies on
+  (e) What conclusion do you draw about the research question? 
 
 You should use `t.test()` or `prop.test()` to compute your point estimates and confidence intervals. You can read the documentation for these functions by running `?t.test` and `?prop.test` in your console. Make sure to pay attention to default arguments and change them as necessary to fit your desired analysis.
 
-### Exercise 5
+### Exercise 4
 
-[HTZ 7.1-5] As a clue to the amount of organic waste in Lake Macatawa, a count was made of the number of bacteria colonies in 100 milliliters of water. The number of colonies, in hundreds, for $n=30$ samples of water from the east basin yielded the following data. Use confidence level of 90%. 
+[HTZ 7.1-5] As a clue to the amount of organic waste in Lake Macatawa, researchers decide to estimate the average number of bacteria colonies in 100 milliliters of water. The number of colonies, in hundreds, for $n=30$ samples of water from the east basin yielded the following data. Compute a 90% confidence interval. 
 
 ```{r}
 x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
@@ -79,9 +78,9 @@ x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
 t.test(x)
 ```
 
-### Exercise 6
+### Exercise 5
 
-[HTZ 7.2-4] Let $X$ and $Y$ equal, respectively, the blood volumes in milliliters for a male who is a paraplegic and participates in vigorous physical activities and for a male who is able-bodied and participates in everyday, ordinary activities. Assume that $X \sim N(\mu_X, \sigma^2_X)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$. The following are the $n_X = 7$ and $n_Y = 10$ observations of $X$ and $Y$. Use confidence level of 95%.
+[HTZ 7.2-4] Let $X$ and $Y$ equal, respectively, the blood volumes in milliliters for a male who is a paraplegic and participates in vigorous physical activities and for a male who is able-bodied and participates in everyday, ordinary activities. Assume that $X \sim N(\mu_X, \sigma^2_X)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$. The following are the $n_X = 7$ and $n_Y = 10$ observations of $X$ and $Y$. Use a 95% CI to estimate the difference in average blood volumes between the two groups of males. 
 
 ```{r}
 x <- c(1612, 1352, 1456, 1222, 1560, 1456, 1924)
@@ -92,9 +91,9 @@ y <- c(1082, 1300, 1092, 1040, 910, 1248, 1092, 1040, 1092, 1288)
 t.test(x, y)
 ```
 
-### Exercise 7
+### Exercise 6
 
-[HTZ 7.2-9] Students in a semester-long health-fitness program have their percentage of body fat measured at the beginning of the semester and at the end of the semester. The following measurements give these percentages for ten males in the class. Use confidence level of 90%.
+[HTZ 7.2-9] Students in a semester-long health-fitness program have their percentage of body fat measured at the beginning of the semester and at the end of the semester. The following measurements give these percentages for ten males in the class. Use a 90% confidence interval to estimate the average change in body fat over the course of the semester. 
 
 ```{r}
 pre <- c(11.1, 19.5, 14, 8.3, 12.4, 
@@ -109,9 +108,9 @@ post <- c(9.97, 15.8, 13.02, 9.28, 11.51,
 t.test(pre, post, paired = TRUE, conf.level = 0.9)
 ```
 
-### Exercise 8
+### Exercise 7
 
-[HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were put on an ultraheavy rope-jumping program. The following data give the time difference in seconds for each girl ("before program time" minus "after program time") for the 40 yard dash. Use confidence level of 95%.
+[HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were put on an ultraheavy rope-jumping program. The following data give the time difference in seconds for each girl ("before program time" minus "after program time") for the 40 yard dash. Use a 95% confidence interval to estimate the average improvement in times that occurred over the course of the program.
 
 ```{r}
 time_diff <- c(0.28, 0.01, 0.13, 0.33, -0.03, 0.07, -0.18, -0.14,
@@ -124,9 +123,9 @@ t.test(time_diff, alternative = "greater")
 ```
 
 
-### Exercise 9
+### Exercise 8
 
-[HTZ 7.3-11] For developing countries in Asia (excluding China) and Africa, random samples of $n_1 = 1300$ and $n_2 = 1100$ yielded $y_1 = 520$ and $y_2 = 385$ children with chronic malnutrition, respectively. Use confidence level of 95%.
+[HTZ 7.3-11] For developing countries in Asia (excluding China) and Africa, random samples of $n_1 = 1300$ and $n_2 = 1100$ yielded $y_1 = 520$ and $y_2 = 385$ children with chronic malnutrition, respectively. Use a 95% confidence interval to estimate the difference in proportions of children with chronic malnutrition between the two continents.
 
 ```{r, eval = FALSE, echo = FALSE}
 x <- c(520, 385)
@@ -134,9 +133,9 @@ n <- c(1300, 1100)
 prop.test(x, n, correct = FALSE)
 ```
 
-### Exercise 10
+### Exercise 9
 
-Public health officials in a large city decided that if compelling evidence could be presented that less than 90% of children under six years of age in the city had received the DPT vaccine, then they would carry out an expensive immunization program throughout the city. A random sample was taken of 537 children under six years of age in the city; of these 460 had been immunized for DPT. Use a one-sided 99% confidence interval.
+Public health officials in a large city decided that if compelling evidence could be presented that less than 90% of children under six years of age in the city had received the DPT vaccine, then they would carry out an expensive immunization program throughout the city. A random sample was taken of 537 children under six years of age in the city; of these 460 had been immunized for DPT. Use a one-sided 99% confidence interval to estimate the proportion of children who had received the DPT vaccine. 
 
 ## Submission
 

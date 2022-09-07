@@ -1,6 +1,6 @@
 ---
 title: "Week 02 Day 02"
-subtitle: "Knowledge Check"
+subtitle: ""
 output: 
   html_document:
     toc: true
@@ -13,6 +13,18 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
+
+
+## Reading Annotation Q/A
+
+1. Should we always assume random data is independent?
+
+2. What do we do when $\sigma_X^2 \neq \sigma_Y^2$?
+
+3. "[Paired t-test] would only work if sample sizes m and n are equal correct? Or else some of the observations would be left unpaired? But I can't help but wonder: if this was like a before and after study of the same subjects, but for whatever reason, data was not obtained "afterwards" for some of the subjects, what do we do then? Do we just ignore those observations and use this method, limiting our sample size only to those we have data for before and after?"
+
+
+## Knowledge Check
 
 For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples.
 
@@ -33,26 +45,24 @@ For this section, use the [Rossman/Chance applet](https://www.rossmanchance.com/
 
 1. In order to solve this problem, do we need the intervals to get a bit narrower or wider?
 
-1. Which of the four terms in the formula – x-bar, z*, s, or n – can we alter to produce a narrower/wider interval?  In other words, which one does not depend on the data?
+1. Which of the four terms in the formula $\bar{x} \pm z_{\alpha/2}\frac{s}{\sqrt{n}}$ (i.e. $\bar{x}, z_{\alpha/2}, s$ or $n$) can we alter to produce a narrower/wider interval?  In other words, which one does not depend on the data?
 
-1. Do we want to use a larger or smaller multiplier than z*?
+1. Do we want to use a larger or smaller multiplier than $z_{\alpha/2}$?
 
-1. Use the `qt()` function in R to find the appropriate t-multiplier. How does this multiplier compare to the value of $z^*$ for 95% confidence? 
+1. Use the `qt()` function in R to find the appropriate t-multiplier. How does this multiplier compare to the value of $z_{\alpha/2}$ for 95% confidence? 
 
 ```{r, echo = FALSE, eval = FALSE}
 qt(0.975, df = 4)
 ```
 
-6. How can we tell whether this t* adjustment is the right amount to produce 95% confidence?
+6. Change the Method to "t" in the applet. How do these intervals compare to the previous ones? Do more of them succeed in capturing the parameter value?
 
-1. Change the Method to "t" in the applet. How do these intervals compare to the previous ones? Do more of them succeed in capturing the parameter value?
+7. What happens with larger sample sizes? Conduct more simulations with larger sample sizes, and compare "z with s" and "t" for each. What do you notice? 
 
-1. What happens with larger sample sizes? Conduct more simulations with larger sample sizes, and compare "z with s" and "t" for each. What do you notice? 
+8. Does t* work equally well with other confidence levels?
 
-1. Does t* work equally well with other confidence levels?
+9. Why do the widths of these intervals vary from sample to sample? 
 
-1. Why do the widths of these intervals vary from sample to sample? 
+10. Change the Distribution to Uniform. Choose an upper and lower limit so that the mean is 50. Run 500 simulations with a sample size of 5. What percent capture the mean using "t" and "z with s"? Do the same for sample size of 20. What do these 4 percentages suggest? 
 
-1. Change the Distribution to Uniform. Choose an upper and lower limit so that the mean is 50. Run 500 simulations with a sample size of 5. What percent capture the mean using "t" and "z with s"? Do the same for sample size of 20. What do these 4 percentages suggest? 
-
-1. Explore trends when the data come from an Exponential distribution, using samples sizes of 5, 20, 40, 100. What do you notice? What conclusions can you draw? 
+11. Explore trends when the data come from an Exponential distribution, using samples sizes of 5, 20, 40, 100. What do you notice? What conclusions can you draw? 

@@ -1498,11 +1498,27 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Week 02 Day 02</h1>
-<h3 class="subtitle">Knowledge Check</h3>
 
 </div>
 
 
+<div id="reading-annotation-qa" class="section level2">
+<h2>Reading Annotation Q/A</h2>
+<ol style="list-style-type: decimal">
+<li><p>Should we always assume random data is independent?</p></li>
+<li><p>What do we do when <span class="math inline">\(\sigma_X^2 \neq
+\sigma_Y^2\)</span>?</p></li>
+<li><p>“[Paired t-test] would only work if sample sizes m and n are
+equal correct? Or else some of the observations would be left unpaired?
+But I can’t help but wonder: if this was like a before and after study
+of the same subjects, but for whatever reason, data was not
+obtained”afterwards” for some of the subjects, what do we do then? Do we
+just ignore those observations and use this method, limiting our sample
+size only to those we have data for before and after?”</p></li>
+</ol>
+</div>
+<div id="knowledge-check" class="section level2">
+<h2>Knowledge Check</h2>
 <p>For Questions 1-5, use the following scenario. Let <span class="math inline">\(X_1, X_2, \dots X_n \sim N(\mu_X,
 \sigma^2)\)</span> and <span class="math inline">\(Y_1, Y_2, \dots Y_n
 \sim N(\mu_Y, \sigma^2)\)</span> be independent random samples.</p>
@@ -1521,6 +1537,7 @@ distributed?</p></li>
 <li><p>When should you use Welch’s t-interval?</p></li>
 <li><p>When should you use a paired t-interval?</p></li>
 </ol>
+</div>
 <div id="simulation-exploration" class="section level2">
 <h2>Simulation exploration</h2>
 <p>For this section, use the <a href="https://www.rossmanchance.com/applets/2021/confsim/ConfSim.html">Rossman/Chance
@@ -1534,15 +1551,13 @@ with s” for the Method dropdown.</p>
 does this simulation analysis reveal?</p></li>
 <li><p>In order to solve this problem, do we need the intervals to get a
 bit narrower or wider?</p></li>
-<li><p>Which of the four terms in the formula – x-bar, z*, s, or n – can
-we alter to produce a narrower/wider interval? In other words, which one
-does not depend on the data?</p></li>
-<li><p>Do we want to use a larger or smaller multiplier than
-z*?</p></li>
+<li><p>Which of the four terms in the formula <span class="math inline">\(\bar{x} \pm
+z_{\alpha/2}\frac{s}{\sqrt{n}}\)</span> (i.e. <span class="math inline">\(\bar{x}, z_{\alpha/2}, s\)</span> or <span class="math inline">\(n\)</span>) can we alter to produce a
+narrower/wider interval? In other words, which one does not depend on
+the data?</p></li>
+<li><p>Do we want to use a larger or smaller multiplier than <span class="math inline">\(z_{\alpha/2}\)</span>?</p></li>
 <li><p>Use the <code>qt()</code> function in R to find the appropriate
-t-multiplier. How does this multiplier compare to the value of <span class="math inline">\(z^*\)</span> for 95% confidence?</p></li>
-<li><p>How can we tell whether this t* adjustment is the right amount to
-produce 95% confidence?</p></li>
+t-multiplier. How does this multiplier compare to the value of <span class="math inline">\(z_{\alpha/2}\)</span> for 95% confidence?</p></li>
 <li><p>Change the Method to “t” in the applet. How do these intervals
 compare to the previous ones? Do more of them succeed in capturing the
 parameter value?</p></li>

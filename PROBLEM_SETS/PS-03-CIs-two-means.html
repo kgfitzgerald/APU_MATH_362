@@ -1614,24 +1614,16 @@ research scenarios</li>
 <h2>By hand or typed</h2>
 <div id="exercise-1" class="section level3">
 <h3>Exercise 1</h3>
-<p>Independent random samples of heights of adult males living in two
-countries yielded the following results: <span class="math inline">\(n_X
-= 12\)</span>, <span class="math inline">\(\overline{X} = 65.7\)</span>
-inches, <span class="math inline">\(s_X = 4\)</span> inches and <span class="math inline">\(n_Y = 15\)</span>, <span class="math inline">\(\overline{Y} = 68.2\)</span> inches, <span class="math inline">\(s_Y = 3\)</span> inches. Find an approximate 98%
-confidence interval for the difference <span class="math inline">\(\mu_X
-- \mu_Y\)</span> of the means of the populations of heights. Assume that
-<span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>.</p>
-</div>
-<div id="exercise-2" class="section level3">
-<h3>Exercise 2</h3>
+<!-- Independent random samples of heights of adult males living in two countries yielded the following results: $n_X = 12$, $\overline{X} = 65.7$ inches, $s_X = 4$ inches and $n_Y = 15$, $\overline{Y} = 68.2$ inches, $s_Y = 3$ inches. Find an approximate 98% confidence interval for the difference $\mu_X - \mu_Y$ of the means of the populations of heights. Assume that $\sigma_X^2 = \sigma_Y^2$. -->
+<!-- ### Exercise 2 -->
 <p>Let <span class="math inline">\(X_1, X_2, \dots X_n \sim N(\mu_X,
 \sigma^2)\)</span> and <span class="math inline">\(Y_1, Y_2, \dots Y_n
 \sim N(\mu_Y, \sigma^2)\)</span> be independent random samples. Show
 that <span class="math inline">\(S_p^2 = \frac{(n-1)S_x^2 +
 (m-1)S_y^2}{n + m - 2}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
 </div>
-<div id="exercise-3" class="section level3">
-<h3>Exercise 3</h3>
+<div id="exercise-2" class="section level3">
+<h3>Exercise 2</h3>
 <p>Suppose a randomized control trial (RCT) was conducted to evaluate
 the effectiveness of a curriculum in improving students’ reading
 comprehension. Reading comprehension scores for students who received
@@ -1650,8 +1642,8 @@ formula for constructing a confidence interval.</p>
 </div>
 <div id="typed" class="section level2">
 <h2>Typed</h2>
-<div id="exercise-4" class="section level3">
-<h3>Exercise 4</h3>
+<div id="exercise-3" class="section level3">
+<h3>Exercise 3</h3>
 <p>In each of the following scenarios, determine if the data are
 paired</p>
 <ol style="list-style-type: upper-alpha">
@@ -1670,10 +1662,8 @@ difference in average SAT scores for students at one high school versus
 another high school in the district. To check, they take a simple random
 sample of 100 students from each high school.</p></li>
 </ol>
-<p>For each of the following scenarios in Questions 5 - 11,</p>
+<p>For each of the following scenarios in Questions 4 - 9,</p>
 <ol style="list-style-type: lower-alpha">
-<li>State a research question relevant to the data that can be
-investigated via a confidence interval</li>
 <li>State the parameter of interest using appropriate notation</li>
 <li>Obtain a relevant point estimate - use appropriate notation to state
 your result (e.g. <span class="math inline">\(\overline{X} =
@@ -1681,8 +1671,7 @@ your result (e.g. <span class="math inline">\(\overline{X} =
 <li>Obtain a confidence interval for your parameter of interest.
 Interpret your confidence in context.</li>
 <li>State what assumptions your confidence interval relies on</li>
-<li>What conclusion do you draw about your research question in
-(a)?</li>
+<li>What conclusion do you draw about the research question?</li>
 </ol>
 <p>You should use <code>t.test()</code> or <code>prop.test()</code> to
 compute your point estimates and confidence intervals. You can read the
@@ -1691,66 +1680,75 @@ documentation for these functions by running <code>?t.test</code> and
 default arguments and change them as necessary to fit your desired
 analysis.</p>
 </div>
-<div id="exercise-5" class="section level3">
-<h3>Exercise 5</h3>
+<div id="exercise-4" class="section level3">
+<h3>Exercise 4</h3>
 <p>[HTZ 7.1-5] As a clue to the amount of organic waste in Lake
-Macatawa, a count was made of the number of bacteria colonies in 100
-milliliters of water. The number of colonies, in hundreds, for <span class="math inline">\(n=30\)</span> samples of water from the east basin
-yielded the following data. Use confidence level of 90%.</p>
+Macatawa, researchers decide to estimate the average number of bacteria
+colonies in 100 milliliters of water. The number of colonies, in
+hundreds, for <span class="math inline">\(n=30\)</span> samples of water
+from the east basin yielded the following data. Compute a 90% confidence
+interval.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">93</span>, <span class="dv">140</span>, <span class="dv">8</span>, <span class="dv">120</span>, <span class="dv">3</span>, <span class="dv">120</span>, <span class="dv">33</span>, <span class="dv">70</span>, <span class="dv">91</span>, <span class="dv">61</span>, <span class="dv">7</span>, <span class="dv">100</span>, <span class="dv">19</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       <span class="dv">98</span>, <span class="dv">119</span>, <span class="dv">23</span>, <span class="dv">14</span>, <span class="dv">94</span>, <span class="dv">57</span>, <span class="dv">9</span>, <span class="dv">66</span>, <span class="dv">53</span>, <span class="dv">28</span>, <span class="dv">76</span>, <span class="dv">58</span>, <span class="dv">9</span>, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">73</span>, <span class="dv">49</span>, <span class="dv">37</span>, <span class="dv">92</span>)</span></code></pre></div>
 </div>
-<div id="exercise-6" class="section level3">
-<h3>Exercise 6</h3>
+<div id="exercise-5" class="section level3">
+<h3>Exercise 5</h3>
 <p>[HTZ 7.2-4] Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> equal, respectively, the blood volumes
 in milliliters for a male who is a paraplegic and participates in
 vigorous physical activities and for a male who is able-bodied and
 participates in everyday, ordinary activities. Assume that <span class="math inline">\(X \sim N(\mu_X, \sigma^2_X)\)</span> and <span class="math inline">\(Y \sim N(\mu_Y, \sigma_Y^2)\)</span>. The
-following are the <span class="math inline">\(n_X = 7\)</span> and <span class="math inline">\(n_Y = 10\)</span> observations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Use confidence level of 95%.</p>
+following are the <span class="math inline">\(n_X = 7\)</span> and <span class="math inline">\(n_Y = 10\)</span> observations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Use a 95% CI to estimate the
+difference in average blood volumes between the two groups of males.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1612</span>, <span class="dv">1352</span>, <span class="dv">1456</span>, <span class="dv">1222</span>, <span class="dv">1560</span>, <span class="dv">1456</span>, <span class="dv">1924</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1082</span>, <span class="dv">1300</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">910</span>, <span class="dv">1248</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">1092</span>, <span class="dv">1288</span>)</span></code></pre></div>
 </div>
-<div id="exercise-7" class="section level3">
-<h3>Exercise 7</h3>
+<div id="exercise-6" class="section level3">
+<h3>Exercise 6</h3>
 <p>[HTZ 7.2-9] Students in a semester-long health-fitness program have
 their percentage of body fat measured at the beginning of the semester
 and at the end of the semester. The following measurements give these
-percentages for ten males in the class. Use confidence level of 90%.</p>
+percentages for ten males in the class. Use a 90% confidence interval to
+estimate the average change in body fat over the course of the
+semester.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.1</span>, <span class="fl">19.5</span>, <span class="dv">14</span>, <span class="fl">8.3</span>, <span class="fl">12.4</span>, </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="fl">7.89</span>, <span class="fl">12.1</span>, <span class="fl">8.3</span>, <span class="fl">12.31</span>, <span class="dv">10</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.97</span>, <span class="fl">15.8</span>, <span class="fl">13.02</span>, <span class="fl">9.28</span>, <span class="fl">11.51</span>, </span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="fl">7.4</span>, <span class="fl">10.7</span>, <span class="fl">10.4</span>, <span class="fl">11.4</span>, <span class="fl">11.95</span>)</span></code></pre></div>
 </div>
-<div id="exercise-8" class="section level3">
-<h3>Exercise 8</h3>
+<div id="exercise-7" class="section level3">
+<h3>Exercise 7</h3>
 <p>[HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were
 put on an ultraheavy rope-jumping program. The following data give the
 time difference in seconds for each girl (“before program time” minus
-“after program time”) for the 40 yard dash. Use confidence level of
-95%.</p>
+“after program time”) for the 40 yard dash. Use a 95% confidence
+interval to estimate the average improvement in times that occurred over
+the course of the program.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>time_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.28</span>, <span class="fl">0.01</span>, <span class="fl">0.13</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.03</span>, <span class="fl">0.07</span>, <span class="sc">-</span><span class="fl">0.18</span>, <span class="sc">-</span><span class="fl">0.14</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.33</span>, <span class="fl">0.01</span>, <span class="fl">0.22</span>, <span class="fl">0.29</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.23</span>, <span class="fl">0.08</span>, <span class="fl">0.04</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.30</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.09</span>, <span class="fl">0.70</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.34</span>, <span class="fl">0.50</span>, <span class="fl">0.06</span>)</span></code></pre></div>
 </div>
-<div id="exercise-9" class="section level3">
-<h3>Exercise 9</h3>
+<div id="exercise-8" class="section level3">
+<h3>Exercise 8</h3>
 <p>[HTZ 7.3-11] For developing countries in Asia (excluding China) and
 Africa, random samples of <span class="math inline">\(n_1 =
 1300\)</span> and <span class="math inline">\(n_2 = 1100\)</span>
 yielded <span class="math inline">\(y_1 = 520\)</span> and <span class="math inline">\(y_2 = 385\)</span> children with chronic
-malnutrition, respectively. Use confidence level of 95%.</p>
+malnutrition, respectively. Use a 95% confidence interval to estimate
+the difference in proportions of children with chronic malnutrition
+between the two continents.</p>
 </div>
-<div id="exercise-10" class="section level3">
-<h3>Exercise 10</h3>
+<div id="exercise-9" class="section level3">
+<h3>Exercise 9</h3>
 <p>Public health officials in a large city decided that if compelling
 evidence could be presented that less than 90% of children under six
 years of age in the city had received the DPT vaccine, then they would
 carry out an expensive immunization program throughout the city. A
 random sample was taken of 537 children under six years of age in the
 city; of these 460 had been immunized for DPT. Use a one-sided 99%
-confidence interval.</p>
+confidence interval to estimate the proportion of children who had
+received the DPT vaccine.</p>
 </div>
 </div>
 <div id="submission" class="section level2">
