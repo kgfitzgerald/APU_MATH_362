@@ -1,6 +1,6 @@
 ---
-title: "Problem Set 04"
-subtitle: "Week 03 Day 01"
+title: "Problem Set 03 & 04"
+subtitle: "Week 03"
 output: 
   html_document:
     toc: true
@@ -32,8 +32,6 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples. Show that $S_p^2 = \frac{(n-1)S_x^2 + (m-1)S_y^2}{n + m - 2}$ is an unbiased estimator of $\sigma^2$. 
 
-## Typed
-
 ### Exercise 2
 
 In each of the following scenarios, determine if the data are paired
@@ -48,8 +46,7 @@ In each of the following scenarios, determine if the data are paired
 
   (E) A school board would like to determine whether there is a difference in average SAT scores for students at one high school versus another high school in the district. To check, they take a simple random sample of 100 students from each high school.
 
-
-### Exercises 3 - 6
+## Typed
 
 For each of the following scenarios in Exercises 3 - 6,
 
@@ -178,17 +175,16 @@ sample_means <- sims %>%
 
 ### Exercise 11
 
-Plot the *sampling distribution* of the sample mean. Describe this distribution. How does it compare to the population distribution and the sample distribution in terms of center and spread? 
+Plot the *sampling distribution* of the sample mean. 
++ Describe this distribution. 
++ How does it compare to the population distribution and the sample distribution in terms of center and spread? 
++ Does the distribution indicate sampling bias or unbiasedness of this random sampling method?  What aspect of the distribution leads you to this conclusion?
+
+<!-- ### Exercise 12 -->
+
+<!-- Consider the following sentence: "The mean of the sample means is the population mean" and the mathematical statement $E(\overline{X}) = \mu$. Explain in words what the three different "means" mean (hah!) and what each of the mathematical symbols means.  -->
 
 ### Exercise 12
-
-Does the distribution of sample means indicate sampling bias or unbiasedness of this random sampling method?  What aspect of the distribution leads you to this conclusion?
-
-### Exercise 13 
-
-Consider the following sentence: "The mean of the sample means is the population mean" and the mathematical statement $E(\overline{X}) = \mu$. Explain in words what the three different "means" mean (hah!) and what each of the mathematical symbols means. 
-
-### Exercise 14
 
 Describe in words the differences between a population distribution, a sample distribution, and a sampling distribution. 
 
@@ -197,7 +193,7 @@ Describe in words the differences between a population distribution, a sample di
 
 When developing confidence interval procedures (formulas), statisticians are interested in the **coverage probability** of their procedure. The coverage probability is the long-run probability that a confidence interval procedure will capture the true parameter. A good procedure will have a coverage probability that is close to the *nominal* $(1-\alpha)100\%$ level. That is, we want a 95% confidence interval procedure to have a 95% coverage probability. 
 
-### Exercise 14
+### Exercise 13
 
 Write out psuedo-code for how to use your simulation results to determine the coverage probability of the following three confidence interval procedures:
 
@@ -207,29 +203,45 @@ $$\bar{x} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$$
 
 $$\bar{x} \pm t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}$$
 
-10. Before writing and executing the code, what do you expect the three coverage probabilities to be? How do you expect them to compare to one another? Why? 
+### Exercise 14
 
-11. Write code to compute the three coverage probabilities above. Document any changes you need to make to your logic in order to get executable code (that is, comment on your evolving reasoning/strategy).
+Before writing and executing the code, what do you expect the three coverage probabilities to be? How do you expect them to compare to one another? Why? 
+
+### Exercise 15
+
+Write code to compute the three coverage probabilities above. 
 
 ## Proportions
 
 Suppose you are also interested in the proportion of movies that are `Animated`. 
 
-12. Write code that utilizes your same simulation results to explore the sampling distribution of $\hat{p} = \frac{\text{# of Animation movies in sample}}{\text{n}}$. Plot the sampling distribution of $\hat{p}$. Is $\hat{p}$ unbiased? What aspect of the distribution leads you to this conclusion?
+### Exercise 16
 
-13. Write code to compute the coverage probability of the confidence interval procedure $\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$. 
+Write code that utilizes your same simulation results to explore the sampling distribution of $\hat{p} = \frac{\text{# of Animation movies in sample}}{\text{n}}$. Plot the sampling distribution of $\hat{p}$. Is $\hat{p}$ unbiased? What aspect of the distribution leads you to this conclusion?
 
-14. What went wrong in #13? Explain as best you can.
+### Exercise 17
+
+Write code to compute the coverage probability of the confidence interval procedure $\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$. 
+
+### Exercise 18
+
+What went wrong in #17? Explain as best you can.
 
 ## Plus-4 Method
 
 An alternative, simple method to remedy the above problem is called the "plus 4" method, which assumes you observed two more successes and two more failures than you actually did. That is, define $\tilde{p} = \frac{x + 2}{n + 4}$ and use the procedure $$\tilde{p} \pm z_{\alpha/2}\sqrt{\frac{\tilde{p}(1 - \tilde{p})}{n + 4}}$$
 
-15. How does $\tilde{p}$ compare to $\hat{p}$? *Hint: consider what happens to $\tilde{p}$ when $\hat{p}$ is less than 0.5, equal to 0.5, and greater than 0.5*
+### Exercise 19
 
-16. Write code to investigate the coverage probability of the above procedure.
+How does $\tilde{p}$ compare to $\hat{p}$? *Hint: consider what happens to $\tilde{p}$ when $\hat{p}$ is less than 0.5, equal to 0.5, and greater than 0.5*
 
-17. When choosing between two procedures, do you think statisticians prefer procedures with coverage probabilities that are above or below the nominal level? Explain. 
+### Exercise 20
+
+Write code to investigate the coverage probability of the above procedure.
+
+### Exercise 21
+
+When choosing between two procedures, do you think statisticians prefer procedures with coverage probabilities that are above or below the nominal level? Explain. 
 
 ## Sample Size
 
@@ -241,7 +253,9 @@ sample <- movies %>%
 sd <- sd(sample$rating)
 ```
 
-18. Determine the sample size necessary to obtain a maximum margin of error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
+### Exercise 22
+
+Determine the sample size necessary to obtain a maximum margin of error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
 
 ```{r, echo = FALSE}
 e <- 0.5
@@ -256,7 +270,9 @@ z <- qnorm(.995)
 n <- z^2*sd^2/(e^2)
 ```
 
-19. Determine the sample size necessary to obtain a maximum margin of error of $\pm 3\%$ when estimating the proportion of movies that are Animated using a 90%, 95%, and 99% confidence interval. Comment on what value you use for $\hat{p}$ and why.
+### Exercise 23
+
+Determine the sample size necessary to obtain a maximum margin of error of $\pm 3\%$ when estimating the proportion of movies that are Animated using a 90%, 95%, and 99% confidence interval. Comment on what value you use for $\hat{p}$ and why.
 
 ```{r, echo = FALSE}
 e <- .03
@@ -272,9 +288,13 @@ z <- qnorm(.995)
 n <- z^2*phat*(1-phat)/(e^2)
 ```
 
-20. Suppose you are a statistician advising a research team on their sampling design and budget. What questions would you ask them about their priorities and constraints to help them develop their plan? 
+### Exercise 24
 
-21. Provide a brief write-up with a final recommended sample size and justification for your choices.
+Suppose you are a statistician advising a research team on their sampling design and budget for the above analysis. What questions would you ask them about their priorities and constraints to help them develop their plan? 
+
+### Exercise 25
+
+Provide a final recommended sample size and justification for your choices.
 
 
 ```{r, eval = FALSE, echo = FALSE}

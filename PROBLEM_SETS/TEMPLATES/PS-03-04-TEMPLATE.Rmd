@@ -24,21 +24,11 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ## Exercise 1
 
-Text...
 
-```{r ex-1}
-
-```
-
-Text...
 
 ## Exercise 2
 
-```{r ex-2}
 
-```
-
-Text...
 
 ## Exercise 3
 
@@ -46,7 +36,9 @@ Text...
 
 ```
 
-Text...
+a. The parameter of interest is... 
+b. The point estimate is...
+c. The confidence interval is... 
 
 ## Exercise 4
 
@@ -54,7 +46,9 @@ Text...
 
 ```
 
-Text...
+a. The parameter of interest is... 
+b. The point estimate is...
+c. We are ___% confident that... 
 
 ## Exercise 5
 
@@ -62,97 +56,87 @@ Text...
 
 ```
 
-Text...
+a. The parameter of interest is... 
+b. The point estimate is...
+c. We are ___% confident that... 
 
 ## Exercise 6
 
-Text...
+```{r ex-6}
+
+```
+
+a. The parameter of interest is... 
+b. The point estimate is...
+c. We are ___% confident that... 
 
 ## Exercise 7
 
-Text... 
-Sample LaTeX syntax: $E(\overline{X})=\mu$
+```{r ex-7}
+
+```
 
 ## Exercise 8
 
-Text...
+
 
 ## Exercise 9
 
-```{r ex-9, eval = FALSE}
-#psuedo-code here
 
-```
 
 
 ## Exercise 10
 
-Text...
+
 
 ## Exercise 11
 
-```{r ex-11}
 
-```
 
-Text...
 
 ## Exercise 12
 
-```{r ex-12}
 
-```
-
-Text...
 
 ## Exercise 13
 
-```{r ex-13}
 
-```
-
-Text...
 
 ## Exercise 14
 
-Text...
+
 
 ## Exercise 15
 
-Text...
+
 
 ## Exercise 16
 
-```{r ex-16}
 
-```
-
-Text...
 
 ## Exercise 17
 
-Text...
 
 ## Exercise 18
 
-```{r ex-18}
-
-```
-
-Text...
 
 ## Exercise 19
 
-```{r ex-19}
-
-```
-
-Text...
 
 ## Exercise 20
 
-Text...
 
 ## Exercise 21
 
-Text...
+
+## Exercise 22
+
+
+## Exercise 23
+
+
+## Exercise 24
+
+
+## Exercise 25
+
