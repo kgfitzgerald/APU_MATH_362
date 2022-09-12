@@ -1,0 +1,248 @@
+---
+title: "Problem Set 01"
+author: "SOLUTIONS"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+```{r load-pkgs}
+library(tidyverse)
+```
+
+## Exercise 1
+
+My guess is they are more likely NOT to meet (60 minute window, only wait for 15 minutes). I estimate they'll meet about 40% of the time. 
+
+## Exercise 2
+
+Need to simulate many (e.g. 10,000) random arrival times (0 to 60 from uniform distribution) for Eponine, then random arrival times for Cosette. Then can determine whether they meet or not by seeing if the two arrival times are no more than 15 minutes apart. Then calculate the proportion of times (out of the 10,000) that they successfully meet.
+
+## Exercise 3
+
+```{r ex3, eval = FALSE}
+# pseudo-code
+
+#generate arrival times
+eponine <- runif(# of simulations, 0, 60)
+cosette <- runif(# of simulations, 0, 60)
+
+#place in same dataframe
+df <- cbind(eponine, cosette)
+
+df <- df %>% 
+  mutate(meet = if_else(15 mins apart, 1, 0))
+
+df %>% 
+  summarize(prob_meet = sum(meet)/# of simulations)
+```
+
+Can visualize `eponine` and `cosette` to make sure they look uniformly distributed. Could create bar graph of `meet` to make sure it seems to match calculated proportion.
+
+## Exercise 4
+
+I noticed I had `# of simulations` written in multiple places, so I decided to define an object N at the beginning of the code chunk to store this choice. 
+
+Since I want to visualize `eponine` and `cosette`, I need them to be in a dataframe not a vector, so I update how those objects are created.
+
+I also decide to create an intermediate variable `wait_time` to make the code a bit more informative instead of combining two steps into one. 
+
+```{r ex4-sims}
+# set number of simulations
+N <- 10000
+
+#generate arrival times
+df <- data.frame(eponine = runif(N, 0, 60),
+                 cosette = runif(N, 0, 60))
+
+# create `wait_time` and `meet` variables
+df <- df %>% 
+  mutate(wait_time = abs(eponine - cosette),
+         meet = if_else(wait_time <= 15, 1, 0))
+
+prob_meet <- df %>% 
+  summarize(prob_meet = sum(meet)/N)
+prob_meet
+```
+
+```{r ex4-viz}
+# visualizations
+
+#check uniform distribution
+ggplot(df, aes(x = eponine)) +
+  geom_histogram(binwidth = 5) +
+  xlim(0,60)
+
+ggplot(df, aes(x = cosette)) +
+  geom_histogram(binwidth = 5) +
+  xlim(0,60)
+
+#check probability of meeting
+ggplot(df, aes(x = 0, fill = factor(meet))) +
+  geom_bar(position = "fill")
+```
+
+
+## Exercise 5
+
+The estimated probability that the two women successfully meet is `r prob_meet`. 
+
+
+## Exercise 6
+
+```{r ex6}
+# calculate margin of error
+ME <- 1/sqrt(N)
+ME
+
+# calculate confidence interval
+CI <- c(prob_meet - ME, prob_meet + ME)
+```
+
+A confidence interval for the probability of meeting is (`r CI[1]`, `r CI[2]`)
+
+## Exercise 7
+
+The simulation error comes from the number of iterations in the simulation. Therefore, we can improve our estimate by running more iterations. I update N to be 100,000 instead of 10,000
+
+```{r ex7}
+#simulation code
+# set number of simulations
+N <- 100000
+
+#generate arrival times
+df <- data.frame(eponine = runif(N, 0, 60),
+                 cosette = runif(N, 0, 60))
+
+# create `meet` variable
+df <- df %>% 
+  mutate(wait_time = abs(eponine - cosette),
+         meet = if_else(wait_time <= 15, 1, 0))
+
+prob_meet <- df %>% 
+  summarize(prob_meet = sum(meet)/N)
+prob_meet
+
+# calculate margin of error
+ME <- 1/sqrt(N)
+ME
+
+# calculate confidence interval
+CI <- c(prob_meet - ME, prob_meet + ME)
+```
+
+The estimated probability that the two women successfully meet is `r prob_meet`, with a confidence interval of (`r CI[1]`, `r CI[2]`). This interval is narrower than the previous interval because the increased N leads to a smaller margin of error.
+
+## Exercise 8
+
+Since they met about 44% of the time by waiting 15 minutes, they need to wait a bit longer to achieve a 50% chance of meeting. Perhaps 20 minutes.
+
+## Exercise 9
+
+Finding a wait time that corresponds to a 50% chance of meeting is equivalent to finding the 50th percentile of the wait times. The median is another term for the 50th percentile. In other words, choosing the median as the wait time will ensure that 50% of wait times are smaller than that cutoff, and 50% are greater than that cutoff, meaning the two will women will meet about 50% of the time if they use the median as their wait time. 
+
+```{r ex9}
+median <- median(df$wait_time)
+median
+```
+
+The women should wait approximately `r median` minutes in order to have a 50% chance of meeting. 
+
+## Exercise 10
+
+I expect to see yellow when the arrival times are within 15 minutes of each other, which will appear as a diagonal band through the visualization. Dots farther in the "corners", where x and y are farther from each other, will be purple. 
+
+
+## Exercise 11
+
+```{r ex11-scatterplot}
+ggplot(df, aes(x = eponine, y = cosette, color = factor(meet))) +
+  geom_point() +
+  scale_color_viridis_d() +
+  labs(color = "Successful meeting",
+       x = "Eponine arrival time",
+       y = "Cosette arrival time") +
+  theme_minimal()
+  
+```
+
+## Exericse 12
+
+The total area of the 60x60 square is 3600. The area of one of the purple triangles is $A = \frac{1}{2}bh = \frac{1}{2}(45)(45)$ = `r .5*45*45`. Therefore the yellow region is 3600 - `r 45*45` = `r 60*60 - 45*45`, which represents a proportion of `r 60*60 - 45*45`/3600 = `r (60*60 - 45*45)/3600`.
+
+## Exercise 13
+
+Yes, the exact probability is included in both confidence intervals above. I.e., the estimate is within the margin of error of the true value. 
+
+## Exercise 14
+
+Following the same logic as in Exercise 14, the probability that they successfully meet is 1 minus the probability of both purple triangles that have base $b$ and height $h$. In this case instead of the base and height both being 15, we can represent them by the expression $(60 - w)$. Therefore, we can write the probability of successfully meeting as 
+
+$$
+\begin{aligned}
+P(S) &= 1 - \frac{2*\frac{1}{2}(60 - w)^2}{3600} \\
+&= 1 - \frac{(60 - w)^2}{3600}
+\end{aligned}
+$$
+Note that we divide by 3600, which is the total area, because we want the proportion not the raw area. 
+
+## Exercise 15
+
+This graph confirms that waiting for 15 minutes results in approximately a 45% chance of meeting.
+
+```{r ex15}
+# graph probability as function of w
+#create vector of wait times from 0 to 60 minutes, by 0.01 minutes
+w <- seq(0, 60, by = 0.01)
+
+#put w in a new dataframe and compute the probability of meeting as a function of w
+new <- data.frame(w) %>% 
+  mutate(probmeet = (1 - (60 - w)^2/3600))
+
+#plot the probability as a function of w
+ggplot(new, aes(x = w, y = probmeet)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "w",
+       y = "Probability",
+       title = "Probability of successfully meeting as a function of wait time, in minutes")
+```
+
+## Exercise 16
+
+We can set the expression for $P(S)$ in 14 to 0.5 and solve for $w$ to find the wait time the results in a 50% chance of meeting. 
+
+$$
+\begin{aligned}
+0.5 &= P(S) = 1 - \frac{(60 - w)^2}{3600} \\
+-0.5 &= -\frac{(60 - w)^2}{3600} \\
+1800 &= (60-w)^2 \\
+\sqrt{1800} &= 60 - w \\
+w &= 60 - \sqrt{1800} \\
+w &= `r 60 - sqrt(1800)`
+\end{aligned}
+$$
+
+## Exercise 17
+
+These exact probabilities are very similar to the approximate ones determined via simulations.
+
+
+
+
