@@ -1,0 +1,271 @@
+---
+title: "Problem Set 02"
+subtite: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+You can access the .Rmd for the solutions [here](https://github.com/kgfitzgerald/APU_MATH_362/blob/main/PROBLEM_SETS/SOLUTIONS/PS-02-SOLUTIONS.Rmd).
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+## Exercise 1
+
+### Part a
+
+```{r}
+n1 <- 1028
+n2 <- 1041
+y1 <- 617
+y2 <- 694
+
+p1hat <- y1/n1
+p2hat <- y2/n2
+```
+
+
+$$\hat{p}_1 = \frac{`r y1`}{`r n1`} = `r p1hat`$$
+$$\hat{p}_2 = \frac{`r y2`}{`r n2`} = `r p2hat`$$
+
+### Part b
+
+A confidence interval for $p_1 - p_2$ is given by the following formula:
+
+$$(\hat{p}_1 - \hat{p}_2) \pm z_{\alpha/2}SE(\hat{p}_1 - \hat{p}_2),$$
+
+where $$SE(\hat{p}_1 - \hat{p}_2) = \sqrt{\frac{\hat{p}_1(1 - \hat{p}_1)}{n_1} + \frac{\hat{p}_2(1 - \hat{p}_2)}{n_2}}$$.
+
+```{r}
+z <- qnorm(.975)
+SE <- sqrt((p1hat*(1 - p1hat)/n1 + p2hat*(1 - p2hat)/n2))
+
+CI_lb <- (p1hat - p2hat) - z*SE
+CI_ub <- (p1hat - p2hat) + z*SE
+c(CI_lb, CI_ub)
+```
+
+We are 95% confident that the difference in proportions between 2017 and 2018 who favor stricter gun laws is between `r round(CI_lb, 3)` and `r round(CI_ub, 3)`. That is, the proportion favoring stricter gun laws was higher in 2018 than in 2017.
+
+
+## Exercise 2
+
+A confidence interval for $\mu$ is given by $$\bar{X} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$$
+
+Here we have $\sigma^2 = 72$, $n = 8$, and $\bar{X} = 85$. 
+
+### Part a
+
+A 99% confidence interval uses a $z_{\alpha/2}$ of `r qnorm(.995)`.
+
+```{r}
+sigma <- sqrt(72)
+n <- 8
+xbar <- 85
+
+z <- qnorm(.995)
+
+CI <- c(xbar - z*sigma/sqrt(n), xbar + z*sigma/sqrt(n))
+CI
+```
+
+
+### Part b
+
+Here we can reuse the exact same code, just reset `z` for a 95% confidence interval
+
+```{r}
+z <- qnorm(.975)
+
+CI <- c(xbar - z*sigma/sqrt(n), xbar + z*sigma/sqrt(n))
+CI
+```
+
+
+### Part c
+
+Here we can reuse the exact same code, just reset `z` for a 90% confidence interval
+
+```{r}
+z <- qnorm(.95)
+
+CI <- c(xbar - z*sigma/sqrt(n), xbar + z*sigma/sqrt(n))
+CI
+```
+
+### Part d
+
+Here we can reuse the exact same code, just reset `z` for a 80% confidence interval
+
+```{r}
+z <- qnorm(.9)
+
+CI <- c(xbar - z*sigma/sqrt(n), xbar + z*sigma/sqrt(n))
+CI
+```
+
+## Exercise 3
+
+$X \sim N(\mu, 9)$ implies that $\sigma = 3$. Note that the statement $$P(\bar{X} - 1 \lt \mu \lt \bar{X} + 1) = 0.9$$ is in the form $$P(\bar{X} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \lt \mu \lt \bar{X} + z_{\alpha/2}\frac{\sigma}{\sqrt{n}}) = 1 - \alpha.$$
+
+Since $1 - \alpha = 0.9$ we have $\alpha = 0.1$, which implies $z_{\alpha/2} = `r round(qnorm(.95), 3)`$. We can set $z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$ equal to 1 (based on the form of the probability statement given above), plug in for $z_{\alpha/2}$ and $\sigma$ and solve for $n$:
+
+$$
+\begin{aligned}
+z_{\alpha/2}\frac{\sigma}{\sqrt{n}} &= 1 \\
+`r round(qnorm(.95), 3)` \frac{3}{\sqrt{n}} &= 1 \\
+\left((`r round(qnorm(.95), 3)`)(3)\right)^2 &= n \\
+`r round(qnorm(.95)^2*3^2, 2)` &= n
+\end{aligned}
+$$
+
+Since sample size must be a whole number, we round up to $n = 25$. Note we round up because a conservative probability statement is preferable to a liberal one. That is, it is better to understate your confidence than to overstate it. 
+
+
+## Exercise 4
+
+This question is about uncertainty / sampling variability in proportions. Here the proportion of interest is proportion of babies that are boys. Because Hospital A has fewer births per day (smaller sample size), there will be more variability in the proportions. The distribution of proportions for both hospitals will be centered at 50%, but the distribution of Hospital A will be more spread out, resulting in more days with 60% or more are boys. 
+
+Another way to think about it, it is more likely just by chance to observe 6 out of 10 rather than to observe 30 out of 50 when the true proportion is 0.5 in both cases, corresponding to expected counts of 5 and 25 respectively. 
+
+Here is a quick simulation demonstrating this:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(cowplot)
+
+data <- data.frame(HospitalA = rbinom(10000, size = 10, prob = .5)/10, 
+                   HospitalB = rbinom(10000, size = 50, prob = .5)/50)
+
+pA <- ggplot(data, aes(x = HospitalA)) +
+  geom_bar() +
+  geom_vline(xintercept = 0.6, color = "blue") +
+  xlim(0, 1) +
+  theme_minimal() 
+
+pB <- ggplot(data, aes(x = HospitalB)) +
+  geom_bar() +
+  geom_vline(xintercept = 0.6, color = "blue") +
+  xlim(0, 1) +
+  theme_minimal() 
+  
+plot_grid(pA, pB)
+
+data %>% 
+  summarize(propA = sum(HospitalA > .6)/10000,
+            propB = sum(HospitalB > .6)/10000)
+```
+
+## Exercise 5
+
+### Part a
+
+The observational units are the movies, the variable is the runtime (in minutes). Runtime is a continuous numeric variable.
+
+### Part b
+
+Because this is a numeric variable, we are interested in a mean, $\mu$. Specifically, we are interested in the average runtime for all documentaries in the IMDB database. 
+
+### Part c
+
+Because $\sigma$ is unknown, we should use the t-distribution. The confidence interval is given by:
+
+$$\bar{X} \pm t_{\alpha/2}\frac{s}{\sqrt{n}}$$
+
+### Part d
+
+The only condition needed for this interval is that $n$ is sufficiently large. In this case 50 > 30, and from the shape of the sample distribution, skewness does not appear to be an issue, so this is a sufficient sample size.
+
+### Part e
+
+```{r}
+xbar <- 65.4
+s <- 33.5
+n <- 50
+t <- qt(.975, df = n - 1)
+
+CI <- c(xbar - t*s/sqrt(n), xbar + t*s/sqrt(n))
+CI
+```
+
+### Part f
+
+We are 95% confident that the true average runtime for documentaries in the IMDB database is between `r round(CI[1], 2)` and `r round(CI[2], 2)`
+
+### Part g
+
+Roughly 20% of films in the sample fall in this interval (about 10 of the 50 dots in the sample distribution plot).
+
+### Part h
+
+The above percentage is not close to 95%, but nothing went wrong. The 95% for a CI tells us the probability that our interval captures the true mean, NOT the probability that a sample value falls in that interval. In fact, we expect the confidence interval to be much narrower than the overall spread of the data since it is a statement about means not individual values. Recall: the standard deviation of $X$ is $\sigma$, but the standard deviation (also called standard error) of $\bar{X}$ is $\frac{\sigma}{\sqrt{n}}$, so the mean will have less variability than the raw data.
+
+
+## Exercise 6
+
+A. INCORRECT - this is a statement about individual films
+B. INCORRECT - this is a statement about individual films
+C. CORRECT, although could be more specific in language
+D. CORRECT 
+E. INCORRECT - this is a statement about individual films
+F. INCORRECT - this is a statement about the sample mean rather than the population mean
+G. INCORRECT - this is stated as a prediction interval rather than a confidence interval
+H. CORRECT - identical to statement D, oops :)
+I. INCORRECT - $\mu$ is not random, the *interval* is random. 
+
+## Exercise 7
+
+The probability that a sample mean birthweight will be between 3200 and 3400 is larger, because the raw data has larger spread (standard deviation $\sigma$) compared to the sampling distribution of the sample mean (standard deviation $\sigma/\sqrt{n}$). That is, more of the distribution fits in a narrower interval for the sample mean as compared to the raw data. 
+
+Here is a quick simulation to demonstrate this:
+
+```{r}
+data <- data.frame(x = rnorm(10000, 3300, 500),
+                   xbar = rnorm(10000, 3300, 500/sqrt(400)))
+
+pX <- ggplot(data, aes(x = x)) +
+  geom_histogram(color = "white") +
+  geom_vline(xintercept = 3200, color = "blue") +
+  geom_vline(xintercept = 3400, color = "blue") +
+  theme_minimal()
+
+pXbar <- ggplot(data, aes(x = xbar)) +
+  geom_histogram(color = "white") +
+  geom_vline(xintercept = 3200, color = "blue") +
+  geom_vline(xintercept = 3400, color = "blue") +
+  theme_minimal()
+
+plot_grid(pX, pXbar)
+
+data %>% 
+  summarize(probX = sum(x > 3200 & x < 3400)/10000,
+            probXbar = sum(xbar > 3200 & xbar < 3400)/10000)
+```
+
+
+## Exercise 8
+
+Answers will vary
+
+a. What is the average number of potholes in a city block in LA County?
+b. What proportion of children under 12 in LA County have been vaccinated for COVID?
+c. What is the difference in proportions between eligible voters in CA vs. TX that favor stricter gun laws?
+
+## BONUS
+
+
+
