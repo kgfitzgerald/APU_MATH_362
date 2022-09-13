@@ -178,6 +178,7 @@ sample_means <- sims %>%
 ### Exercise 10
 
 Plot the *sampling distribution* of the sample mean. 
+
 + Describe this distribution. 
 + How does it compare to the population distribution and the sample distribution in terms of center and spread? 
 + Does the distribution indicate sampling bias or unbiasedness of this random sampling method?  What aspect of the distribution leads you to this conclusion?
