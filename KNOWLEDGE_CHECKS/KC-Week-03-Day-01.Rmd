@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 ## Knowledge Check
 
-For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples.
+For Questions 1-5, use the following scenario. Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_m \sim N(\mu_Y, \sigma^2)$ be independent random samples.
 
 1. How is $\overline{X} - \overline{Y}$ distributed?
 1. How is $\frac{(\overline{X} - \overline{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{\sigma^2}{n} + \frac{\sigma^2}{m}}}$ distributed?
