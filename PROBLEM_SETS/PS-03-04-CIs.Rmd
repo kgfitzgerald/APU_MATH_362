@@ -130,7 +130,7 @@ library(ggplot2movies)
 
 The following visualizes the *population distribution* of `rating`. Include this code and visualization in your write-up. 
 
-```{r, echo = FALSE}
+```{r}
 ggplot(movies, aes(x = rating)) +
   geom_histogram(color = "white")
 ```
