@@ -16,7 +16,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 # Learning objectives
 
-+ Visualize a population distribution, sample distribution, and sampling distribution
++ Construct confidence intervals for two means in R
++ Distinguish between two-sample and paired-mean analyses
++ Identify parameters of interest and appropriate analyses based on research scenarios
 + Articulate the difference between a population distribution, sample distribution, and sampling distribution
 + Conduct a simulation analysis by drawing repeated random samples from a population
 + Investigate via simulations whether an estimator is biased or unbiased
@@ -28,11 +30,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ## By hand or typed
 
+<!-- ### Exercise 1 -->
+
+<!-- Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples. Show that $S_p^2 = \frac{(n-1)S_x^2 + (m-1)S_y^2}{n + m - 2}$ is an unbiased estimator of $\sigma^2$. That is, show that $E(S_p^2) = \sigma^2$.  -->
+
 ### Exercise 1
-
-Let $X_1, X_2, \dots X_n \sim N(\mu_X, \sigma^2)$ and $Y_1, Y_2, \dots Y_n \sim N(\mu_Y, \sigma^2)$ be independent random samples. Show that $S_p^2 = \frac{(n-1)S_x^2 + (m-1)S_y^2}{n + m - 2}$ is an unbiased estimator of $\sigma^2$. 
-
-### Exercise 2
 
 In each of the following scenarios, determine if the data are paired
 
@@ -48,7 +50,7 @@ In each of the following scenarios, determine if the data are paired
 
 ## Typed
 
-For each of the following scenarios in Exercises 3 - 6,
+For each of the following scenarios in Exercises 2 - 5,
 
   (a) State the parameter of interest using appropriate notation
   (b) Obtain a relevant point estimate - use appropriate notation to state your result (e.g. $\overline{X} = 4)$
@@ -56,7 +58,7 @@ For each of the following scenarios in Exercises 3 - 6,
 
 You should use `t.test()` to compute your point estimates and confidence intervals. You can read the documentation for this function by running `?t.test` in your console. Make sure to pay attention to default arguments and change them as necessary to fit your desired analysis.
 
-### Exercise 3
+### Exercise 2
 
 [HTZ 7.1-5] As a clue to the amount of organic waste in Lake Macatawa, researchers decide to estimate the average number of bacteria colonies in 100 milliliters of water. The number of colonies, in hundreds, for $n=30$ samples of water from the east basin yielded the following data. Compute a 90% confidence interval. 
 
@@ -70,7 +72,7 @@ x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
 t.test(x)
 ```
 
-### Exercise 4
+### Exercise 3
 
 [HTZ 7.2-4] Let $X$ and $Y$ equal, respectively, the blood volumes in milliliters for a male who is a paraplegic and participates in vigorous physical activities and for a male who is able-bodied and participates in everyday, ordinary activities. Assume that $X \sim N(\mu_X, \sigma^2_X)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$. The following are the $n_X = 7$ and $n_Y = 10$ observations of $X$ and $Y$. Use a 95% CI to estimate the difference in average blood volumes between the two groups of males. 
 
@@ -83,7 +85,7 @@ y <- c(1082, 1300, 1092, 1040, 910, 1248, 1092, 1040, 1092, 1288)
 t.test(x, y)
 ```
 
-### Exercise 5
+### Exercise 4
 
 [HTZ 7.2-9] Students in a semester-long health-fitness program have their percentage of body fat measured at the beginning of the semester and at the end of the semester. The following measurements give these percentages for ten males in the class. Use a 90% confidence interval to estimate the average change in body fat over the course of the semester. 
 
@@ -100,7 +102,7 @@ post <- c(9.97, 15.8, 13.02, 9.28, 11.51,
 t.test(pre, post, paired = TRUE, conf.level = 0.9)
 ```
 
-### Exercise 6
+### Exercise 5
 
 [HTZ 7.2-10] Twenty-four 9th and 10th grade high school girls were put on an ultraheavy rope-jumping program. The following data give the time difference in seconds for each girl ("before program time" minus "after program time") for the 40 yard dash. Use a 95% confidence interval to estimate the average improvement in times that occurred over the course of the program.
 
@@ -133,11 +135,11 @@ ggplot(movies, aes(x = rating)) +
   geom_histogram(color = "white")
 ```
 
-### Exercise 7
+### Exercise 6
 
 Describe the population distribution of `rating`
 
-### Exercise 8
+### Exercise 7
 
 Select a random sample of 50 movies and plot the distribution of ratings in your sample. This is the *sample distribution*. Compute the average rating in your sample. Describe this distribution. How do you expect it to compare to the population distribution in terms of center and spread?  
 
@@ -154,7 +156,7 @@ ___ %>%
   summarise(avg_rating = mean(___))
 ```
 
-### Exercise 9
+### Exercise 8
 
 Select 10000 random samples of 50 movies. Inspect the new object `sims` to understand what it contains.
 
@@ -163,7 +165,7 @@ sims <- rep_sample_n(movies, size = ___,
                             reps = ___, replace = TRUE)
 ```
 
-### Exercise 10
+### Exercise 9
 
 Compute the mean rating in each sample. Inspect the new object `sample_means` to understand what it contains. 
 
@@ -173,7 +175,7 @@ sample_means <- sims %>%
   summarise(___ = mean(___))
 ```
 
-### Exercise 11
+### Exercise 10
 
 Plot the *sampling distribution* of the sample mean. 
 + Describe this distribution. 
@@ -184,7 +186,7 @@ Plot the *sampling distribution* of the sample mean.
 
 <!-- Consider the following sentence: "The mean of the sample means is the population mean" and the mathematical statement $E(\overline{X}) = \mu$. Explain in words what the three different "means" mean (hah!) and what each of the mathematical symbols means.  -->
 
-### Exercise 12
+### Exercise 11
 
 Describe in words the differences between a population distribution, a sample distribution, and a sampling distribution. 
 
@@ -193,7 +195,7 @@ Describe in words the differences between a population distribution, a sample di
 
 When developing confidence interval procedures (formulas), statisticians are interested in the **coverage probability** of their procedure. The coverage probability is the long-run probability that a confidence interval procedure will capture the true parameter. A good procedure will have a coverage probability that is close to the *nominal* $(1-\alpha)100\%$ level. That is, we want a 95% confidence interval procedure to have a 95% coverage probability. 
 
-### Exercise 13
+### Exercise 12
 
 Write out psuedo-code for how to use your simulation results to determine the coverage probability of the following three confidence interval procedures:
 
@@ -203,11 +205,11 @@ $$\bar{x} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$$
 
 $$\bar{x} \pm t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}$$
 
-### Exercise 14
+### Exercise 13
 
 Before writing and executing the code, what do you expect the three coverage probabilities to be? How do you expect them to compare to one another? Why? 
 
-### Exercise 15
+### Exercise 14
 
 Write code to compute the three coverage probabilities above. 
 
@@ -215,31 +217,31 @@ Write code to compute the three coverage probabilities above.
 
 Suppose you are also interested in the proportion of movies that are `Animated`. 
 
-### Exercise 16
+### Exercise 15
 
 Write code that utilizes your same simulation results to explore the sampling distribution of $\hat{p} = \frac{\text{# of Animation movies in sample}}{\text{n}}$. Plot the sampling distribution of $\hat{p}$. Is $\hat{p}$ unbiased? What aspect of the distribution leads you to this conclusion?
 
-### Exercise 17
+### Exercise 16
 
 Write code to compute the coverage probability of the confidence interval procedure $\hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$. 
 
-### Exercise 18
+### Exercise 17
 
-What went wrong in #17? Explain as best you can.
+What went wrong in #16? Explain as best you can.
 
 ## Plus-4 Method
 
 An alternative, simple method to remedy the above problem is called the "plus 4" method, which assumes you observed two more successes and two more failures than you actually did. That is, define $\tilde{p} = \frac{x + 2}{n + 4}$ and use the procedure $$\tilde{p} \pm z_{\alpha/2}\sqrt{\frac{\tilde{p}(1 - \tilde{p})}{n + 4}}$$
 
-### Exercise 19
+### Exercise 18
 
 How does $\tilde{p}$ compare to $\hat{p}$? *Hint: consider what happens to $\tilde{p}$ when $\hat{p}$ is less than 0.5, equal to 0.5, and greater than 0.5*
 
-### Exercise 20
+### Exercise 19
 
 Write code to investigate the coverage probability of the above procedure.
 
-### Exercise 21
+### Exercise 20
 
 When choosing between two procedures, do you think statisticians prefer procedures with coverage probabilities that are above or below the nominal level? Explain. 
 
@@ -253,7 +255,7 @@ sample <- movies %>%
 sd <- sd(sample$rating)
 ```
 
-### Exercise 22
+### Exercise 21
 
 Determine the sample size necessary to obtain a maximum margin of error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
 
@@ -270,7 +272,7 @@ z <- qnorm(.995)
 n <- z^2*sd^2/(e^2)
 ```
 
-### Exercise 23
+### Exercise 22
 
 Determine the sample size necessary to obtain a maximum margin of error of $\pm 3\%$ when estimating the proportion of movies that are Animated using a 90%, 95%, and 99% confidence interval. Comment on what value you use for $\hat{p}$ and why.
 
@@ -288,14 +290,13 @@ z <- qnorm(.995)
 n <- z^2*phat*(1-phat)/(e^2)
 ```
 
-### Exercise 24
+### Exercise 23
 
 Suppose you are a statistician advising a research team on their sampling design and budget for the above analysis. What questions would you ask them about their priorities and constraints to help them develop their plan? 
 
-### Exercise 25
+### Exercise 24
 
 Provide a final recommended sample size and justification for your choices.
-
 
 ```{r, eval = FALSE, echo = FALSE}
 movies %>% 

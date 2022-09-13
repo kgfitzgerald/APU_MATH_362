@@ -1498,35 +1498,71 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Week 03 Day 01</h1>
-<h3 class="subtitle">Knowledge Check</h3>
 
 </div>
 
 
+<div id="knowledge-check" class="section level2">
+<h2>Knowledge Check</h2>
+<p>For Questions 1-5, use the following scenario. Let <span class="math inline">\(X_1, X_2, \dots X_n \sim N(\mu_X,
+\sigma^2)\)</span> and <span class="math inline">\(Y_1, Y_2, \dots Y_n
+\sim N(\mu_Y, \sigma^2)\)</span> be independent random samples.</p>
 <ol style="list-style-type: decimal">
-<li><p>What formula do you use to compute the sample size needed for
-estimating <span class="math inline">\(\mu\)</span>?</p></li>
-<li><p>What is the hardest part about using the above formula?
-Why?</p></li>
-<li><p>Comment on what each symbol in the formula in #1 means and how
-you obtain values to plug in.</p></li>
-<li><p>When estimating a mean, will increasing your level of confidence
-require more or less necessary sample size? Why?</p></li>
-<li><p>When estimating a mean, does a random variable with a larger
-variance require more or less necessary sample size? Why?</p></li>
-<li><p>When estimating a mean, will increasing your margin of error
-require more or less necessary sample size? Why?</p></li>
-<li><p>What formula do you use to compute the sample size needed for
-estimating <span class="math inline">\(p\)</span>?</p></li>
-<li><p>What is the hardest part about using the above formula?
-Why?</p></li>
-<li><p>Comment on what each symbol in the formula in #7 means and how
-you obtain values to plug in.</p></li>
-<li><p>Comment on how and why the formulas in #1 and #7 relate to one
-another.</p></li>
-<li><p>When estimating <span class="math inline">\(p\)</span>, what
-happens to the necessary sample size as <span class="math inline">\(\hat{p}\)</span> changes?</p></li>
+<li><p>How is <span class="math inline">\(\overline{X} -
+\overline{Y}\)</span> distributed?</p></li>
+<li><p>How is <span class="math inline">\(\frac{(\overline{X} -
+\overline{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{\sigma^2}{n} +
+\frac{\sigma^2}{m}}}\)</span> distributed?</p></li>
+<li><p>How are <span class="math inline">\(\frac{(n-1)S_x^2}{\sigma^2}\)</span> and <span class="math inline">\(\frac{(m-1)S_y^2}{\sigma^2}\)</span>
+distributed?</p></li>
+<li><p>How is <span class="math inline">\(\frac{(n-1)S_x^2}{\sigma^2} +
+\frac{(m-1)S_y^2}{\sigma^2}\)</span> distributed?</p></li>
+<li><p>If <span class="math inline">\(Z \sim N(0,1)\)</span> and <span class="math inline">\(U \sim \chi^2_{df}\)</span>, how is <span class="math inline">\(\frac{Z}{\sqrt{U/df}}\)</span>
+distributed?</p></li>
+<li><p>When should you use Welch’s t-interval?</p></li>
+<li><p>When should you use a paired t-interval?</p></li>
 </ol>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions</h2>
+<ul>
+<li><p>When do we use t vs z?!?!?!?!?! :)</p>
+<ul>
+<li>Simplified answer: t for means, z for proportions</li>
+<li>Butttttt, for sample size calculations, we have to settle for z,
+even for means</li>
+</ul></li>
+<li><p>Statistical thinking pro-tip: think in terms of best/worst case
+scenarios, upper/lower bounds. Can get you a long way towards a
+practical decision!</p>
+<ul>
+<li>“How much would my results change if I’m wrong about XYZ?”
+Robustness checks.</li>
+<li>Just because a value is technically unknown, doesn’t mean we don’t
+know ANYTHING about that value. Even rough estimates help gain traction
+on a problem. Think: orders of magnitude.</li>
+</ul></li>
+<li><p><em>“[Paired t-test] would only work if sample sizes m and n are
+equal correct? Or else some of the observations would be left unpaired?
+But I can’t help but wonder: if this was like a before and after study
+of the same subjects, but for whatever reason, data was not
+obtained”afterwards” for some of the subjects, what do we do then? Do we
+just ignore those observations and use this method, limiting our sample
+size only to those we have data for before and after?“</em></p></li>
+<li><p>Should we always assume random data is independent?</p></li>
+</ul>
+<!-- 1. What  formula do you use to compute the sample size needed for estimating $\mu$?  -->
+<!-- 1. What is the hardest part about using the above formula? Why?  -->
+<!-- 1. Comment on what each symbol in the formula in #1 means and how you obtain values to plug in. -->
+<!-- 1. When estimating a mean, will increasing your level of confidence require more or less necessary sample size? Why?  -->
+<!-- 1. When estimating a mean, does a random variable with a larger variance require more or less necessary sample size? Why?  -->
+<!-- 1. When estimating a mean, will increasing your margin of error require more or less necessary sample size? Why?  -->
+<!-- 1. What  formula do you use to compute the sample size needed for estimating $p$?  -->
+<!-- 1. What is the hardest part about using the above formula? Why?  -->
+<!-- 1. Comment on what each symbol in the formula in #7 means and how you obtain values to plug in. -->
+<!-- 1. Comment on how and why the formulas in #1 and #7 relate to one another. -->
+<!-- 1. When estimating $p$, what happens to the necessary sample size as $\hat{p}$ changes? -->
+</div>
 
 
 
