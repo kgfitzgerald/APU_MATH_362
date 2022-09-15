@@ -150,7 +150,7 @@ sample <- movies %>%
   sample_n(n)
 
 ggplot(data = ___, aes(x = ___)) +
-  geom_bar()
+  geom_histogram(binwidth = 0.5, color = "white")
 
 ___ %>% 
   summarise(avg_rating = mean(___))

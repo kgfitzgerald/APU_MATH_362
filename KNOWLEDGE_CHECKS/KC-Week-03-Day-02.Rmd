@@ -14,18 +14,87 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-1. What are the two possible conclusions from a hypothesis test?
+1. What  formula do we use to compute the sample size needed for estimating $\mu$?
 
-1. Describe in words what a **null hypothesis** is. What notation do we use it?
+$$n \approx \frac{z_{\alpha/2}s^2}{\epsilon^2}$$
 
-1. Describe the difference between a population parameter and sample statistic. Which one is a hypothesis test about? Which one is observed? 
+2. What is the hardest part about using the above formula? Why?  
 
-1. Describe in words what a **critical value** is and how it's used in a hypothesis test. 
+<br/>
+<br/>
+<br/>
 
-1. Describe in words what a **test statistic** is and how it's used in a hypothesis test.
+3. Comment on what each symbol in the formula in #1 means and how you obtain values to plug in.
 
-1. Describe in words the two possible errors that can be made in a hypothesis test. 
+<br/>
+<br/>
+<br/>
 
-1. Describe in words what a **significance level** is. What notation do we use for it?
+4. When estimating a mean, will increasing your level of confidence require more or less necessary sample size? Why?
 
-1. If $\alpha = 0.10$, what is the probability of making a Type I error?
+<br/>
+<br/>
+<br/>
+
+
+5. When estimating a mean, will increasing your margin of error require more or less necessary sample size? Why?
+
+<br/>
+<br/>
+<br/>
+
+6. What  formula do you use to compute the sample size needed for estimating $p$?  
+
+$$n \approx \frac{z_{\alpha/2}\hat{p}(1-\hat{p})}{\epsilon^2}$$
+
+7. What is the hardest part about using the above formula? Why?
+
+<br/>
+<br/>
+<br/>
+
+8. Comment on what each symbol in the formula in #6 means and how you obtain values to plug in. 
+
+<br/>
+<br/>
+<br/>
+
+9. Comment on how and why the formulas in #1 and #6 relate to one another.
+
+<br/>
+<br/>
+<br/>
+
+10. When estimating $p$, what happens to the necessary sample size as $\hat{p}$ changes? 
+
+<br/>
+<br/>
+<br/>
+
+11. Small sample correction for finite populations:
+
+$$\frac{N-n}{N-1}$$
+
+$$SE(\hat{p}) = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}\frac{N-n}{n-1}}$$
+This correction factor goes to 1 pretty quickly:
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+N <- seq(from = 500, to = 1000000, by = 1)
+n <- 100
+
+data <- data.frame(N = N,
+                   n = 100,
+                   correction = (N-n)/(N-1))
+
+ggplot(data, aes(x = N, y = correction)) +
+  geom_line()
+
+ggplot(data, aes(x = N, y = correction)) +
+  geom_line() +
+  xlim(0, 50000)
+```
+
+
+
+
