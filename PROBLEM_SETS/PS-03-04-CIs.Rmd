@@ -258,7 +258,7 @@ sd <- sd(sample$rating)
 
 ### Exercise 21
 
-Determine the sample size necessary to obtain a maximum margin of error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
+Determine the sample size necessary to obtain a maximum error of 0.1 when estimating the average movie rating using a 90%, 95%, and 99% confidence interval. Assume you found in a small pilot study that the standard deviation of the ratings was `r round(sd, 2)`.
 
 ```{r, echo = FALSE}
 e <- 0.5
