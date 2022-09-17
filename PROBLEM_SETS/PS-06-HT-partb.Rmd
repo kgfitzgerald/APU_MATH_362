@@ -24,6 +24,30 @@ library(tidyverse)
 
 # Exercises
 
+2. [HTZ: 8.4-10] Because of tourism in the state, it was proposed that public schools in Michigan begin after Labor Day. To determine whether support for this change was greater than 65%, a public poll was taken. Let $p$ equal the proportion of Michigan adults who favor a post-Labor Day start.
+
+    a. State the null and alternative hypotheses
+    b. Define a test statistic and a $\alpha = 0.025$ critical region.
+    c. Given that 414 out of a sample of 600 favor a post-Labor Day start, calculate the value of the test statistic.
+    d. Find the p-value and state your conclusion.
+    f. Use `prop.test()` in R to conduct this hypothesis test and check your work. *Note: instead of the normal approximation (which is easy to do by-hand), R uses a more complicated (but more precise) procedure that relies on the chi-square distribution. However, the p-value should still be similar to your "by-hand" work*
+    
+```{r}
+p0 <- .65
+y <- 414
+n <- 600
+phat <- y/n
+Z <- (phat - p0)/sqrt(p0*(1-p0)/n)
+pnorm(Z, lower.tail = FALSE)
+
+se_phat <- sqrt(phat*(1-phat)/n)
+
+phat - 1.96*se_phat
+
+prop.test(x = 414, n = 600, alternative = "greater", 
+          p = .65, correct = TRUE)
+```
+
 1. Assume you are testing the hypotheses $H_0: \mu = \mu_0$ vs. $H_A: \mu > \mu_0$ and that $\sigma$ is known. Define a critical region $C$ such that if $\overline{X} \in C$, you reject $H_0$ at a significance level of $\alpha$. That is, define an expression for a critical value that will result in a Type I error rate of $\alpha$. Or stated yet another way, your region $C$ should be defined such that $P(\overline{X} \in C |H_0 \text{ true}) = \alpha$. *Hint: Start with the following probability statement are rearrange* $$P\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}>z_{\alpha}\right) = \alpha$$
 
 2. Do the same thing as in #1 (define an appropriate critical region) for the following hypothesis tests:

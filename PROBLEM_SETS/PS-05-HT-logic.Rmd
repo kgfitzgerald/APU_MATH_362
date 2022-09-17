@@ -16,144 +16,277 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ```{r}
 library(tidyverse)
+library(ggdist)
+library(distributional)
+library(cowplot)
 ```
 
 
 # Learning objectives
 
-+ Develop and execute simulation logic using R to investigate how (un)likely an observed sample statistic is
++ Conduct a hypothesis test for one proportion
 + Articulate the role sample size plays in hypothesis testing
-+ Articulate how hypothesis tests and confidence intervals are related
 + Determine the significance level and Type II error rate of a test
-+ Demonstrate Type I and Type II errors via simulations in R
+
 
 
 # Exercises
 
-1. Return to the first "Which tire?" example where 17/44 students chose the right tire. Use R to conduct simulations to investigate how (un)likely the observed result is. 
+1. Public health officials in a large city decided that if compelling evidence could be presented that less than 90% of children under six years of age in the city had received the DPT vaccine, then they would carry out an expensive immunization program throughout the city. A random sample was taken of 537 children under six years of age in the city; of these 460 had been immunized for DPT. 
 
-    + For completeness, start by writing out the hypotheses being tested. 
-    + In your answer, include your code as well as a two visualizations of your simulation results: one of the $\hat{p}$ values and one of the corresponding test-statistics $Z$. 
-    + On both visualizations, make sure to include lines for the critical value and the observed statistic. 
-    + Include a brief description of what your simulations show and what conclusion you draw as a result. 
-    + Compute the proportion of simulated $\hat{p}$ values that are "more extreme" than the one observed (17/44). What does this tell you about the plausability of the null hypothesis? Explain your reasoning.
-
-```{r, eval = FALSE, echo = FALSE}
-n <- 44
-N <- 10000
-stat_obs <- 17/44
-p <- 0.25
-
-set.seed(437)
-data <- data.frame(x = rbinom(N, size = n, p = 0.25))
-data <- data %>% 
-  mutate(phat = x/n)
+    a. State an appropriate set of hypotheses for this scenario.
+    b. Define a critical region for which you will reject the null hypothesis at most 1% of the time when it is true.
+    c. Compute a relevant point estimate and test statistic.
+    d. State your conclusion for the hypothesis test, and you recommendation about the immunization program.
 
 
-ggplot(data, aes(x = phat)) +
-  geom_histogram() +
-  geom_vline(xintercept = phat, color = "blue")
+2. Return to the right front tire scenario. Suppose that 30% of the people in a random sample from a population select the right front tire.
 
-data %>% 
-  summarize(sum(phat > stat_obs)/N)
+     a. Is 30% a population parameter, sample statistic, test statistic, or critical value? Explain. 
+     b. What more information do you need to conduct a hypothesis test? 
+     c. Write out the hypotheses being tested.  
+     d. Suppose that the sample size is n = 100.  Determine the value of the test statistic. 
+     e. What critical value (on the scale of $\hat{p}$ is needed for a significance level of 0.05 in this case? What conclusion do you draw from the hypothesis test? Explain your reasoning. 
+     f. Repeat d & e for a sample size of n = 500. 
+     g. Explain what the figure below is demonstrating as best you can, and use it to summarize the role of sample size on these hypothesis tests. Questions to consider: What notation would you use to lable the center of the distributions? What about the shaded region? Is the critical region displayed on this visualization? 
+     
+```{r, echo = FALSE}
+phat <- .3
+p0 <- .25
+n <- 100
 
-data <- data %>% 
-  mutate(Z = (phat-0.25)/sqrt(p*(1-p)/n))
+z <- (phat - p0)/sqrt(p0*(1-p0)/n)
 
-test_stat <- (stat_obs-0.25)/sqrt(p*(1-p)/n)
+zstar <- qnorm(.95)
+lb <- phat - zstar*sqrt(phat*(1-phat)/n)
+ub <- phat + zstar*sqrt(phat*(1-phat)/n)
 
-ggplot(data, aes(x = Z)) +
-  geom_histogram() +
-  geom_vline(xintercept = qnorm(.95), color = "red") +
-  geom_vline(xintercept = test_stat, color = "blue")
+n <- 500
+
+z <- (phat - p0)/sqrt(p0*(1-p0)/n)
+
+zstar <- qnorm(.95)
+lb <- phat - zstar*sqrt(phat*(1-phat)/n)
+ub <- phat + zstar*sqrt(phat*(1-phat)/n)
+
+se_phat <- sqrt(p0*(1-p0)/n)
+
+n <- 100
+p1 <- ggplot() +
+  stat_dist_halfeye(aes(y = "n = 100", 
+                        dist = dist_normal(mu = p0, 
+                                           sigma = sqrt(p0*(1-p0)/100)),
+                        fill = stat(x > .3))) +
+  labs(y = "", x = "x") +
+  theme_minimal() +
+  xlim(0.1, .4)
+
+n <- 500
+p2 <- ggplot() +
+  stat_dist_halfeye(aes(y = "n = 500", 
+                        dist = dist_normal(mu = p0, 
+                                           sigma = sqrt(p0*(1-p0)/500)),
+                        fill = stat(x > .3))) +
+  labs(y = "", x = "x") +
+  theme_minimal() +
+  xlim(.1, .4)
+plot_grid(p1, p2, ncol = 1)
 ```
 
+3. Suppose that we design a study in order to test $H_0: p = 0.7$ against $H_A: p > 0.7$, and we determine a sample size of $n = 150$. We decide to reject $H_0$ and accept $H_A$ if and only if $\hat{p} \geq .75$. 
 
-2. Suppose that 30% of the people in a random sample from a population select the right front tire. 
+    a. Determine the significance level $\alpha$ of this test. *Drawing a picture may help*
+    b. Find the probability of the Type II error if, in fact, $p = 0.77$. *Drawing a picture may help*
 
-    a. Is 30% a population parameter, sample statistic, test statistic, or critical value? Explain.
-    b. What more information do you need to conduct a hypothesis test and determine a confidence interval?
-    c. Write out the hypotheses being tested. 
-    d. Suppose that the sample size is n = 100.  Determine the value of the test statistic and a 95% confidence interval.
-    e. What critical value is needed for a significance level of 0.05 in this case? What conclusion do you draw from the hypothesis test? Explain your reasoning.
-    f. Repeat d & e for a sample size of n = 500.
-    g. Summarize the role of sample size on these hypothesis tests and confidence intervals.  How are hypothesis tests and confidence intervals related?
 
-3. Let $Y$ be $b(1000, p)$. To test $H_0: p = 0.3$ against $H_A: p < 0.3$, we reject $H_0$ and accept $H_A$ if and only if $Y \leq 270$. For parts a & b, use the binomial distribution (of $Y$) directly, and then use the normal approximation (of $\hat{p}$).
 
-    a. Determine the significance level $\alpha$ of the test.
-    b. Find the probability of the Type II error if, in fact, $p = 0.26$. 
+
+
+4. Assume you are testing the hypotheses $H_0: \mu = \mu_0$ vs. $H_A: \mu > \mu_0$ and that $\sigma$ is known. Define a critical region $C$ such that if $\overline{X} \in C$, you reject $H_0$ at a significance level of $\alpha$. That is, define an expression for a critical value that will result in a Type I error rate of $\alpha$. Or stated yet another way, your region $C$ should be defined such that $P(\overline{X} \in C |H_0 \text{ true}) = \alpha$. *Hint: Start with the following probability statement are rearrange* $$P\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}>z_{\alpha}\right) = \alpha$$
+
+5. Do the same thing as in #4 (define an appropriate critical region) for the following hypothesis test: $H_0: \mu = \mu_0$ vs. $H_A: \mu \neq \mu_0$, $\sigma$ unknown
+
+6. [HTZ: 8.1-5] The mean birth weight in the United States is $\mu = 3315$, with a standard deviation of $\sigma = 575$. Let $X$ equal the birth weight in grams in Jerusalem. Conduct a hypothesis test to investigate whether the average birth weight in Jerusalem is lower than in the U.S.
+
+    a. State the null and alternative hypotheses
+    b. Define a critical region that has a significance level of $\alpha = 0.05$. 
+    c. If the random sample of $n = 30$ yielded $\overline{X} = 3189$ and $s = 488$, what would be your conclusion?
+    d. What is the p-value of your test?
     
-```{r, echo = FALSE, eval = FALSE}
-set.seed(437)
-N <- 100000
-n <- 1000
-p0 <- 0.3
-p_reject <- 0.27
-Y_reject <- p_reject*n
+## Simulation exploration
 
-#generate from binomial distribution
-data <- data.frame(Y = rbinom(N, n, p0))
+The `NHANES` dataset in the `NHANES` package contains data collected by the US National Center for Health Statistics (NCHS) on 10,000 individuals from 2009 - 2012. For the purposes of this exercise, we will treat this as a **population** dataset. 
 
-#compute proportions
-data <- data %>% 
-  mutate(phat = Y/n)
+Our variable of interest is `Pulse`, which is a numeric variable for a person's 60 second pulse rate. For the purposes of this demonstration, we will filter out people for whom `Pulse` was not recorded and restrict our population to adults age 18+. 
 
-#plot sampling distribution of phat, with critical region marked
-ggplot(data, aes(x = phat)) +
-  geom_histogram() +
-  geom_vline(xintercept = p_reject, color = "blue")
+```{r}
+library(NHANES)
+library(infer)
 
-#compute the significance level
-data %>% 
-  summarize(sum(Y <= Y_reject)/100000,
-            sum(phat <= p_reject)/100000)
+nhanes <- NHANES %>% 
+  filter(!is.na(Pulse), Age >= 18)
 
-#theoretical sig level - normal approx
-Z <- (p_reject - p0)/sqrt(p0*(1-p0)/n)
-pnorm(Z)
-
-#compute type II error (theoretical)
-p1 <- .26
-q <- (p_reject - p1)/sqrt(p1*(1-p1)/n)
-pnorm(q, lower.tail = FALSE)
-pbinom(Y_reject, n, p1, lower.tail = FALSE)
-
-#sims for type II error
-data2 <- data.frame(Y = rbinom(N, n, p1))
-data2 <- data2 %>% 
-  mutate(phat = Y/n)
-data2 %>% 
-  summarize(sum(Y > Y_reject)/100000,
-            sum(phat > p_reject)/100000)
+ggplot(nhanes, aes(x = Pulse)) +
+  geom_histogram()
 ```
 
-4. How would you conduct simulations to demonstrate the Type I and Type II error rates you determined above? Start by writing psuedo-code to work out your logic (and maybe sketch some by-hand graphs), then write R code. Comment on what your simulations show.
+```{r, echo = FALSE}
+mu <- mean(nhanes$Pulse)
+mu_rounded <- round(mu, 2)
+```
 
-    + *Hint: Start by generating 100,000 $Y$ values using `rbinom()`. You will generate another 100,000 for part b.*
+The average pulse among U.S. adults is $\mu = `r round(mu, 2)`$ 
 
-5. Describe what Type I and Type II error mean in your own words. Don't use any mathematical symbols, and try to avoid statistical jargon as much as possible.
+```{r}
+mu <- mean(nhanes$Pulse)
+mu
+```
 
-6. *In PS-03 you constructed a one-sided 99% CI for this scenario. Now, conduct the corresponding hypothesis test: * Public health officials in a large city decided that if compelling evidence could be presented that less than 90% of children under six years of age in the city had received the DPT vaccine, then they would carry out an expensive immunization program throughout the city. A random sample was taken of 537 children under six years of age in the city; of these 460 had been immunized for DPT.
+Note, not every random sample from this population will produce a sample statistic of $\bar{x} = `r round(mu, 2)`$; there will be sampling variability. We will use simulations to explore this sampling variability and its relationship to hypothesis testing. Before conducting the simulations:
 
-```{r, eval = FALSE, echo = FALSE}
-library(infer)
-NHANES %>% 
-  summarize(sum(Smoke100 == "Yes", na.rm=TRUE)/n())
+7. Consider the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ with $\alpha = 0.05$. 
 
-samples <- rep_sample_n(NHANES, 1000, replace = TRUE, 
+    a. Is the null hypothesis true in this case? *Note, we won't know this in real life! But we are using a scenario where we know the truth (we have the whole population) to demonstrate/verify the mathematical properties.*
+    b. Recall the test statistic is given by $T = \frac{\bar{x} - \mu}{s/\sqrt{n}}$, where $\bar{x}$ is the mean pulse observed in the sample, $s$ the standard deviation observed in the sample, and $n$ is the sample size. If we were to draw 10,000 random samples from the `nhanes` population, how many of them would you expect to result in a test statistic $T > `r qt(.975, n - 1)`$? What about $T < 1.5$?
+    c. What is the appropriate critical region for this $\alpha = 0.05$ two-sided test? That is, for which values of the test statistic $T$ should $H_0$ be rejected? 
+    d. Will a test statistic that falls in the critical region lead to a correct or incorrect conclusion to the hypothesis test in this case?
+
+The following code draws 10,000 random samples of size 100 and computes the sample mean and sample standard deviation in each and then visualizes the sampling distribution of the sample mean.
+
+```{r}
+n <- 100
+samples <- rep_sample_n(nhanes, n, 
+                        replace = TRUE, 
                         reps = 10000)
 
-sample_props <- samples %>% 
+sample_stats <- samples %>% 
   group_by(replicate) %>% 
-  summarize(phat = sum(Smoke100 == "Yes", na.rm=TRUE)/n())
+  summarize(xbar = mean(Pulse),
+            s = sd(Pulse)) 
 
-ggplot(sample_props, aes(x = phat)) +
-  geom_histogram()
-
-sample_props %>% 
-  summarize(sum(phat < 0.33)/n())
+ggplot(sample_stats, aes(x = xbar)) +
+  geom_histogram(color = "white")
 ```
+
+8. Write code that utilizes the simulated values to investigate what proportion of simulated values fall in the critical region. *Hint: create a new variable that computes the t-statistic for each $\bar{x}$ as well as an indicator variable for whether the t-statistic falls in the critical region.* Comment on what you find.
+
+```{r, echo = FALSE, eval = FALSE}
+alpha <- 0.05
+n <- 100
+sample_stats <- sample_stats %>% 
+  mutate(T = (xbar - mu)/(s/sqrt(n)),
+         T_reject = if_else((T < qt(alpha/2, n - 1) | T > qt(1-alpha/2, n - 1)), 1, 0))
+
+sample_stats %>% 
+  summarize(sum(T_reject)/n())
+```
+
+9. Still considering the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ and your current set of simulations: how often do you expect to get a p-value < 0.05? Why? Will p-value < 0.05 lead to a correct or incorrect conclusion to the hypothesis test in this case? 
+
+10. What type of error were #8 & 9 concerned with? Explain. If you wanted to reduce this error, what would you do? Explain.
+
+
+## Further exploration (to read + reflect only)
+
+The following code computes the p-value for each random sample in the simulations. 
+
+```{r}
+alpha <- 0.05
+n <- 100
+
+sample_stats <- sample_stats %>% 
+  mutate(T = (xbar - mu)/(s/sqrt(n)),
+         p_value = 2*pt(abs(T), n - 1, lower.tail = FALSE))
+```
+
+Recall that when $H_0$ is true, rejecting $H_0$ results in a Type I error. We control the Type I error by choosing $\alpha$; that is, we choose our rejection region such that $P(\text{Reject } H_0 | H_0 \text{ is true}) = \alpha$. For example, if we choose $\alpha = 0.1$, we will commit a Type I error 10% of the time. 
+
+The following code demonstrates this for the `nhanes` example. Recall that we are working with $H_0 = `r mu_rounded`$ which we happen to know is true. Therefore we want to look at how often we obtained a random sample that would result in erroneously rejecting $H_0$, for various levels of $\alpha$. We first create a vector of possible $\alpha$ values (from 0 to 1). We then initialize an empty vector called `reject_probability` that we will fill in iteratively via a `for loop`. Recall that we reject $H_0$ if p-value < $\alpha$. Therefore, inside the for loop, we calculate for rejection probability for a particular value of $\alpha$ by computing the proportion of p-values in `sample_stats` that were less than $\alpha$.
+
+```{r}
+alpha_values <- seq(from = 0, to = 1, by = 0.01)
+
+reject_probability <- c()
+
+for(i in 1:length(alpha_values)){
+  alpha <- alpha_values[i]
+  reject_probability[i] <- sum(sample_stats$p_value < alpha)/nrow(sample_stats)
+}
+```
+
+We can combine these results into a data frame for plotting. The graph demonstrates that the probability of rejecting $H_0$ (when it's true) is equal to $\alpha$, as guaranteed by the mathematical theory. 
+
+```{r}
+results <- data.frame(alpha = alpha_values,
+                      reject_probability = reject_probability)
+
+ggplot(results, aes(x = alpha, y = reject_probability)) +
+  geom_point() +
+  theme_minimal()
+```
+
+The reason this works is because when the null hypothesis is true, p-values follow a uniform distribution on the interval 0 to 1. Recall that the probability that a $U(0,1)$ random variable is less than some constant (also between 0 and 1), is equal to that constant. In other words, because p-values are uniformly distributed, $P(p\_value < \alpha) = \alpha$, where the p-value is the random variable and $\alpha$ is the constant. The following visualization confirms that the p-values for our analysis are uniformly distributed.
+
+```{r}
+ggplot(sample_stats, aes(x = p_value)) +
+  geom_histogram(color = "white", binwidth = 0.05) +
+  theme_minimal() +
+  xlim(0,1)
+```
+
+### Proof that $p_v \sim U(0,1)$ when $H_0$ is true
+
+The proof that p-values are uniformly distributed random variables under $H_0$ is very similar to a proof you saw in 361 involving cdfs.
+
+Under the null hypothesis, a test statistic $T$ is a random variable that has a pdf (e.g. standard normal distribution, t-distribution, etc). Let's call the pdf $f(t)$ and the corresponding cdf $F(t)$. Recall that a cdf is defined as $F(t) = P(T < t)$. 
+
+Let's denote a p-value as $p_v$ (to distinguish it from the $p$ notation for a population proportion). Note that a p-value can be defined as $p_v = P(T > t)$. That is, a p-value is the probability that the test statistic exceeds some cut-off value, $t$. We can re-write $p_v = 1 - P(T < t) = 1-F(t)$. Note that $p_v$ is a random variable because it is a function of the random variable $T$. We are going to prove that $p_v \sim U(0,1)$ by first proving two Lemmas:
+
+#### Lemma 1:
+
+If $T$ is a random variable with cdf $F(\cdot)$, then $F(T) \sim U(0,1)$
+
+#### Lemma 2: 
+
+If $U \sim U(0,1)$, then $1 - U$ is also $U(0,1)$.
+
+
+#### Lemma 1 Proof:
+
+Recall that if $X \sim U(0,1)$, its cdf is given by $P(X < x) = x$. 
+
+Define $Y = F(T)$ to be a random variable. We can express the cdf of $Y$ as $P(Y < y) = P(F(T) < y)$. Since $F(\cdot)$ is a cdf, it is monotonically increasing, and therefore has an inverse. Therefore:
+
+$$
+\begin{aligned}
+P(Y < y) &= P(F(T) < y) \\
+&= P(F^{-1}(F(T)) < F^{-1}(y)) \\
+&= P(T < F^{-1}(y)) \\
+&= F(F^{-1}(y)) \\
+&= y
+\end{aligned}
+$$
+
+Note that the second to last step is true because $P(T < F^{-1}(y))$ is simply the cdf of T evaluated at $F^{-1}(y)$. Therefore, since $P(Y < y) = y$ we have proved that $Y = F(T) \sim U(0,1)$.
+
+#### Lemma 2 Proof:
+
+Let $U \sim U(0,1)$ and define $W = 1-U$ to be another random variable. We can express the cdf of $W$ as $F(W) = P(W < w)$. If we can show this expression is equal to $w$, we will have shown that $W \sim U(0,1)$.
+
+$$
+\begin{aligned}
+P(W < w) &= P(1 - U < w) \\
+&= P(1 - w < U)\\
+&= P(U>1-w)\\
+&=1-P(U < 1-w)\\
+&=1-(1-w) \\
+&= w
+\end{aligned}
+$$
+
+#### P-value $\sim U(0,1)$ under $H_0$ Proof
+
+Therefore, since a p-value is defined as $p_v = P(T > t) = 1 - F(t)$, by Lemma 1, this is equivalent to 1 minus a uniform random variable, which by Lemma 2 is itself $U(0,1)$. Therefore, $p_v \sim U(0,1)$, which is what gives $P(p_v < \alpha) = \alpha$.
 
 ## Submission
 
@@ -165,6 +298,8 @@ Once you have completed all Exercises and written up your results in the Templat
 
 + (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
++ (RP4): *What questions and/or reflections do you have regarding the Further Exploration demos and proofs?*
+
 Knit your document one final time, then upload your .html file to Problem Set 05 on Canvas. 
 
 ## Grading (50pts)
@@ -174,5 +309,8 @@ Knit your document one final time, then upload your .html file to Problem Set 05
 | RP1      | 5      |
 | RP2      | 5    |
 | RP3      | 5    |
+| RP4       | 5 |
 | Formatting & Clarity | 5 |
-| Exercise completion | 30 |
+| Exercise completion | 25 |
+
+

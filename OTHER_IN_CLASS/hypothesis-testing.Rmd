@@ -113,7 +113,7 @@ Example: the Constitution of the United States stipulates that if a person is el
 
 # For right tire... $\hat{p} = 8/36 = 0.22$
 
-P = null hypothesis that people choose randomly (no preference for right tire)
+P = null hypothesis that people choose randomly (no preference for right tire, $p = 0.25$)
 
 --
 
@@ -121,12 +121,6 @@ Q = test statistic is less than `pnorm(.99) = 2.326`. Or equivalently, $\hat{p} 
 
 --
 
-Here we have an *absence of evidence* that people disproportionately prefer right tire, but...
+We observed $\hat{p} = 8/36 = 0.22$, so Q is true. But we cannot use that as evidence to claim P is necessarily true. 
 
---
-
-ABSENCE OF EVIDENCE DOES NOT CONSTITUTE EVIDENCE OF ABSENCE
-
---
-
-*Many different hypotheses are consistent with the observed data, so it’s not appropriate to accept any ONE of these hypotheses.*
+*Many different hypotheses are consistent with the observed data (e.g. $p = 0.22$, $p = .20$, $p = 0.25$), so it’s not appropriate to accept any ONE of these hypotheses.*

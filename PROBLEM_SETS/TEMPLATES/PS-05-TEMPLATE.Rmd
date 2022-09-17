@@ -22,42 +22,42 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 *RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
+*RP4: What questions and/or reflections do you have regarding the Further Exploration demos and proofs?*
+
 ## Exercise 1
 
-Text...
 
-```{r ex-1}
 
-```
-
-Text...
 
 ## Exercise 2
 
-a. 
 
-b.
-
-c.
-
-d.
-
-e.
-
-f.
-
-g.
 
 
 ## Exercise 3
 
-a.
 
-b.
 
 ## Exercise 4
 
 
 
 ## Exercise 5
+
+
+## Exercise 6
+
+
+## Exercise 7
+
+
+## Exercise 8
+
+
+## Exercise 9
+
+
+## Exercise 10
+
+
 
