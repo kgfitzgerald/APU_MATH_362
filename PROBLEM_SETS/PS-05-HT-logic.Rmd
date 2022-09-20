@@ -108,9 +108,7 @@ plot_grid(p1, p2, ncol = 1)
 
 4. Assume you are testing the hypotheses $H_0: \mu = \mu_0$ vs. $H_A: \mu > \mu_0$ and that $\sigma$ is known. Define a critical region $C$ such that if $\overline{X} \in C$, you reject $H_0$ at a significance level of $\alpha$. That is, define an expression for a critical value that will result in a Type I error rate of $\alpha$. Or stated yet another way, your region $C$ should be defined such that $P(\overline{X} \in C |H_0 \text{ true}) = \alpha$. *Hint: Start with the following probability statement are rearrange* $$P\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}>z_{\alpha}\right) = \alpha$$
 
-5. Do the same thing as in #4 (define an appropriate critical region) for the following hypothesis test: $H_0: \mu = \mu_0$ vs. $H_A: \mu \neq \mu_0$, $\sigma$ unknown
-
-6. [HTZ: 8.1-5] The mean birth weight in the United States is $\mu = 3315$, with a standard deviation of $\sigma = 575$. Let $X$ equal the birth weight in grams in Jerusalem. Conduct a hypothesis test to investigate whether the average birth weight in Jerusalem is lower than in the U.S.
+5. [HTZ: 8.1-5] The mean birth weight in the United States is $\mu = 3315$, with a standard deviation of $\sigma = 575$. Let $X$ equal the birth weight in grams in Jerusalem. Conduct a hypothesis test to investigate whether the average birth weight in Jerusalem is lower than in the U.S.
 
     a. State the null and alternative hypotheses
     b. Define a critical region that has a significance level of $\alpha = 0.05$. 
@@ -149,7 +147,7 @@ mu
 
 Note, not every random sample from this population will produce a sample statistic of $\bar{x} = `r round(mu, 2)`$; there will be sampling variability. We will use simulations to explore this sampling variability and its relationship to hypothesis testing. Before conducting the simulations:
 
-7. Consider the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ with $\alpha = 0.05$. 
+6. Consider the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ with $\alpha = 0.05$. 
 
     a. Is the null hypothesis true in this case? *Note, we won't know this in real life! But we are using a scenario where we know the truth (we have the whole population) to demonstrate/verify the mathematical properties.*
     b. Recall the test statistic is given by $T = \frac{\bar{x} - \mu}{s/\sqrt{n}}$, where $\bar{x}$ is the mean pulse observed in the sample, $s$ the standard deviation observed in the sample, and $n$ is the sample size. If we were to draw 10,000 random samples from the `nhanes` population, how many of them would you expect to result in a test statistic $T > `r round(qt(.975, n - 1), 2)`$? What about $T < 1.5$?
@@ -173,7 +171,7 @@ ggplot(sample_stats, aes(x = xbar)) +
   geom_histogram(color = "white")
 ```
 
-8. Write code that utilizes the simulated values to investigate what proportion of simulated values fall in the critical region. *Hint: create a new variable that computes the t-statistic for each $\bar{x}$ as well as an indicator variable for whether the t-statistic falls in the critical region.* Comment on what you find. Keep your answer to 7d in mind.
+7. Write code that utilizes the simulated values to investigate what proportion of simulated values fall in the critical region. *Hint: create a new variable that computes the t-statistic for each $\bar{x}$ as well as an indicator variable for whether the t-statistic falls in the critical region.* Comment on what you find. Keep your answer to 6d in mind.
 
 ```{r, echo = FALSE, eval = FALSE}
 alpha <- 0.05
@@ -186,9 +184,9 @@ sample_stats %>%
   summarize(sum(T_reject)/n())
 ```
 
-9. Still considering the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ and your current set of simulations: how often do you expect to get a p-value < 0.05? Why? Will p-value < 0.05 lead to a correct or incorrect conclusion to the hypothesis test in this case? 
+8. Still considering the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ and your current set of simulations: how often do you expect to get a p-value < 0.05? Why? Will p-value < 0.05 lead to a correct or incorrect conclusion to the hypothesis test in this case? 
 
-10. What type of error were #8 & 9 concerned with? Explain. If you wanted to reduce the probability of this error, what would you do? Explain.
+9. What type of error were #7 & 8 concerned with? Explain. If you wanted to reduce the probability of this error, what would you do? Explain.
 
 
 ## Further exploration (to read + reflect only)
