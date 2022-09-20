@@ -1,5 +1,6 @@
 ---
 title: "Hypothesis Testing"
+subtitle: "MATH 362"
 author: "Dr. Katie Fitzgerald"
 output:
   xaringan::moon_reader:
