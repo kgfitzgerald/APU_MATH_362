@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 05"
-subtitle: "Week 03 Day 02"
+subtitle: "Week 04"
 output: 
   html_document:
     toc: true
@@ -24,9 +24,11 @@ library(cowplot)
 
 # Learning objectives
 
-+ Conduct a hypothesis test for one proportion
++ Conduct a hypothesis test for a single proportion and a single mean
 + Articulate the role sample size plays in hypothesis testing
++ Investigate the relationship between critical regions, alpha (significance) levels, and p-values. 
 + Determine the significance level and Type II error rate of a test
++ Reflect on the proof that p-values are uniformly distributed (under $H_0$) and the fact $P(p_v < \alpha) = \alpha$.
 
 
 
@@ -37,7 +39,7 @@ library(cowplot)
     a. State an appropriate set of hypotheses for this scenario.
     b. Define a critical region for which you will reject the null hypothesis at most 1% of the time when it is true.
     c. Compute a relevant point estimate and test statistic.
-    d. State your conclusion for the hypothesis test, and you recommendation about the immunization program.
+    d. State your conclusion for the hypothesis test, and your recommendation about the immunization program.
 
 
 2. Return to the right front tire scenario. Suppose that 30% of the people in a random sample from a population select the right front tire.
@@ -46,7 +48,7 @@ library(cowplot)
      b. What more information do you need to conduct a hypothesis test? 
      c. Write out the hypotheses being tested.  
      d. Suppose that the sample size is n = 100.  Determine the value of the test statistic. 
-     e. What critical value (on the scale of $\hat{p}$ is needed for a significance level of 0.05 in this case? What conclusion do you draw from the hypothesis test? Explain your reasoning. 
+     e. What critical value (on the scale of $\hat{p}$) is needed for a significance level of 0.05 in this case? What conclusion do you draw from the hypothesis test? Explain your reasoning. 
      f. Repeat d & e for a sample size of n = 500. 
      g. Explain what the figure below is demonstrating as best you can, and use it to summarize the role of sample size on these hypothesis tests. Questions to consider: What notation would you use to lable the center of the distributions? What about the shaded region? Is the critical region displayed on this visualization? 
      
@@ -79,7 +81,8 @@ p1 <- ggplot() +
                         fill = stat(x > .3))) +
   labs(y = "", x = "x") +
   theme_minimal() +
-  xlim(0.1, .4)
+  xlim(0.1, .4) +
+  scale_fill_viridis_d()
 
 n <- 500
 p2 <- ggplot() +
@@ -89,11 +92,12 @@ p2 <- ggplot() +
                         fill = stat(x > .3))) +
   labs(y = "", x = "x") +
   theme_minimal() +
-  xlim(.1, .4)
+  xlim(.1, .4) +
+  scale_fill_viridis_d()
 plot_grid(p1, p2, ncol = 1)
 ```
 
-3. Suppose that we design a study in order to test $H_0: p = 0.7$ against $H_A: p > 0.7$, and we determine a sample size of $n = 150$. We decide to reject $H_0$ and accept $H_A$ if and only if $\hat{p} \geq .75$. 
+3. Suppose that we design a study in order to test $H_0: p = 0.7$ against $H_A: p > 0.7$, and we determine a sample size of $n = 150$ is needed. We decide to reject $H_0$ and accept $H_A$ if and only if $\hat{p} \geq .75$. 
 
     a. Determine the significance level $\alpha$ of this test. *Drawing a picture may help*
     b. Find the probability of the Type II error if, in fact, $p = 0.77$. *Drawing a picture may help*
@@ -117,7 +121,7 @@ plot_grid(p1, p2, ncol = 1)
 
 The `NHANES` dataset in the `NHANES` package contains data collected by the US National Center for Health Statistics (NCHS) on 10,000 individuals from 2009 - 2012. For the purposes of this exercise, we will treat this as a **population** dataset. 
 
-Our variable of interest is `Pulse`, which is a numeric variable for a person's 60 second pulse rate. For the purposes of this demonstration, we will filter out people for whom `Pulse` was not recorded and restrict our population to adults age 18+. 
+Our variable of interest is `Pulse`, which is a numeric variable for a person's 60 second pulse rate. For the purposes of this demonstration, we will filter out people for whom `Pulse` was not recorded and restrict our population to adults age 18+. We'll consider the resulting dataset `nhanes` to be our population of interest.
 
 ```{r}
 library(NHANES)
@@ -127,7 +131,8 @@ nhanes <- NHANES %>%
   filter(!is.na(Pulse), Age >= 18)
 
 ggplot(nhanes, aes(x = Pulse)) +
-  geom_histogram()
+  geom_histogram(color = "white") +
+  theme_minimal()
 ```
 
 ```{r, echo = FALSE}
@@ -147,7 +152,7 @@ Note, not every random sample from this population will produce a sample statist
 7. Consider the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ with $\alpha = 0.05$. 
 
     a. Is the null hypothesis true in this case? *Note, we won't know this in real life! But we are using a scenario where we know the truth (we have the whole population) to demonstrate/verify the mathematical properties.*
-    b. Recall the test statistic is given by $T = \frac{\bar{x} - \mu}{s/\sqrt{n}}$, where $\bar{x}$ is the mean pulse observed in the sample, $s$ the standard deviation observed in the sample, and $n$ is the sample size. If we were to draw 10,000 random samples from the `nhanes` population, how many of them would you expect to result in a test statistic $T > `r qt(.975, n - 1)`$? What about $T < 1.5$?
+    b. Recall the test statistic is given by $T = \frac{\bar{x} - \mu}{s/\sqrt{n}}$, where $\bar{x}$ is the mean pulse observed in the sample, $s$ the standard deviation observed in the sample, and $n$ is the sample size. If we were to draw 10,000 random samples from the `nhanes` population, how many of them would you expect to result in a test statistic $T > `r round(qt(.975, n - 1), 2)`$? What about $T < 1.5$?
     c. What is the appropriate critical region for this $\alpha = 0.05$ two-sided test? That is, for which values of the test statistic $T$ should $H_0$ be rejected? 
     d. Will a test statistic that falls in the critical region lead to a correct or incorrect conclusion to the hypothesis test in this case?
 
@@ -168,7 +173,7 @@ ggplot(sample_stats, aes(x = xbar)) +
   geom_histogram(color = "white")
 ```
 
-8. Write code that utilizes the simulated values to investigate what proportion of simulated values fall in the critical region. *Hint: create a new variable that computes the t-statistic for each $\bar{x}$ as well as an indicator variable for whether the t-statistic falls in the critical region.* Comment on what you find.
+8. Write code that utilizes the simulated values to investigate what proportion of simulated values fall in the critical region. *Hint: create a new variable that computes the t-statistic for each $\bar{x}$ as well as an indicator variable for whether the t-statistic falls in the critical region.* Comment on what you find. Keep your answer to 7d in mind.
 
 ```{r, echo = FALSE, eval = FALSE}
 alpha <- 0.05
@@ -183,7 +188,7 @@ sample_stats %>%
 
 9. Still considering the hypothesis test $H_0: \mu = `r mu_rounded`$ vs. $H_A: \mu \neq `r mu_rounded`$ and your current set of simulations: how often do you expect to get a p-value < 0.05? Why? Will p-value < 0.05 lead to a correct or incorrect conclusion to the hypothesis test in this case? 
 
-10. What type of error were #8 & 9 concerned with? Explain. If you wanted to reduce this error, what would you do? Explain.
+10. What type of error were #8 & 9 concerned with? Explain. If you wanted to reduce the probability of this error, what would you do? Explain.
 
 
 ## Further exploration (to read + reflect only)
