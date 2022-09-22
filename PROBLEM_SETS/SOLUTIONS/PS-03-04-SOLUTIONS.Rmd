@@ -1,0 +1,412 @@
+---
+title: "Problem Set 03-04"
+subtite: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(broom)
+library(infer)
+library(ggplot2movies)
+```
+
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+## Exercise 1
+
+A. Paired
+
+B. Not paired
+
+C. Paired
+
+D. Paired
+
+E. Not paired
+
+## Exercise 2
+
+```{r}
+x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
+       98, 119, 23, 14, 94, 57, 9, 66, 53, 28, 76, 58, 9, 
+       73, 49, 37, 92)
+
+t.test(x, conf.level = 0.9)
+```
+
+```{r, echo = FALSE}
+results <- tidy(t.test(x, conf.level = 0.9))
+mean <- round(results$estimate, 2)
+CIlb <- round(results$conf.low, 2)
+CIub <- round(results$conf.high, 2)
+```
+
+a. The parameter of interest is $\mu$, the mean amount of organic waste in 100 mililiters of water in Lake Macatawa. 
+b. The point estimate is $\bar{X} = `r mean`$
+c. We are 90% confident that the average amount of organic waste in 100 mililiters of water in Lake Macatawa is between `r CIlb` and `r CIub`
+
+## Exercise 3
+
+```{r ex-3}
+x <- c(1612, 1352, 1456, 1222, 1560, 1456, 1924)
+y <- c(1082, 1300, 1092, 1040, 910, 1248, 1092, 1040, 1092, 1288)
+t.test(x, y)
+```
+
+```{r, echo = FALSE}
+results <- tidy(t.test(x, y))
+xbar <- round(results$estimate1, 2)
+ybar <- round(results$estimate2, 2)
+estimate <- round(results$estimate, 2)
+CIlb <- round(results$conf.low, 2)
+CIub <- round(results$conf.high, 2)
+```
+
+a. The parameter of interest is $\mu_X - \mu_Y$, the  difference in average blood volumes between the two groups of males
+b. The point estimate is $\bar{X} - \bar{Y} = `r xbar` - `r ybar` = `r estimate`$
+c. We are 95% confident that the difference in means is between `r CIlb` and `r CIub`
+
+## Exercise 4
+
+```{r ex-4}
+pre <- c(11.1, 19.5, 14, 8.3, 12.4, 
+         7.89, 12.1, 8.3, 12.31, 10)
+
+post <- c(9.97, 15.8, 13.02, 9.28, 11.51, 
+          7.4, 10.7, 10.4, 11.4, 11.95)
+
+t.test(pre, post, paired = TRUE, conf.level = .9)
+```
+
+```{r, echo = FALSE}
+results <- tidy(t.test(pre, post, paired = TRUE, conf.level = .9))
+mean <- round(results$estimate, 2)
+CIlb <- round(results$conf.low, 2)
+CIub <- round(results$conf.high, 2)
+```
+
+a. The parameter of interest is $\mu_D$ the average difference in test scores
+b. The point estimate is $\bar{X_D} = `r mean`$
+c. We are 90% confident that the average difference in test scores is between `r CIlb` and `r CIub`
+
+## Exercise 5
+
+```{r ex-5}
+time_diff <- c(0.28, 0.01, 0.13, 0.33, -0.03, 0.07, -0.18, -0.14,
+               -0.33, 0.01, 0.22, 0.29, -0.08, 0.23, 0.08, 0.04,
+               -0.30, -0.08, 0.09, 0.70, 0.33, -0.34, 0.50, 0.06)
+t.test(time_diff)
+```
+
+```{r, echo = FALSE}
+results <- tidy(t.test(time_diff))
+mean <- round(results$estimate, 2)
+CIlb <- round(results$conf.low, 2)
+CIub <- round(results$conf.high, 2)
+```
+
+a. The parameter of interest is $\mu_D$, the average improvement in times. 
+b. The point estimate is $\bar{X_D} = `r mean`$
+c. We are 95% confident that the average improvement in times is between `r CIlb` and `r CIub`
+
+## Exercise 6
+
+The population distribution of `rating` is unimodal and slightly skewed left.
+
+```{r ex-6, message = FALSE, warning = FALSE}
+ggplot(movies, aes(x = rating)) +
+  geom_histogram(color = "white")
+```
+
+## Exercise 7
+
+The sample distribution looks relatively normal - it is unimodal. We expect it to be (roughly) similar to the population distribution in terms of center and spread.
+
+```{r ex-7}
+n <- 50
+
+set.seed(437)
+sample <- movies %>% 
+  sample_n(n)
+
+ggplot(data = sample, aes(x = rating)) +
+  geom_histogram(binwidth = 0.5, color = "white")
+
+sample %>% 
+  summarise(avg_rating = mean(rating))
+```
+
+## Exercise 8
+
+```{r}
+N <- 10000
+sims <- rep_sample_n(movies, size = 50, reps = N, replace = TRUE)
+```
+
+`sims` has 500,000 rows: 50 randomly selected movies for each of the 10,000 random samples. It contains all the same columns as `movies`, plus an additional column called `replicate` that specifies which of the 10,000 samples the row corresponds to. 
+
+## Exercise 9
+
+```{r}
+sample_means <- sims %>% 
+  group_by(replicate) %>% 
+  summarise(xbar = mean(rating))
+```
+
+`sample_means` has 10,000 rows, one for each random sample, and two columns: `replicate` and `xbar`. `replicate` is the ID variable to specify which of the 10,000 random samples the row corresponds to. `xbar` contains the sample means computed from each of the 10,000 samples. 
+
+
+## Exercise 10
+
+```{r}
+ggplot(data = sample_means, aes(x = xbar)) +
+  geom_histogram(color = "white")
+```
+
+The sampling distribution of the sample means is approximately normal. It has the same center as the population distribution, but a smaller spread (because the variance is $\sigma^2/n$ instead of $\sigma$). 
+
+## Exercise 11
+
+A population distribution includes all units in the population, whereas a sample distribution includes only those in the sample. We expect the two to have the same shape in terms of center and spread, although depending on the sample size, the exact shape of the sample distribution may be hard to discern. The sampling distribution is the distribution of the sample statistic (e.g. $\bar{x}$ or $\hat{p}$), if a large number of random samples were taken from the population. Note, this is a theoretical construct and will never be observed in real life (we never take a large number of random samples - we take one). Mathematical theory (and/or simulations) tells us the shape of the sampling distribution. It will have the same center as the population distribution (e.g. will be centered at $\mu$ or $p$), but will have a much smaller spread, because the variance formulas for sample statistics all have $n$ on the denominator (e.g. $V(\bar{X}) = \frac{\sigma^2}{n}$). This fits with our intutition as well, that there is less variability in averages than there is in individual values. 
+
+
+## Exercise 12
+
+```{r, eval = FALSE}
+#compute sample mean and sample standard deviation
+#for each of the N random samples
+sample_stats <- simulation_results %>% 
+  group_by(iteration number) %>% 
+  summarize(xbar = mean(variable),
+            s = sd(variable)) %>% 
+  #then compute lower and upper bound of CI using each method (3 times)
+  #and use an if_else statement to indicate whether mu is in the interval
+  mutate(CI_lb_1 = xbar - z*s/sqrt(n),
+         CI_ub_1 = xbar + z*s/sqrt(n),
+         success1 = if_else(mu is in between CI_lb_1 and CI_ub_1, 1, 0),
+         CI_lb_2 = xbar - z*sigma/sqrt(n),
+         CI_ub_2 = xbar + z*sigma/sqrt(n),
+         success2 = if_else(mu is in between CI_lb_2 and CI_ub_2, 1, 0),
+         CI_lb_3 = xbar - t*s/sqrt(n),
+         CI_ub_3 = xbar + t*s/sqrt(n),
+         success3 = if_else(mu is in between CI_lb_3 and CI_ub_3, 1, 0))
+
+#compute probability of success (coverage probability) for each method
+prob1 <- sum(sample_stats$success1)/N
+prob2 <- sum(sample_stats$success2)/N
+prob3 <- sum(sample_stats$success3)/N
+```
+
+
+## Exercise 13
+
+The coverage probabilities should be about 95%. The first method will be slightly lower than 0.95 because it is erroneously using the Z-distribution with $s$ instead of the t-distribution. It shouldn't be too far off, though, because $n= 50$. It would be more off with a smaller sample size (e.g. <30 when CLT hasn't kicked in yet).
+
+## Exercise 14
+
+```{r}
+sigma <- sd(movies$rating)
+mu <- mean(movies$rating)
+z <- qnorm(.975)
+t <- qt(.975, n - 1)
+
+#compute sample mean and sample standard deviation
+#for each of the N random samples
+sample_stats <- sims %>% 
+  group_by(replicate) %>% 
+  summarize(xbar = mean(rating),
+            s = sd(rating)) %>% 
+  #then compute lower and upper bound of CI using each method (3 times)
+  #and use an if_else statement to indicate whether mu is in the interval
+  mutate(CI_lb_1 = xbar - z*s/sqrt(n),
+         CI_ub_1 = xbar + z*s/sqrt(n),
+         success1 = if_else(mu > CI_lb_1 & mu < CI_ub_1, 1, 0),
+         CI_lb_2 = xbar - z*sigma/sqrt(n),
+         CI_ub_2 = xbar + z*sigma/sqrt(n),
+         success2 = if_else(mu > CI_lb_2 & mu < CI_ub_2, 1, 0),
+         CI_lb_3 = xbar - t*s/sqrt(n),
+         CI_ub_3 = xbar + t*s/sqrt(n),
+         success3 = if_else(mu > CI_lb_3 & mu < CI_ub_3, 1, 0))
+
+#compute probability of success (coverage probability) for each method
+prob1 <- sum(sample_stats$success1)/N
+prob2 <- sum(sample_stats$success2)/N
+prob3 <- sum(sample_stats$success3)/N
+```
+
+## Exercise 15
+
+```{r}
+sample_props <- sims %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(Animation)/n())
+
+p <- sum(movies$Animation)/dim(movies)[1]
+Ephat <- mean(sample_props$phat)
+
+ggplot(sample_props, aes(x = phat)) +
+  geom_histogram(color = "white") +
+  geom_vline(xintercept = p, color = "blue") +
+  geom_vline(xintercept = Ephat, color = "green")
+```
+
+
+## Exercise 16
+
+```{r}
+sample_props <- sample_props %>% 
+  mutate(lb = phat - z*sqrt(phat*(1-phat)/n),
+         ub = phat + z*sqrt(phat*(1-phat)/n),
+         success = if_else(p > lb & p < ub, 1, 0))
+
+sum(sample_props$success)/N
+```
+
+
+## Exercise 17
+
+The coverage probability should be 95%, but it is much lower than that. The conditions for using the normal approximation for the confidence interval are not satisfied. Specifically the number of successes, $np$ does not exceed 5. In this case $np = (50)(0.06) = 3$. Visually, we can see the sampling distribution ends up being right-skewed (instead of normal), because proportions have a natural lower bound, so the left tail gets truncated. This results in more $\hat{p}$ values that are equal to 0, which results in confidence "intervals" that consist of only the value 0. This causes fewer intervals overall to be successful in capturing $p$. 
+
+## Exercise 18
+
+$\tilde{p} = \frac{x + 2}{n + 4}$ will be closer to 0.5 than $\hat{p}$ and equal to 0.5 when $\hat{p} = 0.5$. 
+
+```{r}
+x <- seq(from = 1, to = n, by = 1)
+data <- data.frame(x,
+                   phat = x/n,
+                   ptilde = (x + 2)/(n+4)) %>% 
+  pivot_longer(cols = 2:3, names_to = "estimator", values_to = "value")
+
+ggplot(data, aes(x = x, y = value, color = estimator, group = estimator)) +
+  #geom_point() +
+  geom_line() +
+  scale_colour_viridis_d() +
+  theme_minimal()
+```
+
+## Exercise 19
+
+```{r}
+sample_props <- sample_props %>% 
+  mutate(x = phat*n,
+         ptilde = (x + 2)/(n + 4),
+         lb2 = ptilde - z*sqrt(ptilde*(1-ptilde)/n),
+         ub2 = ptilde + z*sqrt(ptilde*(1-ptilde)/n),
+         success2 = if_else(p > lb2 & p < ub2, 1, 0))
+
+sum(sample_props$success2)/N
+```
+
+## Exercise 20
+
+Coverage probabilities that exceed the nominal value are preferrable to those that fall short of the nominal value. It's better to be successful more often than you claim, rather than less often than you claim. 
+
+## Exercise 21
+
+```{r}
+s <- 1.3
+e <- 0.1
+
+z <- qnorm(.95)
+n90 <- z^2*s^2/(e^2)
+n90
+
+z <- qnorm(.975)
+n95 <- z^2*s^2/(e^2)
+n95
+
+
+z <- qnorm(.995)
+n99 <- z^2*s^2/(e^2)
+n99
+```
+
++ For 90% confidence, a sample size of `r ceiling(n90)` is necessary.
+
++ For 95% confidence, a sample size of `r ceiling(n95)` is necessary.
+
++ For 99% confidence, a sample size of `r ceiling(n99)` is necessary.
+
+## Exercise 22
+
+I'm choosing a $\hat{p}$ value of 0.5, which will give the maximum sample size needed for any $\hat{p}$ value. 
+
+```{r}
+phat <- 0.5
+e <- 0.03
+
+z <- qnorm(.95)
+n90 <- z^2*phat^2*(1-phat)^2/(e^2)
+n90
+
+z <- qnorm(.975)
+n95 <- z^2*phat^2*(1-phat)^2/(e^2)
+n95
+
+
+z <- qnorm(.995)
+n99 <- z^2*phat^2*(1-phat)^2/(e^2)
+n99
+```
+
++ For 90% confidence, a sample size of `r ceiling(n90)` is necessary.
+
++ For 95% confidence, a sample size of `r ceiling(n95)` is necessary.
+
++ For 99% confidence, a sample size of `r ceiling(n99)` is necessary.
+
+
+## Exercise 23
+
++ What do you plan to do with the results of the study? Are the stakes high - e.g. are there big business/organizational decisions riding on these results? Or is this more for internal informational purposes only?
++ What is your budget? 
++ How much will it cost (in terms of $ and time) to collect data on one movie? Does this differ for the rating vs animated questions?
++ What are your logistical constraints? How much time does a team member have to devote towards data collection? 
++ What's your desired margin of error? Ideally, you want your result to be within ___ of the true value. 
+    + E.g. is 0.1 reasonable for movie rating, or would an error of 1 still provide a useful enough result for your purposes? That is, if the true average rating is 7. Is it informative enough to say it's between 6 and 8, or do you need your results to be as precise as 6.9 to 7.1. 
+    + Think about the context of how the results will be used, and what the stakes are for the analysis.
++ Which analysis (rating or animated) is of primary importance?
+
+    
+
+## Exercise 24
+
+Perhaps the animation question is of primary importance. I would recommend a sample size of 461. This would allow for 99% confidence for the primary analysis, and 90% confidence for the secondary analysis. Additionally, it's likely that the margin of error can be relaxed (to be greater than 0.1) for the rating analysis and not have too much practical loss is usefulness of findings. Relaxing it even to 0.5 results in a much smaller necessary sample size, far below the 461 determined for the animation analysis. 
+
+```{r}
+s <- 1.3
+e <- 0.5
+
+z <- qnorm(.95)
+n90 <- z^2*s^2/(e^2)
+n90
+
+z <- qnorm(.975)
+n95 <- z^2*s^2/(e^2)
+n95
+
+
+z <- qnorm(.995)
+n99 <- z^2*s^2/(e^2)
+n99
+```
+
