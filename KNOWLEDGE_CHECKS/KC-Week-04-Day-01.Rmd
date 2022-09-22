@@ -48,6 +48,16 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 -   *"This makes me wonder about how previous researchers have gotten data analysis and hypothesis testing wrong in their studies. I am in a research class at APU, and I am aware that researchers in my field are not always versed in statistics. I would like to hear more about common mistakes in hypothesis testing and how to avoid such issues."*
 
+    -   "p-hacking"
+
+    -   Mindlessly using defaults, not thinking about Type I / Type II error
+
+    -   Equating statistical significance with practical significance
+
+    -   Using hypothesis tests in contexts where no randomness was involved
+
+-   How does using the variable \$D_i\$ get rid of the dependence between \$X_i\$ and \$Y_i\$ in paired data?
+
 # Knowledge Check
 
 *Knowledge Checks are to be used as study tools - especially as you prepare for exams (similar to the Exam Reviews provided in 361). Don't need to turn them in, but they're a way for you to check in on whether you are comprehending the main points of the reading. Any that you're unable to answer, you can ask specifically about in class and/or office hours.*
