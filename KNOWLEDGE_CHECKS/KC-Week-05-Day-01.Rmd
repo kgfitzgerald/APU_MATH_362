@@ -1,6 +1,6 @@
 ---
 title: "Week 05 Day 01"
-subtitle: "Knowledge Check"
+subtitle: ""
 output: 
   html_document:
     toc: true
@@ -13,6 +13,28 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
+
+# Student Qs
+
++ Why would we write $H_0: \mu_X - \mu_Y = 0$ instead of $H_0: \mu_X = \mu_Y$?
+
++ How do we know $T = \frac{(\bar{X} - \bar{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}}$ has a t distribution?
+
++ What does $\lfloor r \rfloor$ mean? 
+
++ My Q: should you round decimal sample sizes up or down? 
+
++ The T-value from the unequal variance formula gave a value that was slightly larger than the one from the equal variance formula. Will this always be the case mathematically? 
+    + I don't know - but would be interesting to explore! Algebraic manipulations and/or simulations
+    + Similar to "coverage probability" where we wanted to verify that 95% CI's resulted in 95% coverage probability, we want $\alpha=0.05$ tests to result in 5% Type I error rates. Concern with using the wrong test statistic (and therefore reference distribution) would be that we get Type I error rates that aren't "nominal" (i.e. don't match our specifed $\alpha$). 
+    
++ Never heard of the F-distribution ($F = \frac{U/r_1}{V/r_2}$). Is there a way of dealing with these in R?
+
++ What's the difference between the t-distribution and the F-distribution? What are they used for/what are their benefits?
+
++ When should we use Welch's t-test?
+
+# Knowledge Check
 
 1. Describe what each symbol in $\chi^2 = \frac{(n-1)S^2}{\sigma_0^2}$ means, and how this expression is used in a hypothesis test. 
 
@@ -34,7 +56,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 1. Describe what each symbol in $F_{1 - \alpha/2}(n-1, m-1)$ stands for, and how this expression is used in a hypothesis test.
 
-1. Assume you're conducting a one-sided hypothesis test for $\sigma_X^2 = \sigma_Y^2$ with a sample size of n_X = n_Y = 50. What should you set your $F$ cutoff value to be if you want to: 
+1. Assume you're conducting a one-sided hypothesis test for $\sigma_X^2 = \sigma_Y^2$ with a sample size of $n_X = n_Y = 50$. What should you set your $F$ cutoff value to be if you want to: 
 
     a) control Type I error rate to be 0.10
     a) control Type I error rate to be 0.05

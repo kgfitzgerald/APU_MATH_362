@@ -1498,11 +1498,44 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Week 05 Day 01</h1>
-<h3 class="subtitle">Knowledge Check</h3>
 
 </div>
 
 
+<div id="student-qs" class="section level1">
+<h1>Student Qs</h1>
+<ul>
+<li><p>Why would we write <span class="math inline">\(H_0: \mu_X - \mu_Y
+= 0\)</span> instead of <span class="math inline">\(H_0: \mu_X =
+\mu_Y\)</span>?</p></li>
+<li><p>How do we know <span class="math inline">\(T = \frac{(\bar{X} -
+\bar{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{S_X^2}{n} +
+\frac{S_Y^2}{m}}}\)</span> has a t distribution?</p></li>
+<li><p>What does <span class="math inline">\(\lfloor r \rfloor\)</span>
+mean?</p></li>
+<li><p>My Q: should you round decimal sample sizes up or down?</p></li>
+<li><p>The T-value from the unequal variance formula gave a value that
+was slightly larger than the one from the equal variance formula. Will
+this always be the case mathematically?</p>
+<ul>
+<li>I don’t know - but would be interesting to explore! Algebraic
+manipulations and/or simulations</li>
+<li>Similar to “coverage probability” where we wanted to verify that 95%
+CI’s resulted in 95% coverage probability, we want <span class="math inline">\(\alpha=0.05\)</span> tests to result in 5% Type I
+error rates. Concern with using the wrong test statistic (and therefore
+reference distribution) would be that we get Type I error rates that
+aren’t “nominal” (i.e. don’t match our specifed <span class="math inline">\(\alpha\)</span>).</li>
+</ul></li>
+<li><p>Never heard of the F-distribution (<span class="math inline">\(F
+= \frac{U/r_1}{V/r_2}\)</span>). Is there a way of dealing with these in
+R?</p></li>
+<li><p>What’s the difference between the t-distribution and the
+F-distribution? What are they used for/what are their benefits?</p></li>
+<li><p>When should we use Welch’s t-test?</p></li>
+</ul>
+</div>
+<div id="knowledge-check" class="section level1">
+<h1>Knowledge Check</h1>
 <ol style="list-style-type: decimal">
 <li><p>Describe what each symbol in <span class="math inline">\(\chi^2 =
 \frac{(n-1)S^2}{\sigma_0^2}\)</span> means, and how this expression is
@@ -1530,13 +1563,16 @@ distributed?</p></li>
 \alpha/2}(n-1, m-1)\)</span> stands for, and how this expression is used
 in a hypothesis test.</p></li>
 <li><p>Assume you’re conducting a one-sided hypothesis test for <span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span> with a sample
-size of n_X = n_Y = 50. What should you set your <span class="math inline">\(F\)</span> cutoff value to be if you want to:</p>
+size of <span class="math inline">\(n_X = n_Y = 50\)</span>. What should
+you set your <span class="math inline">\(F\)</span> cutoff value to be
+if you want to:</p>
 <ol style="list-style-type: lower-alpha">
 <li>control Type I error rate to be 0.10</li>
 <li>control Type I error rate to be 0.05</li>
 <li>control Type I error rate to be 0.01</li>
 </ol></li>
 </ol>
+</div>
 
 
 
