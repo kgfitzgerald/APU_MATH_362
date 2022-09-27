@@ -1592,214 +1592,198 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Problem Set 06</h1>
-<h3 class="subtitle">Week 04 Day 01</h3>
+<h3 class="subtitle">Week 05</h3>
 
 </div>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <div id="learning-objectives" class="section level1">
 <h1>Learning objectives</h1>
+<ul>
+<li>Conduct hypothesis tests for means and variances, by hand and using
+R</li>
+<li>Explore the relationship between effect size, sample size, <span class="math inline">\(\alpha\)</span>, and power</li>
+<li>Articulate trade-offs in study design decisions relating to effect
+size, sample size, <span class="math inline">\(\alpha\)</span>, and
+power</li>
+</ul>
 </div>
 <div id="exercises" class="section level1">
 <h1>Exercises</h1>
+</div>
+<div id="by-hand-or-typed" class="section level1">
+<h1>By hand or typed</h1>
 <ol style="list-style-type: decimal">
-<li><p>Assume you are testing the hypotheses <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span> and that <span class="math inline">\(\sigma\)</span> is known. Define a critical region
-<span class="math inline">\(C\)</span> such that if <span class="math inline">\(\overline{X} \in C\)</span>, you reject <span class="math inline">\(H_0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>. That is, define an expression for
-a critical value that will result in a Type I error rate of <span class="math inline">\(\alpha\)</span>. Or stated yet another way, your
-region <span class="math inline">\(C\)</span> should be defined such
-that <span class="math inline">\(P(\overline{X} \in C |H_0 \text{ true})
-= \alpha\)</span>. <em>Hint: Start with the following probability
-statement are rearrange</em> <span class="math display">\[P\left(\frac{\overline{X} -
-\mu}{\sigma/\sqrt{n}}&gt;z_{\alpha}\right) = \alpha\]</span></p></li>
-<li><p>Do the same thing as in #1 (define an appropriate critical
-region) for the following hypothesis tests:</p>
+<li><p>Independent random samples of heights of adult males living in
+two countries yielded the following results: <span class="math inline">\(n_X = 12\)</span>, <span class="math inline">\(\overline{X} = 65.7\)</span> inches, <span class="math inline">\(s_X = 4\)</span> inches and <span class="math inline">\(n_Y = 15\)</span>, <span class="math inline">\(\overline{Y} = 68.2\)</span> inches, <span class="math inline">\(s_Y = 3\)</span> inches. Conduct a hypothesis test
+to test whether the means are equal in each population. Assume that
+<span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span>.</p></li>
+<li><p>[HTZ 8.3-4] In May, the fill weights of six-pound boxes of
+laundry soap had a mean of 6.13 pounds with a standard deviation of
+0.095. The goal was to decrease the standard deviation. The company
+decided to adjust the filling machines and then test <span class="math inline">\(H_0: \sigma = 0.095\)</span> against <span class="math inline">\(H_A: \sigma &lt; 0.095\)</span>. In June, a random
+sample of size <span class="math inline">\(n = 20\)</span> yielded <span class="math inline">\(\bar{x} = 6.10\)</span> and <span class="math inline">\(s = 0.065\)</span></p>
 <ol style="list-style-type: lower-alpha">
-<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> known</li>
-<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> known</li>
-<li><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs. <span class="math inline">\(H_A: \mu \neq \mu_0\)</span>, <span class="math inline">\(\sigma\)</span> unknown</li>
+<li>At an <span class="math inline">\(\alpha = 0.05\)</span>
+significance level, was the company successful?</li>
+<li>What is the approximate p-value of your test?</li>
 </ol></li>
-<li><p>[HTZ: 8.1-5] The mean birth weight in the United States is <span class="math inline">\(\mu = 3315\)</span>, with a standard deviation of
-<span class="math inline">\(\sigma = 575\)</span>. Let <span class="math inline">\(X\)</span> equal the birth weight in grams in
-Jerusalem. Conduct a hypothesis test to investigate whether the average
-birth weight in Jerusalem is lower than in the U.S.</p>
-<ol style="list-style-type: lower-alpha">
-<li>State the null and alternative hypotheses</li>
-<li>Define a critical region that has a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</li>
-<li>If the random sample of <span class="math inline">\(n = 30\)</span>
-yielded <span class="math inline">\(\overline{X} = 3189\)</span> and
-<span class="math inline">\(s = 488\)</span>, what would be your
-conclusion?</li>
-<li>What is the p-value of your test?</li>
-</ol></li>
-<li><p>[From PS-03]. For developing countries in Asia (excluding China)
-and Africa, random samples of <span class="math inline">\(n_1 =
-1300\)</span> and <span class="math inline">\(n_2 = 1100\)</span>
-yielded <span class="math inline">\(y_1 = 520\)</span> and <span class="math inline">\(y_2 = 385\)</span> children with chronic
-malnutrition, respectively. Set up and conduct an appropriate hypothesis
-test for this data. Make sure to state the hypotheses, the <span class="math inline">\(\alpha\)</span> level, the critical region, the
-relevant point estimates, the test statistic, the p-value, and your
-conclusion.</p></li>
-<li><p>[HTZ: 8.4-10] Because of tourism in the state, it was proposed
-that public schools in Michigan begin after Labor Day. To determine
-whether support for this change was greater than 65%, a public poll was
-taken. Let <span class="math inline">\(p\)</span> equal the proportion
-of Michigan adults who favor a post-Labor Day start.</p>
-<ol style="list-style-type: lower-alpha">
-<li>State the null and alternative hypotheses</li>
-<li>Define a test statistic and a <span class="math inline">\(\alpha =
-0.025\)</span> critical region.</li>
-<li>Given that 414 out of a sample of 600 favor a post-Labor Day start,
-calculate the value of the test statistic.</li>
-<li>Find the p-value and state your conclusion.</li>
-<li>Find a one-sided 95% confidence interval that gives a lower bound
-for <span class="math inline">\(p\)</span>.</li>
-<li>Use <code>prop.test()</code> in R to conduct this hypothesis test
-and check your work. <em>Note: instead of the normal approximation
-(which is easy to do by-hand), R uses a more complicated (but more
-precise) procedure that relies on the chi-square distribution. However,
-the p-value and the confidence interval should still be similar to your
-“by-hand” work</em></li>
-</ol></li>
-<li><p>Use <code>prop.test()</code> to conduct the hypothesis test in
-#4.</p></li>
+<li><p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> equal the times in days required for
+maturation of Guardiola seeds from narrow-leaved and broad-leaved
+parents, respectively. Assume that <span class="math inline">\(X\)</span> is <span class="math inline">\(N(\mu_x,
+\sigma^2_x)\)</span> and <span class="math inline">\(Y\)</span> is <span class="math inline">\(N(\mu_y, \sigma^2_y)\)</span> and that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent. Test the hypothesis
+that <span class="math inline">\(H_0: \sigma^2_x = \sigma^2_y\)</span>
+vs. <span class="math inline">\(H_A: \sigma^2_x &gt; \sigma^2_y\)</span>
+if a sample size <span class="math inline">\(n_x = 13\)</span> yielded
+<span class="math inline">\(\bar{x} = 18.97, s_x^2 = 9.88\)</span> and a
+sample of size <span class="math inline">\(n_y = 9\)</span> yielded
+<span class="math inline">\(\bar{y} = 23.2, s_y^2 = 4.08\)</span>. Let
+<span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
 </ol>
 </div>
-<div id="simulation-exploration" class="section level1">
-<h1>Simulation exploration</h1>
-<p>The <code>NHANES</code> dataset in the <code>NHANES</code> package
-contains data collected by the US National Center for Health Statistics
-(NCHS) on 10,000 individuals from 2009 - 2012. For the purposes of this
-exercise, we will treat this as a <strong>population</strong>
-dataset.</p>
-<p>Our variable of interest is <code>Smoke100</code>, which is a
-categorical variable for whether or not the individual has smoked 100
-cigarettes in their lifetime. This question was asked only of those age
-20 and older, so we will subset the data to this sub-population.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>adults <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div>
-<p>The proportion of US adults (in 2009 - 2012) who had smoked 100
-cigarettes in their lifetime was 44.4%. That is <span class="math inline">\(p = 0.44\)</span>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> adults <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p =</span> <span class="fu">sum</span>(Smoke100 <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)<span class="sc">/</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  pull</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
-<pre><code>## [1] 0.4438148</code></pre>
-<p>Note, not every random sample from this population will produce a
-sample statistic of <span class="math inline">\(\hat{p} = 0.44\)</span>;
-there will be sampling variability. The following code draws 10,000
-random samples of size 100 and computes <span class="math inline">\(\hat{p}\)</span> in each.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">rep_sample_n</span>(adults, n, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">reps =</span> <span class="dv">10000</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sample_props <span class="ot">&lt;-</span> samples <span class="sc">%&gt;%</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(replicate) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">phat =</span> <span class="fu">sum</span>(Smoke100 <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)<span class="sc">/</span><span class="fu">n</span>()) </span></code></pre></div>
-<ol start="7" style="list-style-type: decimal">
-<li><p>Use the simulated values to visualize the sampling distribution
-of <span class="math inline">\(\hat{p}\)</span>. Describe the
-distribution.</p></li>
-<li><p>Consider the hypothesis test <span class="math inline">\(H_0: p =
-0.44\)</span> vs. <span class="math inline">\(H_A: p \neq 0.44\)</span>
-with <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div id="typed" class="section level1">
+<h1>Typed</h1>
+<div id="hypothesis-testing-in-r" class="section level2">
+<h2>Hypothesis testing in R</h2>
+<p>For Exercises 4 - 8, you are asked to conduct hypothesis tests on the
+same data you constructed confidence intervals for in PS-03-04. You
+should copy and paste code from PS-03-04 for these exercises.</p>
+<p>For each exercise,</p>
 <ol style="list-style-type: lower-alpha">
-<li>Is the null hypothesis true in this case?</li>
-<li>Recall the test statistic is given by <span class="math inline">\(Z
-= \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\)</span>, where
-<span class="math inline">\(\hat{p}\)</span> is the proportion observed
-in the sample, <span class="math inline">\(p_0\)</span> is the value of
-the parameter hypothesized in <span class="math inline">\(H_0\)</span>,
-and <span class="math inline">\(n\)</span> is the sample size. What
-proportion of the random samples drawn from the <code>adults</code>
-population do you expect to result in a test statistic <span class="math inline">\(|Z| &gt; 1.96\)</span>? Why? What about <span class="math inline">\(|Z| &gt; 1.5\)</span>?</li>
-<li>What is the appropriate critical region for this test? That is, for
-which values of the test statistic <span class="math inline">\(Z\)</span> should <span class="math inline">\(H_0\)</span> be rejected?</li>
-<li>Will a test statistic that falls in the critical region lead to a
-correct or incorrect conclusion to the hypothesis test in this
-case?</li>
-</ol></li>
-<li><p>Write code that utilizes the simulated values to investigate what
-proportion of simulated values fall in the critical region. <em>Hint:
-create a new variable that computes the Z-statistic for each <span class="math inline">\(\hat{p}\)</span> as well as an indicator variable
-for whether the Z-statistic falls in the critical region.</em> Comment
-on what you find.</p></li>
-<li><p>What is the critical region (on the scale of <span class="math inline">\(\hat{p}\)</span>) that corresponds to <span class="math inline">\(|Z| &gt; 1.96\)</span>. Re-create the plot from #7
-but add vertical lines that mark the critical region. Comment on the
-proportion of values that fall in the critical region.</p></li>
-<li><p>Still considering the hypothesis test <span class="math inline">\(H_0: p = 0.44\)</span> vs. <span class="math inline">\(H_A: p \neq 0.44\)</span> and your current set of
-simulations: how often do you expect to get a p-value &lt; 0.05? Why?
-Will p-value &lt; 0.05 lead to a correct or incorrect conclusion to the
-hypothesis test in this case?</p></li>
-<li><p>Write code that utilizes the simulated values to investigate the
-above question. Comment on what you find. What are the connections
-between what you find here and what you found in #9 - 10?</p></li>
-<li><p>What type of error were #8 - #12 demonstrating? Explain. If you
-wanted to reduce this error, what would you do? Explain.</p></li>
-<li><p>What proportion would you expect to fall in the critical region
-if you instead use a Z-cutoff of 2.576? Why? What would be the
-appropriate corresponding p-value cutoff in this case? Comment on how
-critical values and p-value cutoffs relate to one another.</p></li>
-<li><p>Still within the context of the <code>NHANES</code> adult
-population (where we happen to know the true <span class="math inline">\(p = 0.44\)</span>), consider a group of
-researchers (who don’t have the omniscience we have) who test the
-hypothesis <span class="math inline">\(H_0: p = 0.5\)</span> vs. <span class="math inline">\(H_A: p &lt; 0.5\)</span>. What type of error is
-possible in this scenario? Why?</p></li>
-<li><p>Define an appropriate critical region - in terms of <span class="math inline">\(\hat{p}\)</span> and in terms of <span class="math inline">\(Z\)</span> - for an <span class="math inline">\(\alpha\)</span> level of 0.05 for the hypothesis
-test in #15. That is, what should the researchers set as their cut-off
-values if they want to reject their null hypothesis at most 5% of the
-time if it is in fact true? <em>Hint: your work from #10 may be useful
-here</em></p></li>
-<li><p>Find the probability that the researchers analysis in #15 will
-result in a Type II error, knowing what we know about the
-<code>NHANES</code> population. That is, find the probability that you
-fail to reject <span class="math inline">\(H_0: p = 0.5\)</span> (and
-claim <span class="math inline">\(p&lt;0.5\)</span>) when in fact the
-true <span class="math inline">\(p = 0.44\)</span>. Find this
-probability mathematically, then, use the simulated values to
-demonstrate/verify this probability.</p></li>
+<li>state the parameter of interest (in words and symbols)</li>
+<li>state the null and alternative hypotheses</li>
+<li>report the relevant point estimate (provide the correct notation as
+well as the numeric value)</li>
+<li>report the test statistic, and comment on what reference
+distribution it is being compared to (e.g. t, standard normal,
+Chi-squared)</li>
+<li>report the p-value</li>
+<li>state your conclusion to the hypothesis test</li>
+<li>report the corresponding confidence interval, and comment how it
+relates to your conclusion from the hypothesis test</li>
 </ol>
-<!-- 19. Re-run the simulations again, this time with samples of size $n = 500$. Plot the sampling distribution of $\hat{p}$ again, adding vertical lines for the critical region determined in #11. What do you notice? Comment on what happened and why. -->
-<!-- ```{r, eval = FALSE, echo = FALSE} -->
-<!-- n <- 500 -->
-<!-- samples2 <- rep_sample_n(adults, n,  -->
-<!--                         replace = TRUE,  -->
-<!--                         reps = 10000) -->
-<!-- sample_props2 <- samples2 %>%  -->
-<!--   group_by(replicate) %>%  -->
-<!--   summarize(phat = sum(Smoke100 == "Yes")/n())  -->
-<!-- ggplot(sample_props2, aes(x = phat)) + -->
-<!--   geom_histogram() + -->
-<!--   geom_vline(xintercept = lb, color = "blue") + -->
-<!--   geom_vline(xintercept = ub, color = "blue") -->
-<!-- ``` -->
-<!-- 20. Determine the appropriate critical region (in terms of $\hat{p}$) for a significance level of $\alpha$ when testing $H_0: p = 0.44$ vs $H_A: p \neq 0.44$ (still assuming $n = 500$). Comment on how and why this critical region is different from the one you found in #11. What is the appropriate critical region in terms of $Z$? Comment on how and why this relates to the previous critical regions you found in terms of Z.  -->
-<!-- 21. Use the simulated values (with samples of size 500) to compute the proportion that fall into the rejection region in #14. What type of error rate is this demonstrating?  -->
-<!-- 22. Consider again the hypothesis test $H_0: p = 0.5$ vs. $H_A: p < 0.5$. Determine the appropriate critical region (in terms of $\hat{p}$) for a significance level of $\alpha$. Comment on how and why this is different from the critical region in #20 and #16.  -->
-<!-- 23. Find the probability of a Type II error in this scenario. That is, find the probability that you fail to reject $H_0: p = 0.5$ when the true $p = 0.44$. Find this probability mathematically, then, use the simulated values to demonstrate/verify this probability.   -->
-<!-- 24. Comment on how sample size relates to Type I and Type II error rates.  -->
-<!-- ```{r, eval = FALSE} -->
-<!-- %>%  -->
-<!--   mutate(Z = (phat - p)/sqrt(phat*(1-phat)/n), -->
-<!--          Z_reject = if_else((Z < qnorm(alpha/2) | Z > qnorm(1-alpha/2)), 1, 0), -->
-<!--          p_value = 2*pnorm(abs(Z), lower.tail = FALSE), -->
-<!--          p_reject = if_else(p_value < alpha, 1, 0)) -->
-<!-- sample_props %>%  -->
-<!--   summarize(sum(Z_reject)/n(), -->
-<!--             sum(p_reject)/n()) -->
-<!-- ggplot(sample_props, aes(x = phat)) + -->
-<!--   geom_histogram() -->
-<!-- ggplot(sample_props, aes(x = Z)) + -->
-<!--   geom_histogram() -->
-<!-- ggplot(sample_props, aes(x = p_value)) + -->
-<!--   geom_histogram(binwidth = 0.05) -->
-<!-- sample_props %>%  -->
-<!--   summarize(sum(phat < 0.33)/n()) -->
-<!-- ``` -->
+<p><strong>Note: you should use <code>t.test()</code> - you do NOT need
+to do these by hand.</strong></p>
+<ol start="4" style="list-style-type: decimal">
+<li>[From PS-03-04 #2] As a clue to the amount of organic waste in Lake
+Macatawa, researchers decide to estimate the average number of bacteria
+colonies in 100 milliliters of water. The number of colonies, in
+hundreds, for <span class="math inline">\(n=30\)</span> samples of water
+from the east basin yielded the following data. Use <span class="math inline">\(\alpha = 0.1\)</span> to conduct an appropriate
+hypothesis test.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">93</span>, <span class="dv">140</span>, <span class="dv">8</span>, <span class="dv">120</span>, <span class="dv">3</span>, <span class="dv">120</span>, <span class="dv">33</span>, <span class="dv">70</span>, <span class="dv">91</span>, <span class="dv">61</span>, <span class="dv">7</span>, <span class="dv">100</span>, <span class="dv">19</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       <span class="dv">98</span>, <span class="dv">119</span>, <span class="dv">23</span>, <span class="dv">14</span>, <span class="dv">94</span>, <span class="dv">57</span>, <span class="dv">9</span>, <span class="dv">66</span>, <span class="dv">53</span>, <span class="dv">28</span>, <span class="dv">76</span>, <span class="dv">58</span>, <span class="dv">9</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">73</span>, <span class="dv">49</span>, <span class="dv">37</span>, <span class="dv">92</span>)</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>[From PS-03-04 #3] Let <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> equal, respectively, the blood
+volumes in milliliters for a male who is a paraplegic and participates
+in vigorous physical activities and for a male who is able-bodied and
+participates in everyday, ordinary activities. Assume that <span class="math inline">\(X \sim N(\mu_X, \sigma^2_X)\)</span> and <span class="math inline">\(Y \sim N(\mu_Y, \sigma_Y^2)\)</span>. The
+following are the <span class="math inline">\(n_X = 7\)</span> and <span class="math inline">\(n_Y = 10\)</span> observations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Use <span class="math inline">\(\alpha
+= 0.05\)</span> to conduct an appropriate hypothesis test.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1612</span>, <span class="dv">1352</span>, <span class="dv">1456</span>, <span class="dv">1222</span>, <span class="dv">1560</span>, <span class="dv">1456</span>, <span class="dv">1924</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1082</span>, <span class="dv">1300</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">910</span>, <span class="dv">1248</span>, <span class="dv">1092</span>, <span class="dv">1040</span>, <span class="dv">1092</span>, <span class="dv">1288</span>)</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>[From PS-03-04 #4] Students in a semester-long health-fitness
+program have their percentage of body fat measured at the beginning of
+the semester and at the end of the semester. The following measurements
+give these percentages for ten males in the class. Use <span class="math inline">\(\alpha = 0.1\)</span> to conduct an appropriate
+hypothesis test.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.1</span>, <span class="fl">19.5</span>, <span class="dv">14</span>, <span class="fl">8.3</span>, <span class="fl">12.4</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="fl">7.89</span>, <span class="fl">12.1</span>, <span class="fl">8.3</span>, <span class="fl">12.31</span>, <span class="dv">10</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.97</span>, <span class="fl">15.8</span>, <span class="fl">13.02</span>, <span class="fl">9.28</span>, <span class="fl">11.51</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="fl">7.4</span>, <span class="fl">10.7</span>, <span class="fl">10.4</span>, <span class="fl">11.4</span>, <span class="fl">11.95</span>)</span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li>[From PS-03-04 #5] Twenty-four 9th and 10th grade high school girls
+were put on an ultraheavy rope-jumping program. The following data give
+the time difference in seconds for each girl (“before program time”
+minus “after program time”) for the 40 yard dash. Use <span class="math inline">\(\alpha = 0.05\)</span> to conduct an appropriate
+hypothesis test.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>time_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.28</span>, <span class="fl">0.01</span>, <span class="fl">0.13</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.03</span>, <span class="fl">0.07</span>, <span class="sc">-</span><span class="fl">0.18</span>, <span class="sc">-</span><span class="fl">0.14</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.33</span>, <span class="fl">0.01</span>, <span class="fl">0.22</span>, <span class="fl">0.29</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.23</span>, <span class="fl">0.08</span>, <span class="fl">0.04</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="sc">-</span><span class="fl">0.30</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="fl">0.09</span>, <span class="fl">0.70</span>, <span class="fl">0.33</span>, <span class="sc">-</span><span class="fl">0.34</span>, <span class="fl">0.50</span>, <span class="fl">0.06</span>)</span></code></pre></div>
+</div>
+<div id="power" class="section level2">
+<h2>Power</h2>
+<div id="cohens-d" class="section level3">
+<h3>Cohen’s d</h3>
+<p>In many different research contexts, the parameter of interest is a
+mean difference. For example we are interested in the difference between
+the mean in the treatment group <span class="math inline">\(\mu_T\)</span> and the mean in the control group
+<span class="math inline">\(\mu_C\)</span>. It is common practice to
+standardize this difference by the population standard deviation. That
+is, the parameter of interest is <span class="math display">\[\delta =
+\frac{\mu_T - \mu_C}{\sigma}.\]</span> We estimate <span class="math inline">\(\delta\)</span> by <span class="math display">\[d
+= \frac{\overline{Y}_T - \overline{Y}_C}{S_p^2}\]</span></p>
+<p>Under some standard assumptions (that aren’t too hard to meet in many
+research contexts), <span class="math inline">\(d \sim N(0,1)\)</span>.
+The estimator <span class="math inline">\(d\)</span> above, is commonly
+known as Cohen’s <span class="math inline">\(d\)</span>, named after
+psychologist and statistician Jacob Cohen.</p>
+<p>When designing a study, you want to determine:</p>
+<ul>
+<li>What is a practically meaningful value of <span class="math inline">\(\delta\)</span> in my research context?</li>
+<li>What sample size do I need to be able to detect that effect?</li>
+</ul>
+<p>Or alternatively,</p>
+<ul>
+<li>What is the largest sample size I can afford with my budget?</li>
+<li>What is the minimal detectable effect size (MDES) with that sample
+size?</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="simulation-exploration-in-app" class="section level1">
+<h1>Simulation exploration (in app)</h1>
+<p>Go to the following app: <a href="https://rpsychologist.com/d3/nhst/">https://rpsychologist.com/d3/nhst/</a></p>
+<ol start="8" style="list-style-type: decimal">
+<li><p>Assume that you want to detect an effect size of d = 0.1. How
+large of a sample do you need for the following scenarios:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Type I error of 0.05 and power of 0.80</li>
+<li>Type I error of 0.01 and power of 0.80</li>
+<li>Type I error of 0.01 and power of 0.90</li>
+</ol></li>
+<li><p>Let’s say you want to power your test at 80% and restrict your
+Type I error to 0.01 and can only afford a sample size of 50. What’s the
+smallest Cohen’s d you will be able to detect under these
+constraints?</p></li>
+<li><p>Let’s say the value you determined in #9 is unrealistically large
+for your research context (i.e. there’s no way the “treatment” will be
+that effective, that much better than the control), and you really need
+to be able to detect an effect size of 0.3. However, you don’t have
+access to any more money - <span class="math inline">\(n = 50\)</span>
+is still all that you can afford.</p>
+<ol style="list-style-type: lower-alpha">
+<li>What could you change about your design to be able to detect 0.3?
+Come up with at least two alternative designs.</li>
+<li>Comment on the tradeoffs in your designs.</li>
+</ol></li>
+<li><p>Suppose you want to power your study at 80% and need to detect an
+effect of 0.5. What happens to the necessary sample size as alpha
+decreases? Describe why this happens. Describe the trade-off here in
+practical terms.</p></li>
+<li><p>Suppose a Type I error is relatively risky in your context and
+therefore you set <span class="math inline">\(\alpha = 0.01\)</span>.
+You need to detect an effect of 0.5. What happens to the necessary
+sample size as power decreases? Describe why this happens. Describe the
+trade-off here in practical terms.</p></li>
+<li><p>Suppose you decide to power your study at 80% and are okay with a
+Type I error of 5%. What happens to the necessary sample size as <span class="math inline">\(d\)</span> changes? Describe why this happens.
+Describe the trade-off here in practical terms.</p></li>
+<li><p>Suppose you’re serving as a statistical consultant and your
+client says they have budgeted for a sample size of <span class="math inline">\(n = 50\)</span>. They mention that in a pilot
+study they estimated their treatment improved outcomes by about d = 0.1.
+Explain how you would go about articulating to them that this research
+design is not set up for success.</p></li>
+</ol>
 <div id="submission" class="section level2">
 <h2>Submission</h2>
 <p>Once you have completed all Exercises and written up your results in
@@ -1814,7 +1798,7 @@ completing these problems?</em></p></li>
 difficult about them/where did you get stuck?</em></p></li>
 </ul>
 <p>Knit your document one final time, then upload your .html file to
-Problem Set 05 on Canvas.</p>
+Problem Set 06 on Canvas.</p>
 </div>
 <div id="grading-50pts" class="section level2">
 <h2>Grading (50pts)</h2>

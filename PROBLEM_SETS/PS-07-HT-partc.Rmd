@@ -218,9 +218,6 @@ combined %>%
   summarize(sum(F > crit_F)/n())
 ```
 
-
-
-
 ## Submission
 
 Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
