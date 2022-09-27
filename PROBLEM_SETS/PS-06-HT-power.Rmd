@@ -45,7 +45,7 @@ library(infer)
 
 ## Hypothesis testing in R
 
-For Exercises 4 - 8, you are asked to conduct hypothesis tests on the same data you constructed confidence intervals for in PS-03-04. You should copy and paste code from PS-03-04 for these exercises.
+For Exercises 4 - 7, you are asked to conduct hypothesis tests on the same data you constructed confidence intervals for in PS-03-04. You should copy and paste code from PS-03-04 for these exercises.
 
 For each exercise, 
 
