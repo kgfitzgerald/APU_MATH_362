@@ -14,212 +14,87 @@ output:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
-```{r}
-library(NHANES)
-library(infer)
-library(tidyverse)
-```
-
-
 ## Summary / Reflection Prompts
 
 *RP1: What were the main concepts covered in this assignment?*
 
+> YOUR ANSWER HERE
+
 *RP2: What's one thing you understand better after completing these problems?*
 
+> YOUR ANSWER HERE
+
 *RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+> YOUR ANSWER HERE
+
+# By hand or typed
 
 ## Exercise 1
 
 ## Exercise 2
 
+a.
+b.
+
 ## Exercise 3
+
+# Typed
 
 ## Exercise 4
 
+a.
+b.
+c.
+d.
+e.
+f.
+g.
+
 ## Exercise 5
+
+a.
+b.
+c.
+d.
+e.
+f.
+g.
 
 ## Exercise 6
 
+a.
+b.
+c.
+d.
+e.
+f.
+g.
+
 ## Exercise 7
 
+a.
+b.
+c.
+d.
+e.
+f.
+g.
 
-# Simulation exploration
-
-```{r, message = FALSE, warning = FALSE}
-adults <- NHANES %>% 
-  filter(Age >= 20)
-
-p <- adults %>% 
-  summarize(p = sum(Smoke100 == "Yes")/n()) %>% 
-  pull
-p
-
-n <- 100
-samples <- rep_sample_n(adults, n, 
-                        replace = TRUE, 
-                        reps = 10000)
-
-sample_props <- samples %>% 
-  group_by(replicate) %>% 
-  summarize(phat = sum(Smoke100 == "Yes")/n()) 
-```
+# Power
 
 ## Exercise 8
 
-The distribution appears normal (unimodal, symmetric), centered around 0.44 as expected. 
-
-```{r}
-ggplot(sample_props, aes(x = phat)) +
-  geom_histogram(color = "white")
-```
-
 ## Exercise 9
-
-0.05. We know $H_0$ to be true, so $P(|Z| > 1.96) = 0.05$. $|Z| > 1.96$ will lead to a decision of Reject $H_0$, which is an incorrect decision in this case.  
 
 ## Exercise 10
 
-```{r}
-p0 <- 0.44
-sample_props <- sample_props %>% 
-  mutate(Z = (phat - p0)/sqrt(p0*(1-p0)/n),
-         reject = if_else(abs(Z) > 1.96, 1, 0))
-
-sample_props %>% 
-  summarize(sum(reject)/n())
-```
-
-Even when $H_0$ is true, about 5% of samples will produce a $\hat{p}$ that are far enough from $p$ that we will incorrectly reject the null hypothesis. 
-
 ## Exercise 11
-
-By re-arranging $$Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$$ we get $$\hat{p} = Z\sqrt{\frac{p_0(1-p_0)}{n}} + p_0.$$
-
-We can plug in -1.96 and 1.96 for Z to find the cutoff values for the critical region, on the scale of $\hat{p$.
-
-```{r}
-Z <- qnorm(0.975)
-SE_phat <- sqrt(p0*(1-p0)/n)
-lb_phat <- -Z*SE_phat + p0
-ub_phat <- Z*SE_phat + p0
-c(lb_phat, ub_phat)
-
-ggplot(sample_props, aes(x = phat)) +
-  geom_histogram(color = "white") +
-  geom_vline(xintercept = lb_phat, color = "blue") +
-  geom_vline(xintercept = ub_phat, color = "blue")
-```
-
-About 5% of the simulated values fall between `r lb_phat` and `r ub_phat`.
 
 ## Exercise 12
 
-We expect to get a p-value < 0.05 about 5% of the time when $H_0$ is true. The p-value quantifies the probability that the sample proportion will fall more extreme than the one observed, assuming $H_0$ is true. Because $H_0$ is true here, there should be just the 2.5% in each tail should have p-values < 0.05. 
-
 ## Exercise 13
 
-```{r}
-sample_props <- sample_props %>% 
-  mutate(p_value = 2*pnorm(-abs(Z)),
-         p_onesided = pnorm(Z, lower.tail = FALSE),
-         reject_p = if_else(p_value < 0.05, 1, 0))
-
-sample_props %>% 
-  summarize(sum(reject_p)/n()) 
-```
-
-Again, about 5% of the samples led to incorrect rejections of $H_0$. The same exact samples that had $|Z| > 1.96$ have p-value < 0.05 because these are equivalent ways of deciding a hypothesis test. 
-
 ## Exercise 14
-
-Type I error - rejecting $H_0$ when it is true (and we know it to be true in this case). If we wanted to reduce this Type I error rate we can change the threshold - push it farther out in the tails by making the Z-cutoff larger, or equivalently the p-value smaller.
-
-## Exercise 15
-
-About 1% would fall in the critical region (|Z|>2.576). This would lead to a Type I error rate of 1% instead of 5%. The appropriate p-value cutoff would then be 0.01. 
-
-## Exercise 16
-
-A Type II error is possible. Because the null hypothesis is false and should be rejected, so the danger is a false negative. 
-
-## Exercise 17
-
-Note: determining critical regions depends entirely on the hypothesized value under the null, not the actual value. 
-
-```{r}
-Z <- qnorm(0.975)
-p0 <- 0.5
-SE_phat <- sqrt(p0*(1-p0)/n)
-lb_phat <- -Z*SE_phat + p0
-ub_phat <- Z*SE_phat + p0
-c(lb_phat, ub_phat)
-```
-
-
-## Exercise 18
-
-The Type II error rate is ~22%. In real life, we obviously don't know the true 0.44, but we use this to determine best/worst case scenario if the true parameter is "this large/small". 
-
-```{r}
-pnorm(lb_phat, mean = 0.44, sd = sqrt(0.44*(1-0.44)/n)) + pnorm(ub_phat, mean = 0.44, sd = sqrt(0.44*(1-0.44)/n), lower.tail = FALSE)
-
-sample_props %>% 
-  summarize(sum(phat < lb_phat | phat > ub_phat)/n())
-```
-
-<!-- ## Exercise 19 -->
-
-<!-- ```{r} -->
-<!-- n <- 500 -->
-<!-- samples500 <- rep_sample_n(adults, n,  -->
-<!--                         replace = TRUE,  -->
-<!--                         reps = 10000) -->
-
-<!-- sample_props500 <- samples500 %>%  -->
-<!--   group_by(replicate) %>%  -->
-<!--   summarize(phat = sum(Smoke100 == "Yes")/n())  -->
-
-<!-- p0 <- 0.44 -->
-<!-- n <- 100 -->
-<!-- Z <- qnorm(0.975) -->
-<!-- SE_phat <- sqrt(p0*(1-p0)/n) -->
-<!-- lb_phat <- -Z*SE_phat + p0 -->
-<!-- ub_phat <- Z*SE_phat + p0 -->
-<!-- c(lb_phat, ub_phat) -->
-
-<!-- ggplot(sample_props500, aes(x = phat)) + -->
-<!--   geom_histogram(color = "white") + -->
-<!--   geom_vline(xintercept = lb_phat, color = "blue") + -->
-<!--   geom_vline(xintercept = ub_phat, color = "blue") -->
-<!-- ``` -->
-
-
-<!-- ## Exercise 20 -->
-
-<!-- ```{r} -->
-<!-- p0 <- 0.44 -->
-<!-- n <- 500 -->
-<!-- Z <- qnorm(0.975) -->
-<!-- SE_phat <- sqrt(p0*(1-p0)/n) -->
-<!-- lb_phat <- -Z*SE_phat + p0 -->
-<!-- ub_phat <- Z*SE_phat + p0 -->
-<!-- c(lb_phat, ub_phat) -->
-<!-- ``` -->
-
-<!-- This cutoff values are closer to 0.44 because the larger sample size narrowed the overall sampling distribution. The Z cut-off values remain the same, because Z is a standardized distribution that already accounts for the effect of different sample sizes. -->
-
-<!-- ## Exercise 21 -->
-
-<!-- This is describing Type I error rate again. -->
-
-<!-- ```{r} -->
-<!-- sample_props500 <- sample_props500 %>%  -->
-<!--   mutate(Z = (phat - p0)/sqrt(p0*(1-p0)/n), -->
-<!--          reject = if_else(abs(Z) > 1.96, 1, 0)) -->
-
-<!-- sample_props500 %>%  -->
-<!--   summarize(sum(Z > 1.96 | Z < -1.96)/n())  -->
-<!-- ``` -->
 
 
