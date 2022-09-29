@@ -1,6 +1,6 @@
 ---
 title: "Week 05 Day 02"
-subtitle: "Knowledge Check"
+subtitle: ""
 output: 
   html_document:
     toc: true
@@ -13,6 +13,33 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
+
+# Student Questions
+
++ What does $\Phi$ stand for? How do we enter $\Phi$ in RStudio?
+
++ How do we calculate the power if we don't know $\mu$?
+
++ Will we ever work backwards where we don't determine $\alpha$ ahead of time?
+    + Four unknowns: [Power app](https://rpsychologist.com/d3/nhst/)
+    
++ Why are we only aiming for 80% power/20% Type II error?
+
++ Why is 215 more "scientifically meaningful" than 201? 
+    + $H_0: \mu = 200$ (mean blood cholesterol in mg/dl)
+    
++ How do we define the boundary of whether or not it is "scientifically meaningful"? It all seems very subjective. 
+
++ Why would we calculate power for multiple $\mu$ values?
+
++ Are there easy ways of calculating power using R?
+
++ This reminds me of what we demonstrated in class last week; that if n is large enough I can technically force my standard error to be small enough so as to reject the null hypothesis even when the alternative is not that much different from it. I think this idea of statistical vs practical significance is really important especially when it comes to applications in, say, medicine or science. I do wonder what some of the trade offs would be though. Like, at what point can we say that the sample size is too big?
+
+
+
+
+# Knowledge Check
 
 1. What symbols do we use to represent Type I and Type II error?
 
