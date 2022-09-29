@@ -59,7 +59,7 @@ g) report the corresponding confidence interval, and comment how it relates to y
 
 **Note: you should use `t.test()` - you do NOT need to do these by hand.**
 
-4. [From PS-03-04 #2] As a clue to the amount of organic waste in Lake Macatawa, researchers decide to estimate the average number of bacteria colonies in 100 milliliters of water. The number of colonies, in hundreds, for $n=30$ samples of water from the east basin yielded the following data. Use $\alpha = 0.1$ to conduct an appropriate hypothesis test for $H_0: = 70$ vs. $H_A: \mu \neq 70$.
+4. [From PS-03-04 #2] As a clue to the amount of organic waste in Lake Macatawa, researchers decide to estimate the average number of bacteria colonies in 100 milliliters of water. The number of colonies, in hundreds, for $n=30$ samples of water from the east basin yielded the following data. Use $\alpha = 0.1$ to conduct an appropriate hypothesis test for $H_0: \mu = 70$ vs. $H_A: \mu \neq 70$.
 
 ```{r}
 x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
