@@ -1,0 +1,136 @@
+---
+title: "Exam 1"
+subtitle: "MATH 362"
+author: "YOUR NAME HERE"
+date: "due Saturday, October 8, 11:59pm"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "paper"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+**Note: you may need to install one or more of the following packages before being able to knit. You can install the `kableExtra` package, for example, by running `install.packages("kableExtra")` in your console.**
+
+```{r, message = FALSE, warning = FALSE}
+library(infer)
+library(kableExtra)
+library(tidyverse)
+```
+
+
+# Problem 1
+
+```{r prob-1}
+data2019 <- c(3, 2, 7, 4, 0, 2, 2, 4, 6, 0,
+       2, 8, 3, 3, 1, 1, 0, 2, 0, 2,
+       4, 0, 1, 1, 2, 8, 1, 1, 4, 2, 
+       4, 4, 1, 1, 2, 1, 5, 3, 3, 1, 
+       1, 12, 2, 0, 5, 8, 3, 9, 2, 2)
+
+data2020 <- c(0, 4, 4, 3, 8, 2, 5, 5, 2, 3, 
+       3, 4, 1, 3, 4, 1, 3, 11, 5, 2,  
+       1, 2, 7, 4, 4, 4, 8, 2, 1, 4,  
+       7, 4, 0, 1, 4, 8, 4, 3, 5, 11,  
+       9, 3, 2, 2, 4, 3, 0, 0, 12, 4)
+```
+
+a)
+
+b)
+
+c)
+
+d)
+
+e)
+
+f)
+
+g)
+
+h)
+
+
+# Problem 2
+
+### Part a
+
+```{r prob-2}
+
+```
+
+> YOUR ANSWER HERE
+
+### Part b
+
+> YOUR ANSWER HERE
+
+# Problem 3
+
+```{r}
+#read in population data from Google sheets URL
+population <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7Pn9SuN6KzdvxgqMG98iR8J3gorfkPLCVbF9VV4zwna5eY6-21M9ZV98MmxpX6LQ1iN8ChZur1rXe/pub?gid=429421419&single=true&output=csv", 
+                       show_col_types = FALSE)
+
+#draws 10,000 random samples
+samples <- population %>% 
+  rep_sample_n(size = 100, reps = 10000)
+
+#computes sample proportion in each sample
+sample_props <- samples %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(smoke == "Yes")/n())
+```
+
+### Part a
+
+```{r prob-3a}
+
+```
+
+> YOUR ANSWER HERE
+
+### Part b
+
+> YOUR ANSWER HERE
+
+### Part c
+
+```{r prob-3c}
+
+```
+
+### Part d
+
+> YOUR ANSWER HERE
+
+# Problem 4
+
+A) 
+
+B) 
+
+C)
+
+D)
+
+E)
+
+# Problem 5
+
+A) 
+
+B)
+
+C)
+
+D)
+
+E)
