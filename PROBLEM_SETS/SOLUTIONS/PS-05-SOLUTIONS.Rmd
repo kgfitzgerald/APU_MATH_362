@@ -1,0 +1,350 @@
+---
+title: "Problem Set 05"
+subtite: "SOLUTIONS"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+*RP4: What questions and/or reflections do you have regarding the Further Exploration demos and proofs?*
+
+## Exercise 1
+
+a) 
+
+$$H_0: p = 0.9$$
+$$H_A: p < 0.9$$
+
+b) $\alpha = 0.01$, which corresponds to a lower-tail Z-cutoff of `r round(qnorm(.01), 3)`. 
+
+```{r}
+qnorm(0.01)
+```
+
+c) Point estimate is given by $\hat{p} = \frac{460}{537} = `r round(460/537, 3)`$. Test statistic is given by $Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$. Computation in code below.
+
+```{r}
+#value computed from sample
+phat <- 460/537
+
+#"null value" hypothesized in H0
+p0 <- 0.9
+
+#sample size
+n <- 537
+
+#test statistic
+Z <- (phat - p0)/sqrt(p0*(1-p0)/n)
+Z
+```
+
+d) Because the test statistic is more extreme (farther in left tail) than the critical value, we reject $H_0$ and conclude there is sufficient evidence to claim $p < 0.9$. The city should implement the immunization program.
+
+## Exercise 2
+The problem states "30% of the people in a random sample from a population select the right front tire", which implies $\hat{p} = 0.3$.
+
+### Part a
+
+This is a sample statistic because it is the proportion observed from a sample.
+
+### Part b
+
+We need a sample size and an $\alpha$ level to conduct a hypothesis test
+
+### Part c
+
+$H_0: p = 0.25$ vs $H_0: p > 0.25$ by the context of the research question (do people disproportionately prefer the front right tire?)
+
+### Part d
+
+The test statistic is given by Z below
+
+```{r}
+#value computed from sample
+phat <- .3
+
+#"null value" hypothesized in H0
+p0 <- 0.25
+
+#sample size
+n <- 100
+
+#test statistic
+Z <- (phat - p0)/sqrt(p0*(1-p0)/n)
+Z
+```
+
+### Part e
+
+For a right-tailed test, 0.05 corresponds to a Z-cutoff of `r round(qnorm(.95), 3)`. Recall that $Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$. We can rearrange that formula to solve for $\hat{p}$.  $$\hat{p} = Z*\sqrt{\frac{p_0(1-p_0)}{n}} + p_0$$
+
+The code below converts Z to the scale of $\hat{p}$. 
+
+```{r}
+Z_crit <- qnorm(.95)
+
+phat_crit <- Z_crit*sqrt(p0*(1-p0)/n) + p0
+phat_crit
+```
+
+We will reject $H_0$ and claim $p > 0.25$ if $\hat{p} > `r phat_crit`$
+
+### Part f
+
+```{r}
+#sample size
+n <- 500
+
+#test statistic
+Z <- (phat - p0)/sqrt(p0*(1-p0)/n)
+Z
+
+Z_crit <- qnorm(.95)
+
+phat_crit <- Z_crit*sqrt(p0*(1-p0)/n) + p0
+phat_crit
+```
+
+When $n = 500$, we obtain a test statistic of `r Z`. The critical value in this case is `r phat_crit`.
+
+### Part g
+
+As the sample size increases, the sampling distribution of the point estimate (in this case $\hat{p}$ narrows), causing the observed point estimate to be farther out in the tails and appear more extreme. In the visualizations, the distributions are centered at the null value $p = 0.25$, and the yellow shaded region is the p-value: the probability of observing something more extreme than the 0.3 that was observed. We can see that this p-value is much smaller in the $n = 500$ case. This illustrates that a larger sample size will inevitably reduce your p-value. Stated another way, if you have a large enough sample size, you can get a really tiny p-value, and overturn $H_0$, even if the true difference isn't all that large. This is why it is important to distinguish between statistical and practical significance. 
+
+## Exercise 3
+
+### Part a
+
+The figure below shows the critical region for this test. The significance level is equal to the probability of the yellow shaded region. 
+
+```{r}
+library(tidyverse)
+library(ggdist)
+library(distributional)
+
+n <- 150
+p0 <- 0.7
+
+ggplot() +
+  stat_dist_halfeye(aes(y = "n = 150", 
+                        dist = dist_normal(mu = p0, 
+                                           sigma = sqrt(p0*(1-p0)/n)),
+                        fill = stat(x > .75))) +
+  labs(y = "", x = "x") +
+  theme_minimal() +
+  labs(x = "phat", fill = "phat > 0.75") +
+  scale_fill_viridis_d()
+```
+
+Recall that we assume $$\hat{p} \approx N\left(p, \frac{p(1-p)}{n}\right).$$ Therefore we can find the significance level (the yellow shaded region) using the `pnorm()` function and plugging in the 0.75 cutoff value. We use `lower.tail = FALSE` because the yellow shaded region is in the upper tail. 
+
+```{r}
+pnorm(0.75, 0.7, sqrt(.7*(1-.7)/n), lower.tail = FALSE)
+```
+
+Alternatively, we could have converted $\hat{p}$ to a Z-score and found the upper tail probability of the standard normal distribution. Both methods yield the same result, as they are just algebraic manipulations of each other. 
+
+```{r}
+phat_crit <- 0.75
+Z_crit <- (phat_crit - p0)/sqrt(p0*(1-p0)/n)
+Z_crit
+pnorm(Z_crit, lower.tail = FALSE)
+```
+
+### Part b
+
+The purple shaded region in the figure below visualizes the Type II error. That is, when $p = 0.77$ (this means $H_0: p = 0.7$ is false), and we reject if $\hat{p} > 0.75$, then the yellow shaded region results in correct decisions (reject $H_0$), whereas the purple shaded region results in incorrect decisions (fail to reject $H_0$). 
+
+```{r}
+p_alt <- 0.77 
+
+ggplot() +
+  stat_dist_halfeye(aes(y = "n = 150", 
+                        dist = dist_normal(mu = p_alt, 
+                                           sigma = sqrt(p_alt*(1-p_alt)/n)),
+                        fill = stat(x > .75))) +
+  labs(y = "", x = "x") +
+  theme_minimal() +
+  labs(x = "phat", fill = "phat > 0.75") +
+  scale_fill_viridis_d()
+```
+
+We can use the `pnorm()` function to compute this probability in R. Note the Type II error (purple) is the lower tail. 
+
+```{r}
+pnorm(0.75, 0.77, sqrt(.77*(1-.77)/n))
+```
+
+
+
+## Exercise 4
+
+We can define a critical region $C$ such that $P(\overline{X} \in C |H_0 \text{ true}) = \alpha$ by simply rearranging $P\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}>z_{\alpha}\right) = \alpha$
+
+$$
+\begin{aligned}
+\alpha &= P\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}>z_{\alpha}\right)\\ 
+&= P(\overline{X} - \mu > z_{\alpha}\frac{\sigma}{\sqrt{n}}) \\
+&= P(\overline{X}> z_{\alpha}\frac{\sigma}{\sqrt{n}} + \mu)
+\end{aligned}
+$$
+
+Therefore, the critical value is $c = z_{\alpha}\frac{\sigma}{\sqrt{n}} + \mu$, and the critical region can be defined as $C = \{\overline{X}:\overline{X} > c\}$.
+
+
+## Exercise 5
+
+### Part a
+
+$$H_0: \mu = 3315$$
+$$H_A: \mu < 3315$$
+
+### Part b
+
+The parameter of interest is a mean, so we should use the t-distribution. With a left-tailed test with $\alpha = 0.05$, we can define the critical region as $$\overline{X} < t_{0.05, n - 1}\frac{s}{\sqrt{n}} + \mu$$
+
+Plugging in for a sample size of $n = 30$, the critical region becomes:
+
+```{r}
+n <- 30
+alpha <- 0.05
+xbar <- 3189
+s <- 488
+mu <- 3315
+xbar_crit <- qt(alpha, df = n - 1)*s/sqrt(n) + mu
+xbar_crit
+```
+
+### Part c
+
+We can compare $\overline{X} = 3189$ to our critical region above of `r xbar_crit`, or equivalently, compute our test statistic and compare it to $t_{0.05,29} = `r qt(.05, 29)`$.
+
+```{r}
+T <- (xbar - mu)/(s/sqrt(n))
+T
+```
+
+Because our observed value (point estimate, or test statistic) is not more extreme (farther in left tail) than the corresponding critical value, we fail to reject $H_0$. That is, there is not enough evidence to conclude birth weights in Jerusalem are lower on average than birth weights in the US. 
+
+# Simulation Exploration
+
+```{r}
+library(NHANES)
+library(infer)
+
+nhanes <- NHANES %>% 
+  filter(!is.na(Pulse), Age >= 18)
+
+ggplot(nhanes, aes(x = Pulse)) +
+  geom_histogram(color = "white") +
+  theme_minimal()
+
+mu <- mean(nhanes$Pulse)
+```
+
+## Exercise 6
+
+### Part a
+
+The null hypothesis is true in this case
+
+### Part b
+
+When the null hypothesis is true (as it is in this case), $T \sim t_{\alpha, n-1}$. To get an exact answer using code, we need to specify a sample size. We can use $n = 100$, which is what is used later on in the simulations.
+
+```{r}
+prob <- pt(1.96, 99, lower.tail = FALSE)
+prob
+count <- prob*10000
+count
+
+prob <- pt(1.5, 99)
+prob
+count <- prob*10000
+count
+```
+
+To get an approximate answer without specifying a sample size, we can recall that the t distribution and standard normal distribution are similar and use `pnorm()`.
+
+```{r}
+prob <- pnorm(1.96, lower.tail = FALSE)
+prob
+count <- prob*10000
+count
+
+prob <- pnorm(1.5)
+prob
+count <- prob*10000
+count
+```
+
+To get an approximate answer without using any code at all, we can recall that Z-scores and T-scores are a measure of how many standard deviations are are above or below the mean. Therefore a Z or T-score of 1.96 is about 2 standard deviations above the mean, and the empirical rules tells us that about 95% of a normal distribution falls within 2 standard deviations above the mean. Therefore, 2.5% fall more than 2 sds above the mean (T > 2), so we would expect roughly 250 of the 10,000 test statistics to be greater than 1.96. Similarly, T = 1.5 is 1.5 sds above the mean. Using other benchmarks we're familiar with (e.g. Empirical rule says 68.5% will be within 1sd of mean (so the probability of being to the left of 1 is (.645 + (1-.645)/2 = .84)); critical value for 90% CI is 1.645 (so the probability to the left of 1.645 is 0.95), we can make an educated guess that the probability T < 1.5 is between 0.84 and 0.95. This means that of the 10,000 test statistics, somewhere between 8400 and 9500 will be less than 1.5.
+
+### Part c
+
+```{r}
+T_crit <- qt(.975, 99)
+T_crit
+Z_approx <- qnorm(.975)
+Z_approx
+```
+
+For a two-sided $\alpha = 0.05$ test and a sample size of 100, we want to reject when $|T| > `r T_crit`$. A normal approximation can be found without specifying a sample size and yields 1.96.
+
+### Part d
+
+A test statistic that falls in the critical region results in rejecting $H_0$, which is an incorrect decision in this case because $H_0$ is true.
+
+## Exercise 7
+
+```{r}
+n <- 100
+alpha <- 0.05
+mu <- mean(nhanes$Pulse)
+
+samples <- rep_sample_n(nhanes, n, 
+                        replace = TRUE, 
+                        reps = 10000)
+
+sample_stats <- samples %>% 
+  group_by(replicate) %>% 
+  summarize(xbar = mean(Pulse),
+            s = sd(Pulse),
+            T = (xbar - mu)/(s/sqrt(n)),
+            T_reject = if_else((T < qt(alpha/2, n - 1) | 
+                                  T > qt(1-alpha/2, n - 1)), 1, 0))
+
+sample_stats %>% 
+  summarize(sum(T_reject)/n())
+```
+
+We find that about 5% of the 10,000 samples lead to a test statistic that falls in the critical region, leading us to reject $H_0$ even though it is true. This is what we would expect since we set $\alpha = 0.05$
+
+## Exercise 8
+
+Because $\alpha = 0.05$, we will choose to reject when we obtain p-value < 0.05. The probability of finding p-value < 0.05 is equivalent to finding a test statistic that falls in the critical region. The simulations above demonstrated we expect this to happen 5% of the time (because $\alpha  = 0.05$).
+
+## Exercise 9
+
+Exercises 7 & 8 were demonstrating Type I error: the probability of erroneously rejecting $H_0$ when it is true. If you wanted to reduce your risk of a Type I error, then you should reduce your $\alpha$, which will push your critical region farther out in the tails. 
+
+
+
+
+
