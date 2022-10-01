@@ -1,0 +1,173 @@
+---
+title: "Exam 1"
+subtitle: "MATH 362"
+date: "due Saturday, October 8, 11:59pm"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "paper"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(infer)
+library(kableExtra)
+library(tidyverse)
+```
+
+```{css, echo = FALSE}
+/* Whole document: */
+body{
+  font-size: 16pt;
+}
+/* Headers */
+h1{
+  font-size: 24pt;
+}
+```
+
+
+# Problem 1 (30 points)
+
+The [General Social Survey](https://gss.norc.org) asks the question: "For how many days during the past 30 days was your mental health, which includes stress, depression, and problems with emotions, not good?" Below is sample data collected on US adults pre- and post-2020. Suppose the first was obtained via a random sample of 50 US adults in September 2019, and the second was obtained via another random sample of 50 US adults in September 2020. Conduct an appropriate hypothesis test for these data (you may use `t.test()`). Use $\alpha = 0.01$.  
+
+```{r}
+data2019 <- c(3, 2, 7, 4, 0, 2, 2, 4, 6, 0,
+       2, 8, 3, 3, 1, 1, 0, 2, 0, 2,
+       4, 0, 1, 1, 2, 8, 1, 1, 4, 2, 
+       4, 4, 1, 1, 2, 1, 5, 3, 3, 1, 
+       1, 12, 2, 0, 5, 8, 3, 9, 2, 2)
+
+data2020 <- c(0, 4, 4, 3, 8, 2, 5, 5, 2, 3, 
+       3, 4, 1, 3, 4, 1, 3, 11, 5, 2,  
+       1, 2, 7, 4, 4, 4, 8, 2, 1, 4,  
+       7, 4, 0, 1, 4, 8, 4, 3, 5, 11,  
+       9, 3, 2, 2, 4, 3, 0, 0, 12, 4)
+```
+
+a) state the parameter of interest (in words and symbols)
+a) state the null and alternative hypotheses
+a) report the relevant point estimate (provide the correct notation as well as the numeric value)
+a) report the test statistic
+a) comment on what reference distribution the test statistic is being compared to (e.g. t, standard normal, Chi-squared)
+a) report the p-value
+a) state your conclusion to the hypothesis test
+a) report the corresponding confidence interval, and comment how it relates to your conclusion from the hypothesis test
+
+# Problem 2 (10 points)
+
+Suppose public health researchers are concerned about smoking prevelance in a particular population. They decide to conduct a survey of a random sample of 100 residents from this population and will implement an anti-smoking public health campaign if there is sufficient evidence to claim that more than 30% of residents in this population smoke. The researchers are knowledgeable enough about statistics to know that there will be sampling variability in their estimate, so they decide prior to the study that if they find that 40% or more of people in their sample smoke, they will consider this to be sufficient evidence that $p > 0.3$. In the framework of hypothesis testing, they want to test $H_0: p = 0.3$ vs. $H_A: p > 0.3$, and plan to reject $H_0$ if $\hat{p} > 0.4$. 
+
+a) What is the significance level of their test? That is, what is their probability of making a Type I error? *Hint: Drawing a picture may help*. You may assume all the assumptions are satisfied to use the normal approximation for this test. Make sure to provide enough math/code/text to explain your reasoning.
+b) Describe the trade-offs if the researchers instead chose a smaller cutoff (say 0.35, for example) for what they consider "sufficient evidence" that $p > 0.3$. You do not need to compute anything here - I am just interested in your reasoning. 
+
+# Problem 3 (30 points)
+
+Still considering the same hypothesis test setting as in Problem 2 above, suppose the true proportion of people who smoke in the population of interest is 0.444. What is the power of the above hypothesis test? That is, how likely are the public health researchers to conclude $p > 0.3$ when in fact $p = 0.444$? We will use simulations from a hypothetical population dataset to explore this question. We'll treat the `population` data frame below as a census of the population of interest. This population has 72,350 people, and 32,110 of them smoke, giving $p = 0.444$, as shown in the code output below. 
+
+```{r, echo = FALSE, eval = FALSE}
+population <- NHANES %>% 
+  filter(Age >= 20, !is.na(smoke)) %>% 
+  select(smoke = smoke)
+population <- purrr::map_dfr(seq_len(10), ~population) 
+write_csv(population, "./EXAMS/data/population.csv")
+```
+
+```{r, message = FALSE, warning = FALSE}
+population <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7Pn9SuN6KzdvxgqMG98iR8J3gorfkPLCVbF9VV4zwna5eY6-21M9ZV98MmxpX6LQ1iN8ChZur1rXe/pub?gid=429421419&single=true&output=csv", 
+                       show_col_types = FALSE)
+
+population %>% 
+  count(smoke) %>% 
+  mutate(p = n/sum(n)) %>% 
+  kbl(digits = 3) %>% kable_minimal()
+```
+
+The public health researchers of course will not have access to this population data, but will rather draw one sample of 100 people from this population. These simulations are for demonstration of statistical ideas only. The code below draws 10,000 random samples of size 100 from this population and computes the sample proportion in each.
+
+```{r, eval = FALSE}
+samples <- population %>% 
+  rep_sample_n(size = 100, reps = 10000)
+
+sample_props <- samples %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(smoke == "Yes")/n())
+```
+
+### Part a (8 points)
+
+Produce a graph of the sampling distribution of $\hat{p}$ and explain as best you can why it has the shape, center, and spread that it has. 
+
+### Part b (7 points)
+
+Describe the logic for how you could use these simulation results to estimate the power of the public health researchers' test of $H_0: p = 0.3$ vs. $H_A: p > 0.3$. *Hint: recall the critical region specified by the researchers*.
+
+### Part c (5 points)
+
+Write code to estimate the power of the researchers' test using these simulations and report your findings.  *Hint: this can be done in as little as one line of code and will involve the `sample_props` object*
+
+### Part d (10 points)
+
+If the researchers wanted to increase the power of their test, what could they do? Describe two specific ways, and explain in as much detail as you can why these changes would increase power. 
+    
+# Problem 4 (20 points)
+
+For each of the following, indicate if the statement is true or false. **Provide a justification for your response.**
+
+  A) Type I error is the probability that the null hypothesis is false. 
+  A) If we increase our sample size, the percent of "successful" confidence intervals will increase.
+  A) Increasing $\alpha$ is one way to increase power.
+  A) $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$ follows a t-distribution
+  A) A confidence interval will always contain the point estimate
+
+# Problem 5 (10 points)
+
+For each of the following, state a research question you could investigate where the parameter of interest is:
+
+  A) A single mean
+  A) A difference in independent means
+  A) A difference in paired means
+  A) A single proportion
+  A) A difference in proportions
+  
+```{r, include = FALSE, eval = FALSE}
+population <- NHANES %>% 
+  filter(Age >= 20, !is.na(smoke))
+
+population %>% 
+  count(smoke) %>% 
+  mutate(prop = n/sum(n))
+
+samples <- population %>% 
+  rep_sample_n(size = 100, reps = 10000)
+
+stats <- samples %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(smoke == "Yes")/n(),
+            xbar = mean(TotChol))
+
+ggplot(stats, aes(x = phat)) +
+  geom_histogram()
+
+
+
+nhanes2 <- NHANES %>% 
+  filter(!is.na(TotChol))
+
+samples2 <- nhanes %>% 
+  rep_sample_n(size = 100, reps = 10000)
+
+stats2 <- samples2 %>% 
+  group_by(replicate) %>% 
+  summarize(phat = sum(smoke == "Yes")/n(),
+            xbar = mean(TotChol))
+ggplot(stats2, aes(x = xbar)) +
+  geom_histogram()
+```
