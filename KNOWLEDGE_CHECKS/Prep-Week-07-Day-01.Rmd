@@ -19,3 +19,5 @@ You may find it useful to have your notes and/or textbook from MATH 361 handy as
 If you didn't keep access to the HTZ textbook for this semester, [Penn State's STAT 414 course](https://online.stat.psu.edu/stat414/) is very similar to our MATH 361 course and is a good reference (your reading annotations have all come from PSU's STAT 415 course, which is similar to our MATH 362). 
 
 Some context for what you will read this week: so far we have taken for granted that $\overline{X}$ and $\hat{p}$ are "good" estimates of $\mu$ and $p$. Here, we will define what we mean by "good", and will learn how the formulas for estimators such as $\overline{X}$ and $\hat{p}$ are derived.
+
+**Read with pencil and paper in hand, and try to work out the math / convince yourself of each step as you go.** Note where you get stuck

@@ -1,0 +1,32 @@
+---
+title: "Week 07 Day 02"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Knowledge Check
+
++ Mathematically, what does it mean for an estimator to be unbiased?
++ Recall properties of expected value. How can you re-write/reduce the following, where $a$ and $b$ are constants?
+    + $E(aX)$
+    + $E(aX + b)$
+    + $E(\sum_{i = 1}^naX_i)$
+    + $E[\sum_{i = 1}^n(aX_i + b)]$
+    
+## In-class practice
+
++ In groups, do down-the-line proofs to show that when $X_i \sim N(\mu, \sigma^2):
+    + The MLE of $\mu$ is unbiased
+    + The MLE of $\sigma^2$ is biased
+    + The usual sample variance $S^2$ is an unbiased estimator for $\sigma^2$
+    

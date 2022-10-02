@@ -14,6 +14,10 @@ output:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+## In-class practice
+
++ In groups, do a down-the-line proof for the derivation of $\hat{p} = \frac{\sum_{i = 1}^n X_i}{n}$ as the MLE of the proportion $p$. See Example 1-1
+
 ## Knowledge Check
 
 + Suppose that for a random sample $X_1, X_2, ..., X_n$, each $X_i$ has pdf $f(x_i; \theta)$, where $\theta$ is an unknown parameter that the pdf depends on (e.g. $\mu$ or $\sigma^2$). Explain what is meant by each piece of the following and how to get from one expression to the next:
@@ -21,15 +25,14 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 $$L(\theta) = P(X_1 = x_1, X_2 = x_2, ... X_n = x_n) = f(x_1; \theta)\cdot f(x_2;\theta)\cdots f(x_n; \theta) = \prod_{i = 1}^nf(x_i;\theta)$$
 + What are the key features of a Bernoulli random variable?
 + What is the pdf of a Bernoulli random variable?
++ What is the pdf of a normal random variable? 
 + In a normal distribution, what notation do we typically use for the parameters $\theta_1$ and $\theta_2$?
 
 
-## In-class practice
 
-+ In groups, do a down-the-line proof for the derivation of $\hat{p} = \frac{\sum_{i = 1}^n X_i}{n}$ as the MLE of the proportion $p$. See Example 1-1
 
-+ In the context of order statistics, what is the difference in the notation $X_1, X_2, ..., X_n$ and $Y_1, Y_2, ..., Y_n$?
-+ How do we find $P(X < c)$ for a continuous random variable $X$?
-+ What are the key features of a binomial random variable? What is the pdf of a binomial random variable? 
-+ How do we write a cdf as a probability? And as an integral?
-+ What is the mathematical relationship between a pdf and a cdf? 
+<!-- + In the context of order statistics, what is the difference in the notation $X_1, X_2, ..., X_n$ and $Y_1, Y_2, ..., Y_n$? -->
+<!-- + How do we find $P(X < c)$ for a continuous random variable $X$? -->
+<!-- + What are the key features of a binomial random variable? What is the pdf of a binomial random variable?  -->
+<!-- + How do we write a cdf as a probability? And as an integral? -->
+<!-- + What is the mathematical relationship between a pdf and a cdf?  -->

@@ -1,0 +1,221 @@
+---
+title: "Problem Set 07"
+subtitle: "Week 07"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r, include = FALSE}
+library(tidyverse)
+library(NHANES)
+library(infer)
+```
+
+
+# Learning objectives
+
++ Derive maximum likelihood estimators
++ Use simulations to determine if an estimator is unbiased
++ Learn about simulation error and how to estimate/account for it
+
+# Exercises
+
+## By hand or typed
+
+### Exercise 1
+
+[From Rice 8.10-4] Suppose that $X$ is a random variable with the following probability density function that depends on one parameter $\theta$, where $0 \leq \theta \leq 1$:
+
+$$
+\begin{aligned}
+P(X = 0) &= \frac{2}{3}\theta \\
+P(X = 1) &= \frac{1}{3}\theta \\
+P(X = 2) &= \frac{2}{3}(1 - \theta) \\
+P(X = 3) &= \frac{1}{3}(1 - \theta) \\
+\end{aligned}
+$$
+The following 10 independent observations were taken from such a distribution: (3, 0, 2, 1, 3, 2, 1, 0, 2, 1).
+
+Find the maximum likelihood estimate of $\theta$, based on these 10 observations. 
+
+*Hint: You are asked to find an estimate, not an estimator, so your answer will be a number not a formula. Start with the definition of the likelihood function $L(\theta) = \prod_{i = 1}^nP(X_i = x_i)$, and recognize that the list of 10 numbers are the observed $x_i$'s.*
+
+### Exercise 2
+
+Suppose that a random sample of $n$ random variables ($X_1, X_2, ..., X_n$) each follow a geometric distribution, which has the following pdf:
+
+$$P(X_i = x_i) = p(1-p)^{x_i-1}$$
+Find the maximum likelihood estimator (MLE) of $p$.
+
+## Simulation Exploration
+
+Let's consider the following `population` dataset to be our population of interest. We will be interested in the random variable `Pulse`, the 60-second heart rate, for people in this population.
+
+```{r}
+library(tidyverse)
+library(NHANES)
+
+population <- NHANES %>% 
+  filter(!is.na(Pulse), Pulse < 100)
+
+ggplot(population, aes(x = Pulse)) +
+  geom_histogram(color = "white", binwidth = 5)
+
+mu <- mean(population$Pulse)
+mu
+sigma2 <- var(population$Pulse)
+sigma2
+```
+
+The parameters of this distribution are $\mu = `r round(mu, 2)`$ and $\sigma^2 = `r round(sigma2, 2)`$
+
+### Exercise 3
+
+Describe how you could use simulations (think: draw random samples from this population) to demonstrate the following three things: 
+
++ the MLE for $\mu$ is unbiased
++ the MLE for $\sigma^2$ is biased
++ the sample variance $S^2$ is unbiased. 
+
+A few questions to consider:
+
++ If you were to plot the sampling distributions of each estimator, how could you judge whether or not they are unbiased estimators?
++ How could you use your N sample estimates to evaluate whether they "hit the right target" on average? (N is some large number, say, 100,000).
++ How could you estimate the expected value of your estimator from your N estimates? What should you compare that expected value to?
+
+### Exercise 4
+
+Write code to use simulations to demonstrate the (un)biased-ness of the estimators described in Exercise 3. Use a sample size of 30 and 100,000 iterations. Your work should include the following:
+
++ Empirical (i.e. estimated from your simulated values) expected values of each estimator
++ A visualization of the sampling distribution of each estimator. Use the  `geom_vline()` layer twice to include two vertical lines on each plot: one for the empirical expected value, and one for the true parameter value. 
++ Empirical estimates of the bias of each estimator
+
+Recall the formulas for the three estimators, which are provided below. 
+
+```{r, echo = FALSE, eval = FALSE}
+set.seed(437)
+sims <- population %>% 
+  rep_sample_n(size = 30, reps = 100000)
+```
+
+
+$$\hat{\mu}_{MLE} = \overline{X} = \frac{\sum_{i = 1} ^n X_i}{n}$$
+
+$$\hat{\sigma}^2_{MLE} = \frac{\sum_{i = 1} ^n (X_i - \overline{X})^2}{n}$$
+
+$$\hat{\sigma}^2 = S^2 = \frac{\sum_{i = 1} ^n (X_i - \overline{X})^2}{n - 1}$$
+
+*Hint: Instead of using the built-in functions for mean and variance in R, you should compute them manually using the code below, to match the above formulas. Note, each of these lines of code will appear inside a mutate, after a group_by())*
+
+```{r, eval = FALSE}
+# MLE for mu, also known as xbar
+sum(Pulse)/n()
+
+#MLE for sigma2
+sum((Pulse - sum(Pulse)/n())^2)/n()
+
+#the usual sample variance, S^2
+sum((Pulse - sum(Pulse)/n())^2)/(n() - 1)
+```
+
+```{r, eval = FALSE, echo = FALSE}
+sample_stats <- sims %>% 
+  group_by(replicate) %>% 
+  mutate(mu_MLE = sum(Pulse)/n(),
+         sigma2_MLE = sum((Pulse - sum(Pulse)/n())^2)/n(),
+         S2 = sum((Pulse - sum(Pulse)/n())^2)/(n() - 1))
+
+Emu_MLE <- mean(sample_stats$mu_MLE)
+Esigma2_MLE <- mean(sample_stats$sigma2_MLE)
+ES2 <- mean(sample_stats$S2)
+
+ggplot(sample_stats, aes(x = mu_MLE)) +
+  geom_histogram() +
+  geom_vline(xintercept = mu, color = "blue") + 
+  geom_vline(xintercept = Emu_MLE, color = "green")
+
+ggplot(sample_stats, aes(x = sigma2_MLE)) +
+  geom_histogram() +
+  geom_vline(xintercept = sigma2, color = "blue") + 
+  geom_vline(xintercept = Esigma2_MLE, color = "green")
+
+ggplot(sample_stats, aes(x = S2)) +
+  geom_histogram() +
+  geom_vline(xintercept = sigma2, color = "blue") + 
+  geom_vline(xintercept = ES2, color = "green")
+```
+
+## Read and Reflect only
+
+Recall that simulations are subject to simulation error, so we wouldn't expect our estimated expected values $E(\hat{\theta})$ to equal the true parameter value $\theta$ EXACTLY (to an infinite number of decimals), even if that estimator $\hat{\theta}$ truly is unbiased. So how can we tell if our empirical expected value is "close enough" to the true parameter value to claim $\hat{\theta}$ is unbiased? 
+
+To think of it another way, recall that simulation error goes to zero as the number of iterations goes to infinity. That is, if we were truly able to take an infinite number of random samples, we could model the sampling distribution of estimators (including their expected values) perfectly. But when $N$ is not infinity, how much discrepancy (between our empirical $E(\hat{\theta})$ and $\theta$) can we attribute to simulation error, and when can we claim that the discrepancy is large enough so as to indicate $E(\hat{\theta}) \neq \theta$ and hence that $\hat{\theta}$ is biased?
+
+We can use what we know about random variables to help us answer this. Note, when we are computing an empirical expected value of an estimator $\hat{\theta}$, we are computing a mean of $N$ random variables $\hat{\theta}_1, \hat{\theta}_1, ..., \hat{\theta}_N$, where $N$ is the number of iterations. We know what the sampling distribution of a mean of random variables is! Therefore we can estimate the simulation error by noting that the standard error of our estimated $E(\hat{\theta})$ should be $\frac{\sigma_{\hat{\theta}}}{\sqrt{N}}$, where $\sigma_{\hat{\theta}}$ is the empirical standard deviation of the $N$ simulated $\hat{\theta}$ values. The margin of error would be approximately two times the standard error. 
+
+Therefore, we can estimate the expected margin error of our empirical expected values with the following code:
+
+```{r, eval = FALSE}
+N <- 100000
+
+#simulation margin of error for mu_MLE
+2*sd(sample_stats$mu_MLE)/sqrt(N)
+
+#simulation margin of error for sigma2_MLE
+2*sd(sample_stats$sigma2_MLE)/sqrt(N)
+
+#simulation margin of error for S2
+2*sd(sample_stats$S2)/sqrt(N)
+```
+
+If our empirical $E(\hat{\theta})$ is within one margin of error of the true $\theta$, then we can attribute any observed discrepancy between $E(\hat{\theta})$ and $\theta$ to simulation noise. If, however, the difference between the empirical $E(\hat{\theta})$ and $\theta$ exceeds the noise expected by simulation error, then we can claim $E(\hat{\theta}) \neq \theta$ and therefore $\hat{\theta}$ is biased. 
+
+Stated differently, if our empirical bias is smaller than the margin of error, then we can attribute it to noise/simulation error. If the empirical bias is larger than the margin of error, we can attribute it to true bias in  $\hat{\theta}$. 
+
+### A note about the usefulness of simulations
+
+You might be wondering, why go through all the trouble of conducting simulations to show something is biased/unbiased when we can prove it mathematically in just a few steps? 
+
+Simulations serve a useful learning / pedagogical purpose in helping us explore the behavior and properties of randomness and random variables "in action". They let us move beyond abstract concepts of infinity and repeated samples and sampling distributions, and actually observe them.
+
+However, the true usefulness of simulations is not merely pedagogical. So far in this class, we've only used simulations to demonstrate/verify mathematical properties we already know to be true. However, when developing new statistical methods, we often encounter situations for which there is no closed form mathematical solution, or for which obtaining one would be extremely mathematically taxing. That is, in some cases, it is impossible (or extremely difficult) to derive a formula for $E(\hat{\theta})$ or $V(\hat{\theta})$. Often this might be because it involves taking the integral of a non-integrable function. This is where simulations can save the day. They allow us to get a good understanding of the properties of estimators (e.g. are they unbiased? are they precise?) when we are unable to do so mathematically. 
+
+Similarly, often the math involved in deriving properties of new estimators (e.g. bias) can be very complicated, and there is no solutions manual to check your work - because in research you're attempting to solve a problem that's never been solved before! So simulations can serve as a sanity check on your math, and vice versa.  
+
+## BONUS
+
+Compute the margin of error for your simulations for each estimator, and use it to determine if the discrepancy between the empirical expected value and the true parameter is due to simulation noise or true bias. 
+
+## Submission
+
+Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
+
++ (RP1): *What were the main concepts covered in this assignment?*
+
++ (RP2): *What's one thing you understand better after completing these problems?*
+
++ (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
++ (RP4): *What questions and/or reflections do you have regarding the Further Exploration demos and proofs?*
+
+Knit your document one final time, then upload your .html file to Problem Set 07 on Canvas. 
+
+## Grading (50pts)
+
+| Component | Points |
+|:----------|:-------|
+| RP1      | 5      |
+| RP2      | 5    |
+| RP3      | 5    |
+| Formatting & Clarity | 5 |
+| Exercise completion | 30 |
