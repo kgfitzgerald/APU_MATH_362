@@ -188,7 +188,7 @@ $$\bar{X} \pm t_{\alpha/2}\frac{s}{\sqrt{n}}$$
 
 ### Part d
 
-The only condition needed for this interval is that $n$ is sufficiently large. In this case 50 > 30, and from the shape of the sample distribution, skewness does not appear to be an issue, so this is a sufficient sample size.
+The only conditions needed for this interval is that the observations are independent (satisfied by random ample), and $n$ is sufficiently large. In this case 50 > 30, and from the shape of the sample distribution, skewness does not appear to be an issue, so this is a sufficient sample size.
 
 ### Part e
 
@@ -218,13 +218,22 @@ The above percentage is not close to 95%, but nothing went wrong. The 95% for a 
 ## Exercise 6
 
 A. INCORRECT - this is a statement about individual films
+
 B. INCORRECT - this is a statement about individual films
+
 C. CORRECT, although could be more specific in language
+
 D. CORRECT 
+
 E. INCORRECT - this is a statement about individual films
-F. INCORRECT - this is a statement about the sample mean rather than the population mean
+
+F. INCORRECT - this is a statement about the sample mean rather than the 
+population mean
+
 G. INCORRECT - this is stated as a prediction interval rather than a confidence interval
+
 H. CORRECT - identical to statement D, oops :)
+
 I. INCORRECT - $\mu$ is not random, the *interval* is random. 
 
 ## Exercise 7

@@ -1,0 +1,109 @@
+---
+title: "Week 06 Day 01"
+subtitle: "Exam 1 Review"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Exam Info
+
++ 1 hypothesis test question (can use `t.test()`)
++ 1 Type I / Type II error problem
++ 1 simulation problem - most code provided, need to understand conceptually
++ 5 True/False + justification of your response
++ 5 "State a research question for this parameter of interest"
+
+## Hypothesis test example
+
+Research question: are Lyft and Uber prices the same on average? We have a random sample of 10 rides from each company. 
+
+```{r, echo = FALSE}
+set.seed(437)
+lyft <- rnorm(10, 25, 5)
+uber <- rnorm(10, 30, 5)
+```
+
+```{r}
+lyft <- c(26.18, 25.76, 14.38, 33.58, 22.27,
+          20.0, 21.86, 28.5, 24.92, 21.74)
+
+uber <- c(23.0, 29.56, 28.92, 37.26, 29.33,
+          34.9, 23.98, 29.6, 29.1, 30.75)
+
+t.test(lyft, uber)
+```
+
++ What does each value in the output mean?
++ What arguments can we add/change in `t.test()`? 
++ Remember to report the notation as well as the actual number of the point estimate
+
+## Problem Sets Revisited
+
+### PS 02 Exercise 4
+
+Suppose that a region has two hospitals. Hospital A has about 10 births per day, and hospital B has about 50 births per day. About 50% of all babies are boys, but the percentage who are boys varies at each hospital from day to day. Over the course of a year, which hospital will have more days on which 60% or more of the births are boys – A, B, or negligible difference between A and B?
+
+### PS 02 Exercise 6
+
+Why are the following statements INCORRECT:
+
+A. We are 95% confident that a thriller film in the IMDb list runs for between 94.5 and 108.9 minutes.
+
+F. We are 95% confident that the mean runlength of a thriller film in this sample from the IMDb list was between 94.5 and 108.9 minutes.
+
+G. We are 95% confident that the mean runlength of a thriller film in a new random sample from the IMDb list would be between 94.5 and 108.9 minutes.
+
+### PS 02 Exercise 8
+
+Why are the following not appropriate research questions when the parameter of interest is a mean?
+
++ How many people _____?
++ What is the average number of people in this city who _____?
+
+### PS 03-04 Exercise 4 / 5
+
+What notation do we use when dealing with paired means?
+
++ E.g. pre-post measurements with fitness program
++ E.g. race time differences (before time - after time)
+
+### PS 03-04 Exercise 11
+
+What's the difference between a sample distribution and sampling distribution?
+
+### PS 03-04 Exercise 15 - 20
+
+Is $\hat{p}$ an unbiased estimate of $p$? 
+
++ [https://kgfitzgerald.github.io/APU_MATH_362/PROBLEM_SETS/SOLUTIONS/PS-03-04-SOLUTIONS.html#Exercise_15](https://kgfitzgerald.github.io/APU_MATH_362/PROBLEM_SETS/SOLUTIONS/PS-03-04-SOLUTIONS.html#Exercise_15)
+
+What went wrong? 
+
+Do we prefer coverage probabilities that are above or below the nominal level? 
+
+### PS 05 
+
+How often will $T < 1.96$ when $H_0$ is true? $T > 0$?
+
+How often will $p-value < 0.01$ when $H_0$ is true? $p-value < 0.23$?
+
+## Your Questions? 
+
+## Rest of class
+
++ Explain PS 05 Exercise 3 to each other. **Also articulate (in detail) how you could use simulations to demonstrate Type I and Type II error.**  
+
++ Write a research question for each parameter of interest we've covered so far. Exchange with your group members and give feedback.
+
++ Take turns explaining/teaching Knowledge Check questions to each other
+
++ Together, come up with a list of 5 - 10 true false questions that could be asked to evaluate knowledge of material covered so far
