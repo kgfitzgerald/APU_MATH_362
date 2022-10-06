@@ -1,0 +1,247 @@
+---
+title: "Problem Set 06"
+subtite: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(NHANES)
+library(cowplot)
+library(infer)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+# By hand or typed
+
+## Exercise 1
+
+We test the following hypotheses, and will use $\alpha = 0.01$:
+
+$$H_0: \mu_X = \mu_Y$$ $$H_A: \mu_X \neq \mu_Y$$ Since we assume $\sigma^2_X = \sigma_Y^2$, we use the following formula for $T$:
+
+$$T = \frac{(\overline{X} - \overline{Y}) - (\mu_X - \mu_Y)}{S_p\sqrt{\frac{1}{n_X} + \frac{1}{n_Y}}},$$
+
+where $S_p^2$ is the pooled variance. The following code computes the test statistic:
+
+```{r}
+# Define values given in the problem
+n_x <- 12
+xbar <- 65.7
+sx <- 4
+n_y <- 15
+ybar <- 68.2
+sy <- 3
+
+# Compute pooled sample variance
+sp2 <- ((n_x - 1)*sx^2 + (n_y - 1)*sy^2)/(n_x + n_y - 2)
+
+# Compute point estimate and its standard error
+point_estimate <- xbar - ybar
+se_point_estimate <- sqrt(sp2)*sqrt(1/n_x + 1/n_y)
+
+#Compute test statistic
+test_statistic <- point_estimate/se_point_estimate
+test_statistic
+```
+
+With $\alpha = 0.01$ and a two-sided test, we compare this test statistic to the critical value of `qt(.005, df = 12 + 15 - 2)` = `r round(qt(.005, df = 12 + 15 - 2), 3)`.
+
+Because our test statistic is less extreme than the critical value, we fail to reject $H_0$. That is, there is insufficient evidence to claim that the two means are different.
+
+## Exercise 2
+
+We are testing the following hypotheses:
+
+$$H_0: \sigma^2 = 0.095^2$$
+
+$$H_A: \sigma^2  < 0.095^2$$ We use the following test statistic, which has a chi-square distribution with $n-1$ degrees of freedom:
+
+$$\chi^2 = \frac{(n-1)S^2}{\sigma_0^2}$$
+
+### Part a
+
+The following code computes the test statistic:
+
+```{r}
+# Define values given in the problem
+xbar <- 6.10
+s <- 0.065
+sigma0 <- 0.095
+n <- 20
+
+# Compute test statistic
+X2 <- (n-1)*s^2/sigma0^2
+X2
+```
+
+With $\alpha = 0.05$ and a one-sided test, we compare this test statistic to the critical value of `qchisq(.05, df = 20 - 1)` = `r round(qchisq(.05, df = 20 - 1), 3)`.
+
+Because our test statistic is more extreme (farther in the left tail) than our critical value, we reject $H_0$. That is, there is sufficient evidence to claim that the standard deviation was reduced.
+
+### Part b
+
+The p-value is the probability that we observe something more extreme than our test statistic.
+
+```{r}
+pchisq(X2, df = n - 1)
+```
+
+Because this is less than $\alpha$, this fits with our decision to reject $H_0$.
+
+## Exercise 3
+
+We are testing the following hypotheses:
+
+$$H_0: \sigma_X^2 = \sigma_Y^2$$ $$H_0: \sigma_X^2 \neq \sigma_Y^2$$
+
+We use the following test statistic, which has a F-distribution with $n_X-1$ and $n_Y - 1$ degrees of freedom:
+
+$$F = \frac{S_X^2}{S_Y^2}$$
+
+The following code computes the test statistic:
+
+```{r}
+# Define what's given in the problem
+nx <- 13
+xbar <- 18.97
+sx2 <- 9.88
+ny <- 9
+ybar <- 23.2
+sy2 <- 4.08
+
+# Compute test statistic
+F <- sx2/sy2
+F
+```
+
+With $\alpha = 0.05$ and a one-sided test, we compare this to the critical value of `qf(.95, 13 - 1, 9 - 1)` = `r round(qf(.95, 13 - 1, 9 - 1), 3)`.
+
+Since our test statistic is less extreme than the critical value, we fail to reject $H_0$. That is, there is insufficient evidence to claim the two variances are different.
+
+# Typed
+
+## Exercise 4
+
+```{r}
+x <- c(93, 140, 8, 120, 3, 120, 33, 70, 91, 61, 7, 100, 19,
+       98, 119, 23, 14, 94, 57, 9, 66, 53, 28, 76, 58, 9, 
+       73, 49, 37, 92)
+t.test(x, mu = 70, conf.level = .99)
+```
+
+a.  The parameter of interest is $\mu$, the average number of bacteria colonies in 100 milliliters of water
+b.  $H_0: \mu = 70$ vs $H_A: \mu \neq 70$
+c.  $\bar{x} = 60.67$
+d.  $t = -1.2767$
+e.  $p-value = 0.2119$
+f.  Because our p-value is greater than 0.01, we fail to reject $H_0$. That is, there is insufficient evidence to claim $\mu$ is not 70.
+g.  [40.52, 80.82]. Because this interval contains the hypothesized value, there is not enough evidence to reject it.
+
+## Exercise 5
+
+```{r}
+x <- c(1612, 1352, 1456, 1222, 1560, 1456, 1924)
+y <- c(1082, 1300, 1092, 1040, 910, 1248, 1092, 1040, 1092, 1288)
+t.test(x, y)
+```
+
+a.  The parameter of interest is $\mu_X - \mu_Y$, the difference in average blood volume between the two groups of males
+b.  $H_0: \mu_X = \mu_Y$ vs $H_A: \mu_X \neq \mu_Y$
+c.  $\bar{x} - \bar{y} = 1511.714 - 1118.400 = `r 1511.714 - 1118.400`$
+d.  $t = 4.235$
+e.  $p-value = 0.002427$
+f.  Because our p-value is less than 0.05, we reject $H_0$. That is, there is sufficient evidence to claim mean blood volumes are not equal in the two groups.
+g.  [181.7191, 604.9095]. Because this interval does not contain 0, there is enough evidence to claim the means are not equal.
+
+## Exercise 6
+
+```{r}
+pre <- c(11.1, 19.5, 14, 8.3, 12.4, 
+         7.89, 12.1, 8.3, 12.31, 10)
+
+post <- c(9.97, 15.8, 13.02, 9.28, 11.51, 
+          7.4, 10.7, 10.4, 11.4, 11.95)
+
+t.test(pre, post, paired = TRUE, conf.level = 0.9)
+```
+
+a.  The parameter of interest is $\mu_D = \mu_{pre} - \mu_{post}$, the average reduction in % body fat, before and after a health-fitness program.
+b.  $H_0: \mu_D = 0$ vs $H_A: \mu_D \neq 0$
+c.  $\bar{x}_{D}= 0.447$
+d.  $t = 0.81728$
+e.  $p-value = 0.4349$
+f.  Because our p-value is greater than 0.1, we fail to reject $H_0$. That is, there is insufficient evidence to claim average reduction in bodyfat is different from 0.
+g.  [-0.556, 1.450]. Because this interval contains 0, there is insufficient evidence to claim the average is different from 0.
+
+## Exercise 7
+
+```{r}
+time_diff <- c(0.28, 0.01, 0.13, 0.33, -0.03, 0.07, -0.18, -0.14,
+               -0.33, 0.01, 0.22, 0.29, -0.08, 0.23, 0.08, 0.04,
+               -0.30, -0.08, 0.09, 0.70, 0.33, -0.34, 0.50, 0.06)
+
+t.test(time_diff)
+```
+
+a.  The parameter of interest is $\mu_D = \mu_{pre} - \mu_{post}$, the average reduction in race times, before and after a rope-jumping program.
+b.  $H_0: \mu_D = 0$ vs $H_A: \mu_D \neq 0$
+c.  $\bar{x}_{D}= 0.07875$
+d.  $t = 1.5134$
+e.  $p-value = 0.1438$
+f.  Because our p-value is greater than 0.05, we fail to reject $H_0$. That is, there is insufficient evidence to claim average reduction in times is different from 0.
+g.  [-0.0289, 0.1864]. Because this interval contains 0, there is insufficient evidence to claim the average is different from 0.
+
+# Power
+
+## Exercise 8
+
+a. n = 785
+b. n = 1168
+c. n = 1488
+
+## Exercise 9
+
+0.48
+
+## Exercise 10
+
+Alternative design options for d = 0.3, n = 50:
+
+1. $\alpha = 0.2$, power = 80%
+2. $\alpha = 0.1$, power 68%
+
+The first design has a higher probability of a Type I error (20%) than is typical, but maintains 80% power. The second design restricts the Type I error to a more reasonable value (10%), but has only 68% power, meaning the probability of a Type II error is 32%. A decision should be made based off of which error is worse in the context of the research question. 
+
+## Exercise 11
+
+As $\alpha$ decreases, the necessary sample size increases. For example, with an $\alpha$ of 0.1, n = 25 is needed for these conditions, whereas reducing $\alpha$ to 0.05 increases the necessary sample size to 32. Decreasing $\alpha$ means pushing your critical region farther out in the tails, making it harder to reject $H_0$. If the sample size stays the same, this means more of the curve on the right falls to the left of the critical value, indicating an increased Type II error (decreased power). So a larger sample size is necessary in order to maintain the same amount of power to reject $H_0$. Practically, this means that reducing your Type I error (while maintaining power) comes at the cost ($, logistics) of needing more sample size.
+
+## Exercise 12
+
+As power decreases, the necessary sample size also decreases. For example, for a power of 80%, n = 130 is needed for these conditions, whereas for an increased power of say 90%, n = 166 is needed. Increasing the power means that more of the distribution on the right curve should fall past the critical value, which is accomplished by decreasing the variance via increasing the sample size. 
+
+## Exercise 13
+
+As d decreases, the necessary sample size increases. For example, for d = 0.5, n = 32 is needed for these conditions, whereas for a smaller difference, say d = 0.3, you need a sample size of 88. It is harder to distinguish between smaller differences than larger ones. In order to force less probability to be overlapping in the two curves, you need to decrease the spread of the distributions, which is accomplished by increasing the sample size. 
+
+## Exercise 14
+
+Under these conditions (n = 50, d = 0.1), even with an alpha of 0.1 (10% probability of Type I error), this test will only have 11% power, meaning you will fail to detect the treatment effect (Type II error) 89% of the time even when it exists! Alternatively, if you set your test to have reasonable power, say 70%, your probability of a Type I error (false positive) is 62%. A sample size of 50 is not nearly large enough to detect an effect as small as 0.1. The researchers either need to increase their sample size and/or design a more effective intervention that will improve the treatment group by more than d = 0.1.
