@@ -206,7 +206,7 @@ Once you have completed all Exercises and written up your results in the Templat
 
 + (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
-+ (RP4): *What questions and/or reflections do you have regarding the Further Exploration demos and proofs?*
++ (RP4): *What questions and/or reflections do you have regarding the read & reflect section?*
 
 Knit your document one final time, then upload your .html file to Problem Set 07 on Canvas. 
 

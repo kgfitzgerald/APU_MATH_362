@@ -1,0 +1,44 @@
+---
+title: "Week 08 Day 01"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Knowledge Check
+
+-   What's the difference between an observed and a predicted value?
+-   What is a residual? What notation and formula do we use for it?
+-   What's the relevance of $Q = \sum_{i = 1}^n (y_i - \hat{y}_i)^2$ to least squares regression? Articulate the logic of least squares regression.
+-   Explain as best you can what the following figure is demonstrating
+
+![](images/regression.png){width="554"}
+
+-   What are the four assumption of a linear regression model?
+
+    -   L:
+
+    -   I:
+
+    -   N:
+
+    -   E:
+
+-   What's the point of writing the regression line as $\hat{y_i} = a + b(x_i - \bar{x})$ instead of $\hat{y_i} = a_1 + b(x_i - \bar{x})$?
+-   What are the equations for the least squares estimators for the slope and intercept?
+
+
+## In Class Practice
+
++ Let $\hat{\beta} = \frac{\sum_{i = 1}^n (x_i - \bar{x})Y_i}{\sum_{i = 1}^n (x_i - \bar{x})^2}$, such that it is a linear combination of $n$ normal random variables $Y_i \sim N(\alpha + \beta(x_i - \bar{x}), \sigma^2)$. In groups, conduct a "down-the-line" proof of the following:
+$$E(\hat{\beta}) = \beta$$
+$$V(\hat{\beta}) = \frac{\sigma^2}{\sum_{i = 1}^n (x_i - \bar{x})^2}$$
