@@ -14,25 +14,69 @@ output:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+## Student Questions
+
+-   What's the difference between the parameter $\theta$ and the parameter space $\Omega$?
+
+$$\Omega = \{\mu : 0 \leq \mu \leq 4\}$$ $$\Omega = \{p : 0 \leq p \leq 1\}$$
+
+-   What's the difference between a point estimate and a point estimator?
+
+    -   Estimand, estimator, estimate
+    -   Recall difference between $X$ and $x$ in 361
+
+-   What does maximum likelihood do / what's it for?
+
+    -   We don't know the value of a parameter $\theta$, but we do have observed data $x_1, x_2, ... x_n$. There's many possible values of $\theta$. Which value maximizes the likelihood that we'd observe the $x_1, x_2, ... x_n$ we observed?
+
+-   Quick review of independence / a random sample of $n$ random variables (see Knowlege Check Q below)
+
+-   Let $X_1, X_2, ... X_n$ be a random sample from a distribution that depends on one or more unknown parameters, $\theta_1, \theta_2, ... \theta_m$.
+
+    -   Why would the parameters go to $m$ but the $X$'s only go to $n$? Wouldn't there be the same number of parameters as Xs?
+    -   [Seeing Theory resource](https://seeing-theory.brown.edu/probability-distributions/index.html#section2)
+
+-   Where did the summation notation come from in the likelihood function for the normal distribution?
+
+-   What do they mean by "competing estimators"? Does that mean that we have to decide which is "unbiased" for each problem that we do or just for each parameter?
+
+-   What type of bias are we talking about when we say "unbiased estimator"?
+
+![](images/bias-precision.png)
+
+-   If this method (MLE) isn't guaranteed to give us unbiased estimators, is it really the best method for getting estimators? Are there better methods?
+
+    -   A few nice properties of MLE (proofs mostly beyond the scope of this course - potential special topics!):
+
+        -   Consistency: the estimator converges in probability to the thing being estimated (see probability theory: Weak Law of Large Numbers)
+
+        -   Functional equivariance: If $\hat{\theta}$ is the maximum likelihood estimator for $\theta$, and if $g(\theta)$ is any transformation of $\theta$, then the maximum likelihood estimator for $\alpha = g(\theta)$ is $\hat{\alpha} = g(\hat{\theta})$
+
+        -   Efficiency: achieves the Cramer-Rao lower bound, meaning there is no consistent estimator that has lower MSE (mean squared error = $Bias(\hat{\theta}^2) + V(\hat{\theta})$
+
+    -   Alternatives to MLE: Method of Moments, RMLE, Bayesian estimation
+
 ## In-class practice
 
-+ In groups, do a down-the-line proof for the derivation of $\hat{p} = \frac{\sum_{i = 1}^n X_i}{n}$ as the MLE of the proportion $p$. See Example 1-1
+-   In groups, do a "down-the-line" proof for the derivation of $\hat{p} = \frac{\sum_{i = 1}^n X_i}{n}$ as the MLE of the proportion $p$. See Example 1-1
 
 ## Knowledge Check
 
-+ Suppose that for a random sample $X_1, X_2, ..., X_n$, each $X_i$ has pdf $f(x_i; \theta)$, where $\theta$ is an unknown parameter that the pdf depends on (e.g. $\mu$ or $\sigma^2$). Explain what is meant by each piece of the following and how to get from one expression to the next:
+-   Suppose that for a random sample $X_1, X_2, ..., X_n$, each $X_i$ has pdf $f(x_i; \theta)$, where $\theta$ is an unknown parameter that the pdf depends on (e.g. $\mu$ or $\sigma^2$). Explain what is meant by each piece of the following and how to get from one expression to the next:
 
 $$L(\theta) = P(X_1 = x_1, X_2 = x_2, ... X_n = x_n) = f(x_1; \theta)\cdot f(x_2;\theta)\cdots f(x_n; \theta) = \prod_{i = 1}^nf(x_i;\theta)$$
-+ What are the key features of a Bernoulli random variable?
-+ What is the pdf of a Bernoulli random variable?
-+ What is the pdf of a normal random variable? 
-+ In a normal distribution, what notation do we typically use for the parameters $\theta_1$ and $\theta_2$?
 
-
-
+-   What are the key features of a Bernoulli random variable?
+-   What is the pdf of a Bernoulli random variable?
+-   What is the pdf of a normal random variable?
+-   In a normal distribution, what notation do we typically use for the parameters $\theta_1$ and $\theta_2$?
 
 <!-- + In the context of order statistics, what is the difference in the notation $X_1, X_2, ..., X_n$ and $Y_1, Y_2, ..., Y_n$? -->
+
 <!-- + How do we find $P(X < c)$ for a continuous random variable $X$? -->
+
 <!-- + What are the key features of a binomial random variable? What is the pdf of a binomial random variable?  -->
+
 <!-- + How do we write a cdf as a probability? And as an integral? -->
+
 <!-- + What is the mathematical relationship between a pdf and a cdf?  -->

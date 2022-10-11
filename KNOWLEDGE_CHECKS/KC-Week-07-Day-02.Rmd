@@ -25,7 +25,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
     
 ## In-class practice
 
-+ In groups, do down-the-line proofs to show that when $X_i \sim N(\mu, \sigma^2):
++ In groups, do down-the-line proofs to show that when $X_i \sim N(\mu, \sigma^2)$:
     + The MLE of $\mu$ is unbiased
     + The MLE of $\sigma^2$ is biased
     + The usual sample variance $S^2$ is an unbiased estimator for $\sigma^2$
