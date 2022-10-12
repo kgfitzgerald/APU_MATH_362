@@ -40,6 +40,21 @@ d. For the data in part (c), let $\hat{y_i} = \hat{\beta}x_i$ for $i = 1,2$. Cal
 Under the assumptions of the simple linear regression model, prove that a $(1 - \alpha)100\%$ confidence interval for the intercept parameter $\alpha$ is given by:
 
 $$a \pm t_{\alpha/2}\left(\sqrt{\frac{\hat{\sigma}^2}{n-2}}\right)$$
+### Exercise 4
+
+```{r, echo = FALSE, eval = FALSE}
+library(tidyverse)
+
+senic <- read.table("/Volumes/GoogleDrive/My Drive/STAT 511/homework/data/APPENC01.txt", quote="\"", comment.char="")
+
+colnames(senic) <- c("ID", "length", "age", "infection_risk",
+                     "ratio_culture", "ratio_xray", "num_beds",
+                     "med_school", "region", "avg_census",
+                     "num_nurses", "avail_facilities")
+
+write_csv(senic, "./PROBLEM_SETS/data/senic.csv")
+```
+
 
 ## Submission
 
