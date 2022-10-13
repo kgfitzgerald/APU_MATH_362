@@ -1502,6 +1502,75 @@ div.tocify {
 </div>
 
 
+<div id="student-questions" class="section level2">
+<h2>Student Questions</h2>
+<ul>
+<li><p><span class="math inline">\(\hat{\mu} = \frac{\sum_{i = 1}^n
+X_i}{n} = \overline{X}\)</span>. What’s the difference between <span class="math inline">\(X_i\)</span> and <span class="math inline">\(\overline{X}\)</span>?</p></li>
+<li><p><span class="math inline">\(E(u(X_1, X_2, ..., X_n)) =
+\theta\)</span>. So we just want to know if the expected value of the
+mean of random samples is equal to the parameter space? So we are just
+checking to see if the expected value is part of the space and if it is
+not then it is biased?</p></li>
+<li><p><span class="math inline">\(E(X_i) = p\)</span> for a Bernoulli
+random variable. How do we know this again?</p></li>
+<li><p>“<span class="math inline">\(E(\hat{p}) = p\)</span>, therefore
+the maximum likelihood estimator is an unbiased estimator of <span class="math inline">\(p\)</span>.”</p>
+<ul>
+<li>Student question: And this holds true no matter what right? It
+doesn’t depend on any specific values. That’s just a truth about
+parameter p?</li>
+</ul></li>
+<li><p>Got lost on step in finding <span class="math inline">\(E(\hat{\sigma}^2)\)</span></p></li>
+<li><p>Since this is estimator is biased, do we search for an
+alternative estimator for the variance? Is there ever a situation where
+we have to settle for the biased estimator?</p></li>
+<li><p>Why is <span class="math inline">\(S\)</span> not an unbiased
+estimator of <span class="math inline">\(\sigma\)</span> if <span class="math inline">\(S^2\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>??</p>
+<ul>
+<li>Proof: <a href="https://stats.stackexchange.com/questions/11707/why-is-sample-standard-deviation-a-biased-estimator-of-sigma">https://stats.stackexchange.com/questions/11707/why-is-sample-standard-deviation-a-biased-estimator-of-sigma</a></li>
+</ul></li>
+<li><p>What’s the difference? Did we see these in 361?</p>
+<ul>
+<li><span class="math inline">\(E(X^k)\)</span></li>
+<li><span class="math inline">\(E[(X-\mu)^k]\)</span></li>
+<li><span class="math inline">\(M_k = \frac{1}{n}\sum_{i
+=1}^nX_i^k\)</span></li>
+<li><span class="math inline">\(M_k^* = \frac{1}{n}\sum_{i
+=1}^n(X_i-\overline{X})^k\)</span></li>
+</ul></li>
+<li><p>Will the method of moments always give the same estimator as the
+maximum likelihood estimator? Or is this just a coincidence?</p></li>
+<li><p>How do we know in which cases to find moments about the origin
+and in which cases to find the sample moments about the mean? Is it some
+arbitrary decision that we just have to make? Are these forms of the
+method equal (i.e. will they give the same answers), the only difference
+being that one makes the math a little easier to work with?</p>
+<ul>
+<li>Book: “This example, in conjunction with the second example,
+illustrates how the two different forms of the method can require
+varying amounts of work depending on the situation.”</li>
+<li>Student: “I’m still a little lost on why you use method of moments
+vs the other method”</li>
+</ul></li>
+<li><p>In the alternative version of Method of Moments, why is the first
+step to set the first sample moment equal to the moment about the
+origin, instead of the moment about the mean?</p>
+<ul>
+<li><a href="https://online.stat.psu.edu/stat415/lesson/1/1.4#paragraph--500">https://online.stat.psu.edu/stat415/lesson/1/1.4#paragraph–500</a></li>
+<li>So is the only difference that this method takes the second sample
+moment about the mean instead of about the origin? When would we use the
+difference methods and why?</li>
+</ul></li>
+<li><p>How do we know <span class="math inline">\(E(X_i) =
+\alpha\theta\)</span>? [in that particular context]</p>
+<ul>
+<li>Wikipedia for gamma: <a href="https://en.wikipedia.org/wiki/Gamma_distribution">https://en.wikipedia.org/wiki/Gamma_distribution</a></li>
+</ul></li>
+<li><p><span class="math inline">\(\hat{\theta}_{MM}\)</span> - are the
+MM used to denote the method of moments estimator?</p></li>
+</ul>
+</div>
 <div id="knowledge-check" class="section level2">
 <h2>Knowledge Check</h2>
 <ul>
@@ -1515,19 +1584,6 @@ following, where <span class="math inline">\(a\)</span> and <span class="math in
 <li><span class="math inline">\(E(\sum_{i = 1}^naX_i)\)</span></li>
 <li><span class="math inline">\(E[\sum_{i = 1}^n(aX_i +
 b)]\)</span></li>
-</ul></li>
-</ul>
-</div>
-<div id="in-class-practice" class="section level2">
-<h2>In-class practice</h2>
-<ul>
-<li>In groups, do down-the-line proofs to show that when <span class="math inline">\(X_i \sim N(\mu, \sigma^2)\)</span>:
-<ul>
-<li>The MLE of <span class="math inline">\(\mu\)</span> is unbiased</li>
-<li>The MLE of <span class="math inline">\(\sigma^2\)</span> is
-biased</li>
-<li>The usual sample variance <span class="math inline">\(S^2\)</span>
-is an unbiased estimator for <span class="math inline">\(\sigma^2\)</span></li>
 </ul></li>
 </ul>
 </div>

@@ -15,6 +15,12 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+
 # Learning objectives
 
 
@@ -40,6 +46,7 @@ d. For the data in part (c), let $\hat{y_i} = \hat{\beta}x_i$ for $i = 1,2$. Cal
 Under the assumptions of the simple linear regression model, prove that a $(1 - \alpha)100\%$ confidence interval for the intercept parameter $\alpha$ is given by:
 
 $$a \pm t_{\alpha/2}\left(\sqrt{\frac{\hat{\sigma}^2}{n-2}}\right)$$
+
 ### Exercise 4
 
 ```{r, echo = FALSE, eval = FALSE}
@@ -53,6 +60,64 @@ colnames(senic) <- c("ID", "length", "age", "infection_risk",
                      "num_nurses", "avail_facilities")
 
 write_csv(senic, "./PROBLEM_SETS/data/senic.csv")
+```
+
+The following code reads in a dataset called `senic` which contains data on .... 
+
+```{r}
+senic <- read_csv("https://raw.githubusercontent.com/kgfitzgerald/APU_MATH_362/main/PROBLEM_SETS/data/senic.csv")
+```
+
+a. Fit a linear model using `infection_risk` to predict `length` of stay. Call your model `m1`
+b. Write out the equation of the fitted regression model
+c. Interpret the slope and intercept in context
+d. Write out the hypotheses to test the slope parameter
+e. Report the relevant test statistic, p-value, and your conclusion
+f. Recall the test statistic is computed by $t = \frac{\hat{\beta} - \beta_0}{\sqrt{\frac{MSE}{\sum_{i=1}^n(x_i - \bar{x})^2}}}$. Use the output from `tidy(m1)` and the code below to extract the relevant numbers to compute the test statistic "by hand"
+
+```{r, eval = FALSE}
+# raw output
+anova(m1$fit)
+
+# tidy output for extracting numbers with code
+tidy(anova(m1$fit))
+
+# note the sum of squares (SS) in the denom in square root 
+# of test statistic is simply the same numerator that 
+# appears on the sample variance of x
+# so can use the following code to compute it
+n <- nrow(senic)
+SS <- var(senic$infection_risk)*(n - 1)
+
+# alternatively, to compute sum of squares (SS) "manually": 
+SS_alt <- senic %>% 
+  mutate(diff_sqrd = (infection_risk - mean(infection_risk))^2) %>% 
+  summarize(SS = sum(diff_sqrd)) %>% 
+  pull(SS)
+```
+
+
+```{r, echo = FALSE, eval = FALSE}
+m1 <- linear_reg() %>% 
+  set_engine("lm") %>% 
+  fit(length ~ infection_risk, data = senic)
+tidy(m1)
+
+
+tidy(anova(m1$fit))
+
+
+n <- nrow(senic)
+SS <- var(senic$infection_risk)*(n - 1)
+
+SS_alt <- senic %>% 
+  mutate(diff_sqrd = (infection_risk - mean(infection_risk))^2) %>% 
+  summarize(SS = sum(diff_sqrd)) %>% 
+  pull(SS)
+
+b <- tidy(m1)$estimate[2]
+MSE <- tidy(anova(m1$fit))$meansq[2]
+t <- b/sqrt(MSE/SS)
 ```
 
 
