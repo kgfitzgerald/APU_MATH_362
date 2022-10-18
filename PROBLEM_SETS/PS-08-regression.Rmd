@@ -23,6 +23,11 @@ library(tidymodels)
 
 # Learning objectives
 
++ Work with properties of the least squares regression line
++ Use least squares and MLE logic to derive estimators for new linear model parameters
++ Derive the formula for a confidence interval for an intercept parameter
++ Fit a linear regression model in R and interpret the output
++ Conduct a hypothesis test for linear regression parameters
 
 # Exercises
 

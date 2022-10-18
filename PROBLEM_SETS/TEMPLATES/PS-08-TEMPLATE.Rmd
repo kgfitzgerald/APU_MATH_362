@@ -1,0 +1,48 @@
+---
+title: "Problem Set 08"
+author: "TEMPLATE"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+> YOUR ANSWER HERE
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+> YOUR ANSWER HERE
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+> YOUR ANSWER HERE
+
+*RP4: What questions and/or reflections do you have regarding the read & reflect section?*
+
+> YOUR ANSWER HERE
+
+# By hand or typed
+
+## Exercise 1
+
+## Exercise 2
+
+## Exercise 3
+
+# Typed
+
+## Exercise 4
+
+
+
