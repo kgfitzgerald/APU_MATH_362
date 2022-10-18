@@ -131,7 +131,7 @@ sum((Pulse - sum(Pulse)/n())^2)/(n() - 1)
 ```{r, eval = FALSE, echo = FALSE}
 sample_stats <- sims %>% 
   group_by(replicate) %>% 
-  mutate(mu_MLE = sum(Pulse)/n(),
+  summarize(mu_MLE = sum(Pulse)/n(),
          sigma2_MLE = sum((Pulse - sum(Pulse)/n())^2)/n(),
          S2 = sum((Pulse - sum(Pulse)/n())^2)/(n() - 1))
 

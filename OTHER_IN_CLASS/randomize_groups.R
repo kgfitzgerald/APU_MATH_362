@@ -2,6 +2,6 @@
 
 names <- c("Emily", "Valerie", 
            "David", "Melanie",
-           "Caden", "Nanette", "Daniel")
+           "Caden", "Nanette")
 
-sample(names, size = 7)
+sample(names, size = 6)

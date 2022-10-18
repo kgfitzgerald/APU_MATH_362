@@ -1609,7 +1609,7 @@ div.tocify {
 <div id="exercise-1" class="section level3">
 <h3>Exercise 1</h3>
 <p>[HTZ: 6.5-1] Show that the residuals <span class="math inline">\(Y_i
-= \hat{Y}_i, \ \ \ i= 1,2,...,n\)</span> from the least squares
+- \hat{Y}_i, \ \ \ i= 1,2,...,n\)</span> from the least squares
 regression model sum to 0.</p>
 </div>
 <div id="exercise-2" class="section level3">
@@ -1642,10 +1642,20 @@ interval for the intercept parameter <span class="math inline">\(\alpha\)</span>
 <p><span class="math display">\[a \pm
 t_{\alpha/2}\left(\sqrt{\frac{\hat{\sigma}^2}{n-2}}\right)\]</span></p>
 </div>
+</div>
+<div id="typed" class="section level2">
+<h2>Typed</h2>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
 <p>The following code reads in a dataset called <code>senic</code> which
-contains data on ….</p>
+contains data on a random sample of 113 hospitals in the US. We will be
+exploring two variables:</p>
+<ul>
+<li><code>infection_risk</code> = Average estimated probability of
+acquiring an infection in the hospital (measured as %)</li>
+<li><code>length</code> = Average length of stay of all patients in the
+hospital (in days)</li>
+</ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>senic <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kgfitzgerald/APU_MATH_362/main/PROBLEM_SETS/data/senic.csv&quot;</span>)</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li>Fit a linear model using <code>infection_risk</code> to predict
@@ -1694,7 +1704,7 @@ completing these problems?</em></p></li>
 difficult about them/where did you get stuck?</em></p></li>
 </ul>
 <p>Knit your document one final time, then upload your .html file to
-Problem Set 07 on Canvas.</p>
+Problem Set 08 on Canvas.</p>
 </div>
 <div id="grading-50pts" class="section level2">
 <h2>Grading (50pts)</h2>
