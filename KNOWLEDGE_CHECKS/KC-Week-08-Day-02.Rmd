@@ -1,0 +1,35 @@
+---
+title: "Week 08 Day 02"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Student Questions
+
++ Book: "Because we know that if the correlation coefficient is 0, then $X$ and $Y$ are independent random variables"
+    + You're correct that this is wrong! 
++ What is MSE and what does it do?
+
+$$MSE = \frac{\sum_{i = 1}^n (Y_i - \hat{Y}_i)^2}{n-2}$$
+
++ Why does the test statistic have $n-2$ degrees of freedom instead of $n-1$
+$$T = \frac{\hat{\beta} - \beta}{\sqrt{\frac{MSE}{\sum(x_i - \bar{x})^2}}}$$
+
++ Why is that ^^ the test statistic?
++ Why would we want to test $H_0: \beta = \beta_0$
++ What R code do we use to get the regression/hypothesis test output?
+
+## PS 08 - work on the board!
+
+## Knowledge Check
+
