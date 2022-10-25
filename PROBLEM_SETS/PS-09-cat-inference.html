@@ -1598,7 +1598,7 @@ div.tocify {
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span></code></pre></div>
 <div id="learning-objectives" class="section level1">
 <h1>Learning objectives</h1>
 <ul>
@@ -1753,10 +1753,10 @@ random shuffle is provided below.</p>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>random_shuffle <span class="sc">%&gt;%</span> </span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(death, gilbert_worked)</span></code></pre></div>
 <pre><code>##     death gilbert_worked    n
-## 1   Death             No   62
-## 2   Death            Yes   12
-## 3 NoDeath             No 1322
-## 4 NoDeath            Yes  245</code></pre>
+## 1   Death             No   55
+## 2   Death            Yes   19
+## 3 NoDeath             No 1329
+## 4 NoDeath            Yes  238</code></pre>
 <ol style="list-style-type: lower-alpha">
 <li><p>Articulate the logic for how you could use many, many random
 shuffles to investigate whether an unusually high number of deaths
