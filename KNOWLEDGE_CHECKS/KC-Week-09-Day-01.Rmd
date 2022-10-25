@@ -16,6 +16,49 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ## Student Questions
 
++ Notation questions:
+    + $b(n,p_1)$: $b$ stands for binomial
+    + $H_0: p_F = 0.6$: $p_F$ stands for proportion females
+    + $Y_1$ = count in group/condition 1, $Y_k$ = count in group/condition $k$
+    
+<br/>
+<br/>
+    
++ $np_1 \geq 5$ and $n(1-p_1) \geq 5$ for CLT to kick in. Why not $n > 30$? 
+
+<br/>
+<br/>
+
++ $Z^2 = Q_1 = \frac{(Y_i -np_i)^2}{np_i(1-p_i)}$. 
+    + Is this the same/related to the Q we saw last week? $Q = \sum_{i = 1}^n(y_i - \hat{y}i)^2$
+    + Why would we want a chi-squared distribution instead of a normal distribution?
+    
+<br/>
+<br/>
+
++ $Q_1$ was originally written as $\frac{(Y_1 - np_1)^2}{np_1(1-p_1)}$. What's the point of re-writing so it involves $Y_2 = n - Y_1$, since $Y_2$ requires that we know $Y_1$?
+
+<br/>
+<br/>
+
++ In what scenarios would using Q be more helpful than using the Z test statistic? What scenarios warrant a chi-square test as opposed to test we have been using?
+
+<br/>
+<br/>
+
++ Book: five categories of candies.. we have four numbers that are "free" to be any number, but once they are determined, then the number of coffee-colored candies immediately follows. It is in this sense that we have "four degrees of freedom"
+    + "I am still a little confused by this explanation of degrees of freedom. What about scenarios that have n-1 degrees of freedom, like for the T-test? What are the numbers that are free to be any number?"
+    + Example: Suppose I have 5 numbers, and their average must be 7. 
+    
+<br/>
+<br/>
+
++ $\chi^2_{\alpha}(k-1)$. Is $\alpha$ given or do we use the MLE?
+
+<br/>
+<br/>
+
++ $Q_9 \geq \chi^2_{10-1, 0.05}$. What would the p value approach to this test look like? Also, would the greater than or equal to sign imply that this is a one-tailed test? Would we ever deal with a two-tailed test?
 
 ## Knowledge Check
 
