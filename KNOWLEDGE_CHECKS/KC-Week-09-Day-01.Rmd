@@ -1,0 +1,28 @@
+---
+title: "Week 09 Day 01"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Student Questions
+
+
+## Knowledge Check
+
++ When $Z \sim N(0,1)$, how is $Q = Z^2$ distributed?
++ For chi-square tests, what does a large value of $Q_1$ indicate? 
++ Articulate what is going on in the following formula and what is meant by "OBSERVED" and "EXPECTED":
+$$Q_1 = \sum_{i = 1}^2\frac{(Y_i - np_i)^2}{np_i} = \sum_{i = 1}^2\frac{(\text{OBSERVED - EXPECTED})^2}{\text{EXPECTED}}$$
+
++ How many degrees of freedom does $Q_1$ have?
++ What is the relationship between a Z-test for a proportion and a chi-squared goodness-of-fit test?

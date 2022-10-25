@@ -1,0 +1,224 @@
+---
+title: "Problem Set 09"
+subtitle: "Week 09"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+```
+
+# Learning objectives
+
++ Derive the expected value of the Chi-square goodness-of-fit (GOF) statistic
++ Conduct Chi-square GOF tests by hand and using R
++ Design simulations to investigate a real-world problem involving contingency table data
+
+# Exercises
+
+## By hand or typed
+
+### Exercise 1
+
+Let $Y_i \sim binomial(n, p_i)$ and $Q = \sum_{i = 1}^k\frac{(Y_i - np_i)^2}{np_i}$. Derive the expected value of $Q$. Verify that your derivation is correct by using what we know about the approximate distribution of $Q$ and checking the Wikipedia page for that distribution.
+
+### Exercise 2
+
+[HTZ 9.1-5] Let $X$ equal the number of female children in a three-child family. Among students who were taking statistics, 52 came from families with three children. For these families, $x = 0,1,2, \text{ and }3$ for $5, 17, 24, \text{ and } 6$ families, respectively. We shall use a chi-square goodness-of-fit statistic to test the null hypothesis that the distribution of $X$ is $b(3, 0.5)$
+
+a)  Define the test statistic and critical region, using an $\alpha = 0.05$ significance level. *Hint: how many values of* $X$ are possible? You can think of these as being the $k$ possible events $A_1, ..., A_k$ (See PSU 16.2)
+b)  Write out the null hypothesis in terms of $p_i$'s. *Hint: you can utilize the `dbinom()` function in R to compute binomial probabilities*
+c)  Calculate the value of the test statistic and state your conclusion.
+
+### Exercise 3
+
+A rare type of mutation causes the bacterium in E. coli to become resistant to the drug streptomycin. This mutation can be detected by plating many bacteria on petri dishes containing an antibiotic medium. Any colonies that grow on this medium result from a single mutant cell. A sample of $n = 150$ petri dishes of streptomycin agar where each plated with $10^6$ bacteria, and the numbers of colonies were counted on each dish. The observed results were that 92 dishes had 0 colonies, 46 had 1, 8 had 2, 3 had 3, and 1 dish had 4 colonies. Let $X$ equal the number of colonies per dish. Test the hypothesis that $X$ has a Poisson distribution. Use $\bar{X} = 0.5$ as an estimate of $\lambda$. Let $\alpha = 0.01$.
+
+```{r, echo = FALSE, eval = FALSE}
+x <- c(0,1,2,3,4)
+y_obs <- c(92,46,8,3,1)
+p <- c(dpois(x, .5))
+n <- 150
+y_exp <- n*p
+Q <- sum((y_obs - y_exp)^2/(n*p))
+qchisq()
+
+chisq.test(x = y_obs, p = p, rescale.p = TRUE)
+
+x <- c(0,1,2,3)
+y_obs <- c(15,12,7,6)
+lambda_hat <- 1.25
+p <- c(dpois(0, lambda_hat),
+       dpois(1, lambda_hat),
+       dpois(2, lambda_hat),
+       ppois(2, lambda_hat, lower.tail = FALSE))
+n <- 40
+y_exp <- n*p
+Q <- sum((y_obs - y_exp)^2/(n*p))
+qchisq(.95, 2)
+```
+
+## Typed
+
+### Exercise 4
+
+Use the function `chisq.test()` in R to conduct the hypothesis tests from Exercises 2 & 3. Note that you should give `chisq.test()` the argument `x` = observed counts of $Y_i$ and `p` = probabilities under null hypothesis.
+
+```{r, echo = FALSE, eval = FALSE}
+y_obs <- c(5,17,24,6)
+x <- c(0, 1, 2, 3)
+p <- c(dbinom(x, size = 3, prob = 0.5))
+y_exp <- 52*p
+chisq.test(x = y_obs, p = p)
+```
+
+### Exercise 5
+
+Were eight-hour hospital shifts on which Kristen Gilbert worked as a nurse more likely to have a patient death than shifts on which Gilbert did not work? Data on this question were presented in the murder case of Kristen Gilbert, a nurse accused of being a serial killer of patients.
+
+
+|                              | Gilbert worked shift | Gilbert did not work shift | Total |
+|------------------------------|----------------------|----------------------------|-------|
+| Death occurred on shift       | 40                   | 34                         | 74    |
+| Death did not occur on shift | 217                  | 1350                       | 1567  |
+| Total                        | 257                  | 1384                       | 1641  |
+
+The following code reads in the raw data.
+
+```{r}
+gilbert <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRCZs5ebB4Dlltr9rn7WG8YChPwmD-cNmS0k9wd6nNQOGTLbqP3yMiDMTyN4E-CXbjtZaUnHh9qq-fC/pub?output=csv")
+
+glimpse(gilbert)
+
+gilbert %>% 
+  count(gilbert_worked, death)
+```
+
+One way to investigate whether an unusually high number of deaths occurred on Gilbert's shifts (more than would be expected due to chance), is to simulate what *would* be expected simply due to chance. If Gilbert working on the shift and whether or not a death occurs are *independent*, we would expect the deaths to be evenly distributed among the shifts that Gilbert works and does not work. We can mimic this with simulations by randomly permuting (shuffling) the `death` column. For example, code for one iteration of a random shuffle is provided below.
+
+```{r}
+#split columns into separate data frames
+shift_data <- gilbert %>% 
+  select(gilbert_worked)
+
+death_data <- gilbert %>% 
+  select(death)
+
+# randomly permute the death column 
+# so deaths appear at random rows among the 1641 rows
+random_shuffle <- death_data %>% 
+  sample_n(size = nrow(gilbert)) 
+
+# combine the randomly shuffled deaths with the shift data
+random_shuffle <- cbind(random_shuffle, shift_data)
+
+random_shuffle %>% 
+  count(death, gilbert_worked)
+```
+
+a) Articulate the logic for how you could use many, many random shuffles to investigate whether an unusually high number of deaths occured on Kristen Gilbert's shifts. Note there is more than one reasonable way to approach this. 
+
+b) On the board, write out psuedo-code for how you will conduct these simulations. *Hint: a for loop may be helpful*. You do not need to include your psuedo-code in your write-up.
+
+c) Write code and conduct 10,000 simulations. Provide a visualization of a relevant sampling distribution. 
+
+d) Based on your simulations, is there sufficient evidence that the shifts Gilbert worked and the deaths that occurred are NOT independent? 
+
+e) What test statistic did you use in your simulations? Do you know its sampling distribution? *Note, your answers may vary, depending on how you chose to conduct your simulations*
+
+f) If your code does not already involve computing $Q$, the chi-squared test statistic for each random shuffle, adapt it to do so, and visualize the sampling distribution of $Q$. Compute the observed value of $Q$ for the original data, and compare it to your sampling distribution. What conclusion would you draw based on a chi-squared test of independence for this data? 
+
+```{r, eval = FALSE, echo = FALSE}
+library(tidyverse)
+library(infer)
+death_data <- data.frame(death = c(rep("Death", 72),
+                                   rep("NoDeath", 1567)))
+shift_data <- data.frame(gilbert_worked = c(rep("Yes", 255), 
+                                            rep("No", 1384)))
+
+p_death <- sum(death_data$death == "Death")/nrow(death_data)
+n_gilbert_worked <- sum(shift_data$gilbert_worked == "Yes")
+
+random_shuffle <- sample_n(death_data, size = 1639, replace = FALSE)
+sample_1 <- cbind(shift_data, random_shuffle)
+
+sample_1 %>% 
+  count(gilbert_worked, death, name = "observed") %>% 
+  mutate(expected = case_when(gilbert_worked == "Yes" & death == "Death" ~ n_gilbert_worked*p_death,
+                              gilbert_worked == "Yes" & death == "NoDeath" ~ n_gilbert_worked*(1-p_death),
+                              gilbert_worked != "Yes" & death == "Death" ~ (nrow(shift_data) - n_gilbert_worked)*p_death,
+                              gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(shift_data) - n_gilbert_worked)*(1-p_death))) %>% 
+  summarize(Q = sum((observed - expected)^2/expected))
+
+Q <- c()
+for(i in 1:10){
+  random_shuffle <- sample_n(death_data, size = 1639, replace = FALSE)
+  sample_i <- cbind(shift_data, random_shuffle)
+
+  Q[i] <- sample_i %>% 
+  count(gilbert_worked, death, name = "observed") %>% 
+  mutate(expected = case_when(gilbert_worked == "Yes" & death == "Death" ~ n_gilbert_worked*p_death,
+                              gilbert_worked == "Yes" & death == "NoDeath" ~ n_gilbert_worked*(1-p_death),
+                              gilbert_worked != "Yes" & death == "Death" ~ (nrow(shift_data) - n_gilbert_worked)*p_death,
+                              gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(shift_data) - n_gilbert_worked)*(1-p_death))) %>% 
+  summarize(Q = sum((observed - expected)^2/expected)) %>% 
+    pull(Q)
+}
+
+T <- c()
+for(i in 1:10000){
+  random_shuffle <- sample_n(death_data, size = 1639, replace = FALSE)
+  sample_i <- cbind(shift_data, random_shuffle)
+
+  T[i] <- sample_i %>% 
+    summarise(obs = sum(gilbert_worked == "Yes" & death == "Death")) %>% 
+    pull(obs)
+}
+data <- data.frame(T)
+ggplot(data, aes(x = T)) +
+  geom_histogram()
+
+gilbert <- read_excel("PROBLEM_SETS/data/gilbert.xlsx", sheet = "Sheet2")
+
+null_distribution <- gilbert %>% 
+  specify(death ~ gilbert_worked, success = "Death") %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 10000, type = "permute") %>% 
+  calculate(stat = "Chisq")
+
+ggplot(null_distribution, aes(x = stat)) +
+  geom_histogram()
+```
+
+## Submission
+
+Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
+
+-   (RP1): *What were the main concepts covered in this assignment?*
+
+-   (RP2): *What's one thing you understand better after completing these problems?*
+
+-   (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+Knit your document one final time, then upload your .html file to Problem Set 09 on Canvas.
+
+## Grading (50pts)
+
+| Component            | Points |
+|:---------------------|:-------|
+| RP1                  | 5      |
+| RP2                  | 5      |
+| RP3                  | 5      |
+| Formatting & Clarity | 5      |
+| Exercise completion  | 30     |
