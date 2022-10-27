@@ -52,7 +52,7 @@ p <- c(dpois(x, .5))
 n <- 150
 y_exp <- n*p
 Q <- sum((y_obs - y_exp)^2/(n*p))
-qchisq()
+qchisq(.95, 4)
 
 chisq.test(x = y_obs, p = p, rescale.p = TRUE)
 

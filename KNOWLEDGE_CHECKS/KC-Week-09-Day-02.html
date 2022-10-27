@@ -11,7 +11,7 @@
 
 
 
-<title>Week 05 Day 01</title>
+<title>Week 09 Day 02</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1497,81 +1497,50 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Week 05 Day 01</h1>
+<h1 class="title toc-ignore">Week 09 Day 02</h1>
 
 </div>
 
 
-<div id="student-qs" class="section level1">
-<h1>Student Qs</h1>
+<div id="student-questions" class="section level2">
+<h2>Student Questions</h2>
 <ul>
-<li><p>Why would we write <span class="math inline">\(H_0: \mu_X - \mu_Y
-= 0\)</span> instead of <span class="math inline">\(H_0: \mu_X =
-\mu_Y\)</span>?</p></li>
-<li><p>How do we know <span class="math inline">\(T = \frac{(\bar{X} -
-\bar{Y}) - (\mu_X - \mu_Y)}{\sqrt{\frac{S_X^2}{n} +
-\frac{S_Y^2}{m}}}\)</span> has a t distribution?</p></li>
-<li><p>What does <span class="math inline">\(\lfloor r \rfloor\)</span>
-mean?</p></li>
-<li><p>My Q: should you round decimal sample sizes up or down?</p></li>
-<li><p>The T-value from the unequal variance formula gave a value that
-was slightly larger than the one from the equal variance formula. Will
-this always be the case mathematically?</p>
-<ul>
-<li>I don’t know - but would be interesting to explore! Algebraic
-manipulations and/or simulations</li>
-<li>Similar to “coverage probability” where we wanted to verify that 95%
-CI’s resulted in 95% coverage probability, we want <span class="math inline">\(\alpha=0.05\)</span> tests to result in 5% Type I
-error rates. Concern with using the wrong test statistic (and therefore
-reference distribution) would be that we get Type I error rates that
-aren’t “nominal” (i.e. don’t match our specifed <span class="math inline">\(\alpha\)</span>).</li>
-</ul></li>
-<li><p>Never heard of the F-distribution (<span class="math inline">\(F
-= \frac{U/r_1}{V/r_2}\)</span>). Is there a way of dealing with these in
-R?</p></li>
-<li><p>What’s the difference between the t-distribution and the
-F-distribution? What are they used for/what are their benefits?</p></li>
-<li><p>When should we use Welch’s t-test?</p></li>
+<li><p>Why do we want <span class="math inline">\(Q\)</span> to be
+larger? <span class="math inline">\(Q \geq
+\chi^2_{\alpha,k-1}\)</span></p></li>
+<li><p>What is the <a href="https://en.wikipedia.org/wiki/Multinomial_distribution">multinomial
+distribution</a>?</p></li>
+<li><p>Would we reject the null hypothesis in the case where one of the
+four proportions is significantly different? <span class="math display">\[H_0: p_{M1} = p_{F1}, \ p_{M2} = p_{F2}, \ p_{M3}
+= p_{F3}, p_{M4} = p_{F4}\]</span> <span class="math display">\[H_A:
+p_{M1} \neq p_{F1}, \text{ or  } p_{M2} \neq p_{F2}, \text{ or  } p_{M3}
+\neq p_{F3}, \text{ or  } p_{M4} \neq p_{F4}\]</span></p></li>
+<li><p><a href="https://online.stat.psu.edu/stat415/lesson/17/17.1">Indexing
+notation</a></p></li>
+<li><p><span class="math inline">\(Q = \sum_{i =
+1}^h\sum_{j=1}^k\frac{(y_{ij} - n_i\hat{p}_j)^2}{n_i\hat{p}_j}\)</span>
+has <span class="math inline">\(h(k-1) - (k-1) = (h-1)(k-1)\)</span>
+degrees of freedom. Where does this df come from?</p></li>
+<li><p>I wonder what would happen if they used <span class="math inline">\(\hat{p}_i\)</span> instead. So they figure out
+what proportion of the total is in each sample and then multiply that by
+the total of each category. I tried it for this problem and it worked
+out to be the same; is that a coincidence, or will it always
+happen?</p></li>
+<li><p>Is it correct to also understand these hypotheses as the H0
+explaining there is no significant relationship between variables and
+the HA saying there is one? What is the significance of knowing that two
+variables are or are not independent of each other?</p></li>
+<li><p><span class="math inline">\(\sum_{j = 1}^k p_{ij} =
+p_{i\cdot}\)</span> If the test for homogeneity and the test for
+independence are essentially the same procedure, what’s the point of
+changing the notation? Is it just to distinguish the two tests (i.e. to
+emphasize that they have different purposes?)</p></li>
+<li><p>Does the chi-square test for independence have to be for
+categorical variables or could they also be numerical? Why?</p></li>
+<li><p>Why are we able to assume independence to calculate the pij for
+the chi-square statistic when we have yet to determine whether the two
+variables are truly independent or not?</p></li>
 </ul>
-</div>
-<div id="knowledge-check" class="section level1">
-<h1>Knowledge Check</h1>
-<ol style="list-style-type: decimal">
-<li><p>Describe what each symbol in <span class="math inline">\(\chi^2 =
-\frac{(n-1)S^2}{\sigma_0^2}\)</span> means, and how this expression is
-used in a hypothesis test.</p></li>
-<li><p>How is <span class="math inline">\(\chi^2\)</span> above
-distributed?</p></li>
-<li><p>Assume you’re conducting a one-sided hypothesis test for <span class="math inline">\(\sigma^2\)</span> with a sample size of 50. What
-should you set your <span class="math inline">\(\chi^2\)</span> cutoff
-value to be if you want to:</p>
-<ol style="list-style-type: lower-alpha">
-<li>control Type I error rate to be 0.10</li>
-<li>control Type I error rate to be 0.05</li>
-<li>control Type I error rate to be 0.01</li>
-</ol></li>
-<li><p>Describe how the above cutoff values would change if you instead
-had a sample size of 100. You don’t actually need to compute new
-values.</p></li>
-<li><p>If <span class="math inline">\(U \sim \chi^2_{n-1}\)</span> and
-<span class="math inline">\(V \sim \chi^2_{m-1}\)</span>, how is <span class="math inline">\(\frac{U/(n-1)}{V/(m-1)}\)</span>
-distributed?</p></li>
-<li><p>Explain why the test statistic for the hypothesis test <span class="math inline">\(H_0: \sigma^2_X = \sigma^2_Y\)</span> is <span class="math inline">\(F = \frac{S_X^2}{S_Y^2}\)</span> and not <span class="math inline">\(F =
-\frac{S_X^2}{S_Y^2}\frac{\sigma_Y^2}{\sigma_X^2}\)</span>.</p></li>
-<li><p>How many parameters does the F distribution have?</p></li>
-<li><p>Describe what each symbol in <span class="math inline">\(F_{1 -
-\alpha/2}(n-1, m-1)\)</span> stands for, and how this expression is used
-in a hypothesis test.</p></li>
-<li><p>Assume you’re conducting a one-sided hypothesis test for <span class="math inline">\(\sigma_X^2 = \sigma_Y^2\)</span> with a sample
-size of <span class="math inline">\(n_X = n_Y = 50\)</span>. What should
-you set your <span class="math inline">\(F\)</span> cutoff value to be
-if you want to:</p>
-<ol style="list-style-type: lower-alpha">
-<li>control Type I error rate to be 0.10</li>
-<li>control Type I error rate to be 0.05</li>
-<li>control Type I error rate to be 0.01</li>
-</ol></li>
-</ol>
 </div>
 
 

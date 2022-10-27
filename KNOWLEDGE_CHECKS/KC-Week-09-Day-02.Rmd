@@ -1,0 +1,39 @@
+---
+title: "Week 09 Day 02"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Student Questions
+
++ Why do we want $Q$ to be larger? $Q \geq \chi^2_{\alpha,k-1}$
++ What is the [multinomial distribution](https://en.wikipedia.org/wiki/Multinomial_distribution)? 
++ Would we reject the null hypothesis in the case where one of the four proportions is significantly different? 
+$$H_0: p_{M1} = p_{F1}, \ p_{M2} = p_{F2}, \ p_{M3} = p_{F3}, p_{M4} = p_{F4}$$
+$$H_A: p_{M1} \neq p_{F1}, \text{ or  } p_{M2} \neq p_{F2}, \text{ or  } p_{M3} \neq p_{F3}, \text{ or  } p_{M4} \neq p_{F4}$$
+
++ [Indexing notation ](https://online.stat.psu.edu/stat415/lesson/17/17.1)
+
++ $Q = \sum_{i = 1}^h\sum_{j=1}^k\frac{(y_{ij} - n_i\hat{p}_j)^2}{n_i\hat{p}_j}$ has $h(k-1) - (k-1) = (h-1)(k-1)$ degrees of freedom. Where does this df come from? 
+
++  I wonder what would happen if they used $\hat{p}_i$ instead. So they figure out what proportion of the total is in each sample and then multiply that by the total of each category. I tried it for this problem and it worked out to be the same; is that a coincidence, or will it always happen?
+
++ Is it correct to also understand these hypotheses as the H0 explaining there is no significant relationship between variables and the HA saying there is one? What is the significance of knowing that two variables are or are not independent of each other?
+
++ $\sum_{j = 1}^k p_{ij} = p_{i\cdot}$ If the test for homogeneity and the test for independence are essentially the same procedure, what's the point of changing the notation? Is it just to distinguish the two tests (i.e. to emphasize that they have different purposes?)
+
++ Does the chi-square test for independence have to be for categorical variables or could they also be numerical? Why?
+
++ Why are we able to assume independence to calculate the pij for the chi-square statistic when we have yet to determine whether the two variables are truly independent or not?
+
+
