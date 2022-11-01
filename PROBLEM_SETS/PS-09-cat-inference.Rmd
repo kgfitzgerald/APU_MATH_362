@@ -41,6 +41,14 @@ a)  Define the test statistic and critical region, using an $\alpha = 0.05$ sign
 b)  Write out the null hypothesis in terms of $p_i$'s. *Hint: you can utilize the `dbinom()` function in R to compute binomial probabilities*
 c)  Calculate the value of the test statistic and state your conclusion.
 
+```{r, echo = FALSE}
+y_obs <- c(5,17,24,6)
+p <- c(.125, .375, .375, .125)
+y_exp <- 52*p
+Q <- sum((y_obs - y_exp)^2/y_exp)
+```
+
+
 ### Exercise 3
 
 A rare type of mutation causes the bacterium in E. coli to become resistant to the drug streptomycin. This mutation can be detected by plating many bacteria on petri dishes containing an antibiotic medium. Any colonies that grow on this medium result from a single mutant cell. A sample of $n = 150$ petri dishes of streptomycin agar where each plated with $10^6$ bacteria, and the numbers of colonies were counted on each dish. The observed results were that 92 dishes had 0 colonies, 46 had 1, 8 had 2, 3 had 3, and 1 dish had 4 colonies. Let $X$ equal the number of colonies per dish. Test the hypothesis that $X$ has a Poisson distribution. Use $\bar{X} = 0.5$ as an estimate of $\lambda$. Let $\alpha = 0.01$.
@@ -56,17 +64,17 @@ qchisq(.95, 4)
 
 chisq.test(x = y_obs, p = p, rescale.p = TRUE)
 
-x <- c(0,1,2,3)
-y_obs <- c(15,12,7,6)
-lambda_hat <- 1.25
-p <- c(dpois(0, lambda_hat),
-       dpois(1, lambda_hat),
-       dpois(2, lambda_hat),
-       ppois(2, lambda_hat, lower.tail = FALSE))
-n <- 40
-y_exp <- n*p
-Q <- sum((y_obs - y_exp)^2/(n*p))
-qchisq(.95, 2)
+# x <- c(0,1,2,3)
+# y_obs <- c(15,12,7,6)
+# lambda_hat <- 1.25
+# p <- c(dpois(0, lambda_hat),
+#        dpois(1, lambda_hat),
+#        dpois(2, lambda_hat),
+#        ppois(2, lambda_hat, lower.tail = FALSE))
+# n <- 40
+# y_exp <- n*p
+# Q <- sum((y_obs - y_exp)^2/(n*p))
+# qchisq(.95, 2)
 ```
 
 ## Typed
@@ -78,8 +86,10 @@ Use the function `chisq.test()` in R to conduct the hypothesis tests from Exerci
 ```{r, echo = FALSE, eval = FALSE}
 y_obs <- c(5,17,24,6)
 x <- c(0, 1, 2, 3)
+p <- c(d)
 p <- c(dbinom(x, size = 3, prob = 0.5))
 y_exp <- 52*p
+
 chisq.test(x = y_obs, p = p)
 ```
 

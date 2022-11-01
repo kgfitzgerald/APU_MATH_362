@@ -1,0 +1,157 @@
+---
+title: "Problem Set 07"
+author: "SOLUTIONS"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+
+*RP4: What questions and/or reflections do you have regarding the read & reflect section?*
+
+
+# By hand or typed
+
+## Exercise 1
+
+$$
+\begin{aligned}
+L(\theta) &= P(X = x_1, X= x_2, \dots, X = x_{10}) = \prod_{i = 1}^nf(x_i;\theta) \\
+&= P(X = 3)P(X = 0)P(X = 2)P(X = 1)P(X = 3)P(X = 2)P(X = 1)P(X = 0)P(X = 2)P(X = 1)\\
+&= [P(X=0)]^2[P(X=1)]^3[P(X=2)]^3[P(X=3)]^2\\
+&= \frac{2^2}{3^2}\theta^2\frac{1^3}{3^3}\theta^3\frac{2^3}{3^3}(1-\theta)^3\frac{1^2}{3^2}(1-\theta)^2\\
+&=\frac{2^5}{3^{10}}\theta^5(1-\theta)^5\\
+logL(\theta) &= log\left(\frac{2^5}{3^{10}}\right) + 5log(\theta) + 5log(1-\theta)\\
+\frac{\partial logL(\theta)}{\partial \theta} &= \frac{5}{\theta} - \frac{5}{1 - \theta} \overset{\text{SET}}{=} 0 \\
+\end{aligned}
+$$
+
+Solving for $\theta$ yields an MLE of $\hat{\theta} = \frac{1}{2}$
+
+## Exercise 2
+
+$$
+\begin{aligned}
+L(p) &= \prod_{i = 1}^n f(x_i; p)\\
+&= \prod_{i = 1}^n p(1-p)^{x_i - 1} \\
+&= p^n(1-p)^{\sum x_i - n}\\
+logL(p) &= nlog(p) + (\sum_{i = 1}^nx_i - n)log(1-p)\\
+\frac{\partial logL(p)}{\partial p} &= \frac{n}{p} - \frac{\sum_{i = 1}^nx_i - n}{1 - p}
+\end{aligned}
+$$
+
+Setting the above expression equal to 0, finding a common denominator, and solving for p, we get
+
+$$
+\begin{aligned}
+(1-p)n - p(\sum_{i = 1}^nx_i - n) &= 0\\
+n - np - p\sum_{i = 1}^nx_i + np &= 0 \\
+n &= p\sum_{i = 1}^nx_i\\
+1 = p\overline{x}\\
+\frac{1}{\overline{x}} = p
+\end{aligned}
+$$
+
+Therefore, the MLE of $p$ for a geometric distribution is $\hat{p}_{MLE} = \frac{1}{\overline{x}}$
+
+# Typed
+
+## Exercise 3
+
+To show if an estimator $\hat{\theta}$ is unbiased, we can:
+
+1. draw repeated samples (e.g. 10,000) from the population
+2. compute a value for $\hat{\theta}$ at each iteration, using the formula for the estimator
+3. plot the 10,000 $\hat{\theta}$ values and see if they are centered at $\theta$
+4. compute the empirical expected value of $\hat{\theta}$ by taking the average of the 10,000 values, and compare it to $\theta$
+
+If the empirical expected value of the 10,000 $\hat{\theta}$ values is equal to $\theta$ (plus or minus some simulation error), that is evidence that $\hat{\theta}$ is an unbiased estimator of $\theta$.
+
+The above procedure would be done for each of the three estimators in question. 
+
+## Exercise 4
+
+Code provided:
+
+```{r}
+library(tidyverse)
+library(NHANES)
+library(infer)
+
+#create population data
+population <- NHANES %>% 
+  filter(!is.na(Pulse), Pulse < 100)
+
+#plot population distribution of variable of interest
+ggplot(population, aes(x = Pulse)) +
+  geom_histogram(color = "white", binwidth = 5)
+
+#compute and store population mean and variance
+mu <- mean(population$Pulse)
+mu
+sigma2 <- var(population$Pulse)
+sigma2
+
+#set seed and draw 100,000 random samples of size 30
+set.seed(437)
+sims <- population %>% 
+  rep_sample_n(size = 30, reps = 100000)
+```
+
+Rest of solutions: 
+
+```{r}
+#compute a value for each of the three estimators for each random sample
+#sample_stats will have 100,000 rows and 4 variables
+sample_stats <- sims %>% 
+  group_by(replicate) %>% 
+  summarize(mu_MLE = sum(Pulse)/n(),
+         sigma2_MLE = sum((Pulse - sum(Pulse)/n())^2)/n(),
+         S2 = sum((Pulse - sum(Pulse)/n())^2)/(n() - 1))
+
+#compute empirical expected values of each estimator
+Emu_MLE <- mean(sample_stats$mu_MLE)
+Esigma2_MLE <- mean(sample_stats$sigma2_MLE)
+ES2 <- mean(sample_stats$S2)
+
+#plot sampling distributions with true parameter value marked in red
+#and empirical expected value marked in blue
+#red visible indicates estimator is biased
+#red invisible (covered by blue) indicates estimator is unbiased
+ggplot(sample_stats, aes(x = mu_MLE)) +
+  geom_histogram() +
+  geom_vline(xintercept = mu, color = "red") + 
+  geom_vline(xintercept = Emu_MLE, color = "blue")
+
+ggplot(sample_stats, aes(x = sigma2_MLE)) +
+  geom_histogram() +
+  geom_vline(xintercept = sigma2, color = "red") + 
+  geom_vline(xintercept = Esigma2_MLE, color = "blue")
+
+ggplot(sample_stats, aes(x = S2)) +
+  geom_histogram() +
+  geom_vline(xintercept = sigma2, color = "red") + 
+  geom_vline(xintercept = ES2, color = "blue")
+```
+
+
+## BONUS
+

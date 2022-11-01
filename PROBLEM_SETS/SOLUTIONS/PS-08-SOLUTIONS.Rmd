@@ -1,0 +1,110 @@
+---
+title: "Problem Set 08"
+author: "SOLUTIONS"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+# By hand or typed
+
+## Exercise 1
+
+Note $\hat{Y}_i = a + b(x_i - \overline{x}$. 
+
+We want to show that $\sum_{i = 1}^n(Y_i - \hat{Y}_i) = 0$
+
+$$
+\begin{aligned}
+\sum_{i = 1}^n(Y_i - \hat{Y}_i) &= \sum_{i = 1}^n(Y_i - (a + b(x_i - \overline{x})) \\
+&= \sum_{i = 1}^n Y_i - an - b\sum_{i = 1}^nx_i+bn\overline{x} \\
+&= \sum_{i = 1}^n Y_i - an
+\end{aligned}
+$$
+
+with the last equality being true because $bn\overline{x} = bn\frac{\sum_{i = 1}^nx_i}{n} = b\sum_{i = 1}^nx_i$.
+
+Recall that $a = \overline{y}$, so 
+
+$$
+\begin{aligned}
+\sum_{i = 1}^n Y_i - an &= \sum_{i = 1}^n Y_i - \overline{y}n \\
+&= \sum_{i = 1}^n Y_i - \sum_{i = 1}^n Y_i \\
+&= 0
+\end{aligned}
+$$
+
+as was to be proved.
+
+
+
+## Exercise 2
+
+### Part a
+
+Let $Y_i = \beta X_i + \epsilon_i, \ \ \ \epsilon_i \sim N(0, \sigma^2)$.
+
+This implies $Y_i \sim N(\beta X_i, \sigma^2)$. Therefore, there are two unknown parameters ($\beta, \sigma^2$), and the likelihood function is given as follows
+
+$$
+\begin{aligned}
+L(Y_i | \beta, \sigma^2) &= \prod_{i = 1}^n \frac{1}{\sqrt{2\pi\sigma^2}}exp\left[\frac{-(Y_i - \beta X_i)^2}{2\sigma^2}\right] \\
+&= (2\pi)^{-n/2}(\sigma^2)^{-n/2}exp\left[\frac{-1}{2\sigma^2}\sum_{i = 1}^n(Y_i - \beta X_i)^2\right]\\
+logL(\beta, \sigma^2) &= -\frac{n}{2}log(2\pi) - \frac{n}{2}log(\sigma^2) - \frac{1}{2\sigma^2}\sum_{i = 1}^n(Y_i - \beta X_i)^2
+\end{aligned}
+$$
+
+To find the MLE of $\beta$, we can take the derivative of the log-likelihood function with respect to $\beta$ and set the expression equal to 0. 
+
+
+$$
+\begin{aligned}
+\frac{\partial logL(\beta, \sigma^2)}{\partial \beta} &= 2 \sum_{i = 1}^n(Y_i - \beta X_i)(X_i) = 0 \\
+&=-\sum_{i = 1}^nY_iX_i + \beta\sum_{i = 1}^nX_i^2 = 0 \\
+\end{aligned}
+$$
+
+Rearranging and solving for $\beta$ yields $\hat{\beta}_{MLE} = \frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i = 1}^n X_i^2}$
+
+To find the MLE of $\sigma^2$, we can take the derivative of the log-likelihood function with respect to $\sigma^2$ and set the expression equal to 0. 
+
+
+$$
+\begin{aligned}
+\frac{\partial logL(\beta, \sigma^2)}{\partial \sigma^2} &= \frac{-n}{2}\frac{1}{\sigma^2} + \frac{1}{2\sigma^4}\sum_{i = 1}^n(Y_i - \beta X_i)^2 = 0 \\
+&= -n\sigma^2 + \sum_{i = 1}^n(Y_i - \beta X_i)^2 = 0 \\
+\end{aligned}
+$$
+
+Solving for $\sigma^2$ and plugging in the MLE for $\beta$ yields $\hat{\sigma}^2_{MLE} = \frac{\sum_{i = 1}^n (Y_i - \hat{\beta}_{MLE}X_i)^2}{n}$
+
+### Part b
+
+
+
+## Exercise 3
+
+# Typed
+
+## Exercise 4
+
+
+

@@ -1,0 +1,42 @@
+---
+title: "Week 10 Day 01"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Student Questions
+
++ What does it mean for the researchers to be "blinded"? Is it just the act of renaming the brands? But that seems like it would add more confusion.
++ I wonder: if we're going to assume that the different populations all have the same variance, are we really only just checking the variability between groups? Or do we need to estimate the variability within groups also so that we can compare it to the variability between groups?
++ Is the F-statistic the same as the test statistic?
++ Book: break down TOTAL variation into:
+    1. a component that is due to the TREATMENT (or FACTOR), and
+    2. a component that is due to just RANDOM ERROR
+    + Student: isn't #2 just be equal to the variance of each population as estimated by the samples from each?
+    
+
+## Knowledge Check
+
++ What is the purpose of an ANOVA test?
++ What are the assumptions in an ANOVA test?
++ What is the null hypothesis in an ANOVA test? What is the alternative?
++ ANOVA splits variation into what two components?
++ What is meant by $SS(Total) = SS(Between) + SS(Error)$?
++ What do Source, DF, SS, MS, F, and P stand for in an ANOVA table? 
++ How is the F-statistic calculated? 
++ Hos is the F-statistic distributed? How many degrees of freedom does it have?
++ How are MSB and MSE calculated? What do the letters stand for?
++ What does $\overline{X}_{i\cdot}$ stand for? What about $\overline{X}_{\cdot\cdot}$
+
+
+
