@@ -34,11 +34,13 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ## Exercise 2
 
-# Typed
-
 ## Exercise 3
 
+# Typed
+
 ## Exercise 4
+
+## Exercise 5
 
 
 

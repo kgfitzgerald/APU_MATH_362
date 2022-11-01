@@ -160,6 +160,7 @@ shift_data <- data.frame(gilbert_worked = c(rep("Yes", 255),
 p_death <- sum(death_data$death == "Death")/nrow(death_data)
 n_gilbert_worked <- sum(shift_data$gilbert_worked == "Yes")
 
+
 random_shuffle <- sample_n(death_data, size = 1639, replace = FALSE)
 sample_1 <- cbind(shift_data, random_shuffle)
 
@@ -172,8 +173,8 @@ sample_1 %>%
   summarize(Q = sum((observed - expected)^2/expected))
 
 Q <- c()
-for(i in 1:10){
-  random_shuffle <- sample_n(death_data, size = 1639, replace = FALSE)
+for(i in 1:1000){
+  random_shuffle <- sample_n(death_data, size = nrow(death_data), replace = FALSE)
   sample_i <- cbind(shift_data, random_shuffle)
 
   Q[i] <- sample_i %>% 
@@ -184,7 +185,20 @@ for(i in 1:10){
                               gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(shift_data) - n_gilbert_worked)*(1-p_death))) %>% 
   summarize(Q = sum((observed - expected)^2/expected)) %>% 
     pull(Q)
+  print(i)
 }
+
+Q_obs <- gilbert %>% count(gilbert_worked, death, name = "observed") %>% 
+  mutate(expected = case_when(gilbert_worked == "Yes" & death == "Death" ~ n_gilbert_worked*p_death,
+                              gilbert_worked == "Yes" & death == "NoDeath" ~ n_gilbert_worked*(1-p_death),
+                              gilbert_worked != "Yes" & death == "Death" ~ (nrow(shift_data) - n_gilbert_worked)*p_death,
+                              gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(shift_data) - n_gilbert_worked)*(1-p_death))) %>% 
+  summarize(Q = sum((observed - expected)^2/expected))
+
+ggplot(data.frame(Q), aes(x = Q)) +
+  geom_histogram() +
+  geom_vline(xintercept = Q_obs$Q, color = "blue")
+
 
 T <- c()
 for(i in 1:10000){
@@ -209,6 +223,34 @@ null_distribution <- gilbert %>%
 
 ggplot(null_distribution, aes(x = stat)) +
   geom_histogram()
+
+diff_in_props <- c()
+for(i in 1:10000){
+  random_shuffle <- sample_n(death_data, 
+                             size = nrow(death_data), 
+                             replace = FALSE)
+  sample_i <- cbind(shift_data, random_shuffle)
+  
+  table <- sample_i %>% 
+    count(gilbert_worked, death)
+  prop_1 <- table[3,3]/(table[3,3] + table[4,3])
+  prop_2 <- table[1,3]/(table[1,3] + table[2,3])
+  diff_in_props[i] <- prop_1 - prop_2
+  print(i)
+}
+
+data <- data.frame(diff_in_props)
+
+table <- gilbert %>% 
+  count(gilbert_worked, death)
+prop_1 <- table[3,3]/(table[3,3] + table[4,3])
+prop_2 <- table[1,3]/(table[1,3] + table[2,3])
+obs_diff_in_props <- prop_1 - prop_2 %>% pull(n)
+
+
+ggplot(data, aes(x = diff_in_props)) +
+  geom_histogram(color = "white", binwidth = 0.005) +
+  geom_vline(xintercept = obs_diff_in_props$n, color = "blue")
 ```
 
 ## Submission

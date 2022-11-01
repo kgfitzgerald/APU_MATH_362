@@ -14,6 +14,8 @@ output:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+You can access the .Rmd for the solutions [here](https://github.com/kgfitzgerald/APU_MATH_362/blob/main/PROBLEM_SETS/SOLUTIONS/PS-08-SOLUTIONS.Rmd).
+
 ## Summary / Reflection Prompts
 
 *RP1: What were the main concepts covered in this assignment?*

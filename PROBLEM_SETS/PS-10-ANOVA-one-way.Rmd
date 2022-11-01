@@ -1,0 +1,239 @@
+---
+title: "Problem Set 10"
+subtitle: "Week 10"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Learning objectives
+
+-   Algebraically manipulate ANOVA sums of squares
+-   Derive expected values of MSE and MST
+-   Articulate usefulness of F-statistic in testing for the equality of means
+-   Conduct a one-way ANOVA "by hand" and using R
+
+# Exercises
+
+## By hand or typed
+
+### Exercise 1
+
+Recall that the total sums of squares is given by the following formula:
+
+$$SS(TO) = \sum_{i = 1}^m\sum_{j = 1}^{n_i} (X_{ij} - \overline{X}_{\cdot\cdot})^2$$
+
+Show that it can be rewritten in the following three ways:
+
+a.  $\sum_{i = 1}^m\sum_{j = 1}^{n_i} X_{ij}^2 - n\overline{X}_{\cdot\cdot}^2$
+b.  $\sum_{i = 1}^m n_i\overline{X}_{i\cdot}^2 - n\overline{X}_{\cdot\cdot}^2$
+c.  SS(T) + SS(E)
+
+### Exercise 2
+
+Recall that $MSE = \frac{\sum_{i = 1}^m\sum_{j = 1}^{n_i}(X_{ij} - \overline{X}_{i\cdot})^2}{n - m}$. Show that MSE is an unbiased estimator of $\sigma^2$.
+
+You may use the following facts in your proof:
+
+-   $E(X_{ij}) = \mu_i$
+-   $V(X_{ij}) = \sigma^2$
+-   $\overline{X}_{i\cdot} = \frac{\sum_{j = 1}^{n_i}X_{ij}}{n_i}$
+-   $E(\overline{X}_{i\cdot}) = \mu_i$
+-   $V(\overline{X}_{i\cdot}) = \frac{\sigma^2}{n_i}$
+
+### Exercise 3
+
+Recall that $MST = \frac{\sum_{i = 1}^m(n_i\overline{X}_{i\cdot}^2) - n\overline{X}_{\cdot\cdot}^2}{m - 1}$.
+
+a.  Show that $E(MST) = \sigma^2 + \frac{1}{m-1}\left[\sum_{i = 1}^mn_i\mu_i^2 - n\overline{\mu}^2\right]$, where $\overline{\mu} = \frac{1}{n}\sum_{i = 1}^m n_i\mu_i$
+b.  Show that when all the group means are equal (i.e. $\mu_i = \overline{\mu}$), $E(MST) = \sigma^2$
+c.  Articulate why $F = \frac{MST}{MSE}$ is a useful test statistic for evaluating $H_0: \mu_1 = \mu_2 = \dots = \mu_m$.
+
+## Typed
+
+### Exercise 4
+
+[HTZ: 9.3-5] The female cuckoo lays her eggs in other birds' nests. The "foster parents" are usually deceived, probably because of hte similarity in sizes of their own eggs and cuckoo eggs. A researcher named Latter investigated this possible explanation and measured the lengths of cuckoo eggs (in mm) that were found in the nests of three species. His data are in the following code chunk:
+
+```{r}
+hedge_sparrow <- c(22.0, 23.9, 20.9, 23.8, 25.0,
+                   24.0, 21.7, 23.8, 22.8, 23.1,
+                   23.1, 23.5, 23.0, 23.0)
+
+robin <- c(21.8, 23.0, 23.3, 22.4, 23.0,
+           23.0, 23.0, 22.4, 23.9, 22.3,
+           22.0, 22.6, 22.0, 22.1, 21.1,
+           23.0)
+
+wren <- c(19.8, 22.1, 21.5, 20.9, 22.0, 
+          21.0, 22.3, 21.0, 20.3, 20.9,
+          22.0, 20.0, 20.8, 21.2, 21.0)
+
+data <- data.frame(x_ij = c(hedge_sparrow, robin, wren),
+                   species = c(rep("Hedge sparrow", length(hedge_sparrow)),
+                               rep("Robin", length(robin)),
+                               rep("Wren", length(wren))))
+```
+
+a.  Create a side-by-side boxplot of the data
+b.  Construct an ANOVA table "by hand" to test the equality of the three means. Some template code is provided below for how to streamline the calculations in R:
+
+```{r, eval = FALSE}
+n <- dim(data)[1]
+m <- 3
+xbar_dotdot <- mean(data$x_ij)
+
+data %>% 
+  group_by(species) %>% 
+  mutate(xbar_i = _____) %>% 
+  ungroup() %>% 
+  summarize(SST = sum((_____ - _____)^2),
+            SSE = sum((_____ - _____)^2)) %>% 
+  mutate(MST = _____,
+         MSE = _____,
+         F = _____)
+```
+
+| Source  | df  | SS  | MS  | F   | p-value |
+|---------|:----|:----|:----|:----|:--------|
+| species |     |     |     |     |         |
+| Error   |     |     |     | NA  | NA      |
+| Total   |     |     | NA  | NA  | NA      |
+
+c. Write out the hypotheses, test statistic, critical region, and conclusion. Use $\alpha = 0.01$. Interpret your results. 
+
+d. The function `aov()` can be used to conduct ANOVA tests in R. Use the code `aov(x_ij ~ species, data = data)` to conduct the analysis and confirm your by-hand calculations. You can use `tidy()` around an `aov()` object to print out the full ANOVA table.
+
+```{r, echo = FALSE, eval = FALSE}
+ggplot(data, aes(x = species, y = x_ij)) +
+  geom_boxplot()
+
+xbar1 <- mean(hedge_sparrow)
+xbar2 <- mean(robin)
+xbar3 <- mean(wren)
+xbar_dotdot <- mean(data$x_ij)
+n <- dim(data)[1]
+m <- 3
+
+data %>% 
+  group_by(species) %>% 
+  mutate(xbar_i = mean(x_ij),
+         diff2_MSE = (x_ij - xbar_i)^2,
+         diff2_MST = (xbar_i - xbar_dotdot)^2) %>% 
+  ungroup() %>% 
+  summarize(MSE = sum(diff2_MSE)/(n - m),
+            MST = sum(diff2_MST)/(m - 1)) %>% 
+  mutate(F = MST / MSE)
+
+
+data %>% 
+  group_by(species) %>% 
+  mutate(xbar_i = mean(x_ij)) %>% 
+  ungroup() %>% 
+  summarize(SST = sum((xbar_i - xbar_dotdot)^2),
+            SSE = sum((x_ij - xbar_i)^2)) %>% 
+  mutate(MST = SST/(m-1),
+         MSE = SSE/(n - m),
+         F = MST / MSE)
+
+tidy(aov(x_ij ~ species, data = data))
+```
+
+### Exercise 5
+
+[HTZ: 9.3-7] Montgomery examines the strengths of a synthetic fiber that may be affected by the percentage of cotton in the fiber. Five levels of this percentage are considered, with five observations taken at each level. The data is given below. Conduct an ANOVA F-test using `aov()`, with $\alpha = 0.01$ to see if there are any differences in the mean breaking strengths due to the percentages of cotton used.
+
+```{r}
+data_ex5 <- data.frame(perc_cotton = c(rep(15, 5),
+                                   rep(20, 5),
+                                   rep(25, 5),
+                                   rep(30, 5),
+                                   rep(35, 5)),
+                   tensile_strength = c(7, 7, 15, 11, 9,
+                                        12, 17, 12, 18, 18,
+                                        14, 18, 18, 19, 19,
+                                        19, 25, 22, 19, 23,
+                                        7, 10, 11, 15, 11))
+```
+
+
+```{r, echo = FALSE, eval = FALSE}
+tidy(aov(tensile_strength ~ perc_cotton, data_ex5))
+
+ggplot(data_ex5, aes(x = factor(perc_cotton), y = tensile_strength)) +
+  geom_boxplot()
+```
+
+
+```{r, echo = FALSE , eval = FALSE}
+library(tidyverse)
+#H0 true
+mu_1 <- 5
+mu_2 <- 5
+mu_3 <- 5
+sigma2 <- 1
+sigma <- sqrt(sigma2)
+n <- 50
+m <- 3
+
+F <- c()
+I <- 10000
+for(i in 1:I){ 
+
+
+x_1j <- data.frame(x_ij = rnorm(n, mu_1, sigma),
+                   i = rep(1, n))
+x_2j <- data.frame(x_ij = rnorm(n, mu_2, sigma),
+                   i = rep(2, n))
+x_3j <- data.frame(x_ij = rnorm(n, mu_3, sigma),
+                   i = rep(3, n))
+
+data <- rbind(x_1j, x_2j, x_3j)
+
+xbar_dotdot <- mean(data$x_ij)
+
+F[i] <- data %>% 
+  group_by(i) %>% 
+  mutate(xbar_i = mean(x_ij),
+         diff2_MSE = (x_ij - xbar_i)^2,
+         diff2_MST = (xbar_i - xbar_dotdot)^2) %>% 
+  ungroup() %>% 
+  summarize(MSE = sum(diff2_MSE)/(n - m),
+            MST = sum(diff2_MST)/(m - 1)) %>% 
+  mutate(F = MST / MSE) %>% 
+  pull(F)
+}
+
+ggplot(data.frame(F), aes(x = F)) +
+  geom_histogram()
+```
+
+## Submission
+
+Once you have completed all Exercises and written up your results in the Template .Rmd provided, take about 5-10 minutes to respond to the reflection prompts (RP) at the top of the Template:
+
+-   (RP1): *What were the main concepts covered in this assignment?*
+
+-   (RP2): *What's one thing you understand better after completing these problems?*
+
+-   (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+Knit your document one final time, then upload your .html file to Problem Set 09 on Canvas.
+
+## Grading (50pts)
+
+| Component            | Points |
+|:---------------------|:-------|
+| RP1                  | 5      |
+| RP2                  | 5      |
+| RP3                  | 5      |
+| Formatting & Clarity | 5      |
+| Exercise completion  | 30     |
