@@ -1312,6 +1312,100 @@ window.buildTabsets = function(tocID) {
 
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -1575,8 +1669,8 @@ take the derivative of the log-likelihood function with respect to <span class="
 &amp;=-\sum_{i = 1}^nY_iX_i + \beta\sum_{i = 1}^nX_i^2 = 0 \\
 \end{aligned}
 \]</span></p>
-<p>Rearranging and solving for <span class="math inline">\(\beta\)</span> yields <span class="math inline">\(\hat{\beta}_{MLE} = \frac{\sum_{i = 1}^n
-Y_iX_i}{\sum_{i = 1}^n X_i^2}\)</span></p>
+<p>Rearranging and solving for <span class="math inline">\(\beta\)</span> yields <span class="math inline">\(\hat{\beta} = \frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i
+= 1}^n X_i^2}\)</span></p>
 <p>To find the MLE of <span class="math inline">\(\sigma^2\)</span>, we
 can take the derivative of the log-likelihood function with respect to
 <span class="math inline">\(\sigma^2\)</span> and set the expression
@@ -1591,21 +1685,208 @@ equal to 0.</p>
 \]</span></p>
 <p>Solving for <span class="math inline">\(\sigma^2\)</span> and
 plugging in the MLE for <span class="math inline">\(\beta\)</span>
-yields <span class="math inline">\(\hat{\sigma}^2_{MLE} = \frac{\sum_{i
-= 1}^n (Y_i - \hat{\beta}_{MLE}X_i)^2}{n}\)</span></p>
+yields <span class="math inline">\(\hat{\sigma}^2 = \frac{\sum_{i = 1}^n
+(Y_i - \hat{\beta}X_i)^2}{n}\)</span></p>
 </div>
 <div id="part-b" class="section level3">
 <h3>Part b</h3>
+<p>Note that <span class="math inline">\(\hat{\beta} = \frac{\sum_{i =
+1}^n Y_iX_i}{\sum_{i = 1}^n X_i^2}\)</span> is a linear combination of
+normal random variables since <span class="math inline">\(Y_i \sim
+N(\beta X_i, \sigma^2)\)</span>. Therefore <span class="math inline">\(\hat{\beta}\)</span> is also normal; we just need
+to find its expected value and variance.</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(\hat{\beta}) &amp;= E\left(\frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i = 1}^n
+X_i^2}\right) \\
+&amp;= \frac{\sum_{i = 1}^n X_iE(Y_i)}{\sum_{i = 1}^n X_i^2}\\
+&amp;= \frac{\sum_{i = 1}^n X_i\beta X_i}{\sum_{i = 1}^n X_i^2}\\
+&amp;= \frac{\beta \sum_{i = 1}^n X^2_i}{\sum_{i = 1}^n X_i^2}\\
+&amp;= \beta
+\end{aligned}
+\]</span> <span class="math display">\[
+\begin{aligned}
+V(\hat{\beta}) &amp;= V\left(\frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i = 1}^n
+X_i^2}\right) \\
+&amp;= \frac{\sum_{i = 1}^n X^2_iV(Y_i)}{\left(\sum_{i = 1}^n
+X_i^2\right)^2}\\
+&amp;= \frac{\sum_{i = 1}^n X^2_i\sigma^2}{\left(\sum_{i = 1}^n
+X_i^2\right)^2}\\
+&amp;= \frac{\sigma^2}{\sum_{i = 1}^n X_i^2}
+\end{aligned}
+\]</span></p>
+<p>Therefore, <span class="math inline">\(\hat{\beta} \sim N\left(\beta,
+\frac{\sigma^2}{\sum_{i = 1}^n X_i^2}\right)\)</span></p>
+</div>
+<div id="part-c" class="section level3">
+<h3>Part c</h3>
+<p>With the two coordinates (1,1) and (2,1), we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta} &amp;= \frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i = 1}^n X_i^2} \\
+&amp;= \frac{(1)(1) + (2)(1)}{1^2 + 2^2} = \frac{3}{5}
+\end{aligned}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\sigma}^2 &amp;= \frac{\sum_{i = 1}^n (Y_i - \hat{\beta}X_i)^2}{n}
+\\
+&amp;= \frac{(1 - \frac{3}{5}(1))^2 + (1 - \frac{3}{5}(2))^2}{2} \\
+&amp;= \frac{\frac{4}{25} + \frac{1}{25}}{2}= \frac{1}{10}
+\end{aligned}\]</span></p>
+</div>
+<div id="part-d" class="section level3">
+<h3>Part d</h3>
+<p><span class="math inline">\(\hat{y}_i = \hat{\beta}X_i\)</span> and
+<span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> so</p>
+<p><span class="math display">\[\hat{y}_1 = \frac{3}{5}(1) =
+\frac{3}{5}\]</span> <span class="math display">\[\hat{y}_2 =
+\frac{3}{5}(2) = \frac{6}{5}\]</span> <span class="math display">\[e_1 =
+1 - \frac{3}{5} = \frac{2}{5}\]</span> <span class="math display">\[e_1
+= 1 - \frac{6}{5} = -\frac{1}{5}\]</span></p>
+<p>Therefore, <span class="math inline">\(\sum_{i = 1}^n e_i =
+\frac{1}{5} \neq 0\)</span></p>
 </div>
 </div>
 <div id="exercise-3" class="section level2">
 <h2>Exercise 3</h2>
+<p>Note <span class="math inline">\(a = \overline{y} = \frac{\sum_{i =
+1}^nY_i}{n} \sim N(\alpha, \frac{\sigma^2}{n})\)</span>. Therefore,
+<span class="math display">\[\frac{a - \alpha}{\sigma/\sqrt{n}} \sim
+N(0,1)\]</span> We also know that <span class="math display">\[\frac{n
+\hat{\sigma}^2}{\sigma^2} \sim \chi^2_{n-2}\]</span> We know that a
+random variable of the form <span class="math inline">\(T =
+\frac{Z}{\sqrt{U/df}}\)</span> follows a <span class="math inline">\(t_{df}\)</span> distribution, where <span class="math inline">\(Z \sim N(0,1)\)</span> and <span class="math inline">\(U \sim \chi^2_{df}\)</span>. Therefore we can
+develop a test statistic in the following way:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T &amp;= \frac{Z}{\sqrt{U/df}} = \frac{\frac{a -
+\alpha}{\sigma/\sqrt{n}}}{\sqrt{\frac{n
+\hat{\sigma}^2}{\sigma^2}/(n-2)}} \\
+&amp;= \frac{\frac{a -
+\alpha}{\sigma}\sqrt{n}}{\frac{\sqrt{n}\hat{\sigma}}{\sigma\sqrt{n-2}}}
+= \frac{a - \alpha}{\sqrt{\hat{\sigma}^2/(n-2)}} \sim t_{n-2}
+\end{aligned}
+\]</span></p>
+<p>Therefore we can write the probability statement</p>
+<p><span class="math display">\[P\left(-t_{\alpha/2; n-2} \leq \frac{a -
+\alpha}{\sqrt{\hat{\sigma}^2/(n-2)}} \leq t_{\alpha/2; n-2}\right) = 1 -
+\alpha\]</span></p>
+<p>Rearranging to solve for <span class="math inline">\(\alpha\)</span>
+gives</p>
+<p><span class="math display">\[P\left(a -t_{\alpha/2;
+n-2}\frac{\hat{\sigma}}{\sqrt{n-2}} \leq \alpha \leq a + t_{\alpha/2;
+n-2}\frac{\hat{\sigma}}{\sqrt{n-2}}\right) = 1 - \alpha\]</span></p>
+<p>Therefore, a <span class="math inline">\((1-\alpha)*100\%\)</span>
+confidence interval for <span class="math inline">\(\alpha\)</span> is
+given by <span class="math display">\[a \pm t_{\alpha/2;
+n-2}\frac{\hat{\sigma}}{\sqrt{n-2}}\]</span></p>
+<p><em>Note the unfortunate notation from the book that the intercept
+parameter <span class="math inline">\(\alpha\)</span> is different from
+the usual significance level <span class="math inline">\(\alpha\)</span>.</em></p>
 </div>
 </div>
 <div id="typed" class="section level1">
 <h1>Typed</h1>
 <div id="exercise-4" class="section level2">
 <h2>Exercise 4</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#read data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>senic <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/kgfitzgerald/APU_MATH_362/main/PROBLEM_SETS/data/senic.csv&quot;</span>)</span></code></pre></div>
+<div id="part-a-1" class="section level3">
+<h3>Part a</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fit model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;lm&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(length <span class="sc">~</span> infection_risk, <span class="at">data =</span> senic)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m1)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 5
+##   term           estimate std.error statistic  p.value
+##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)       6.34      0.521     12.2  3.94e-22
+## 2 infection_risk    0.760     0.114      6.64 1.18e- 9</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alpha_hat <span class="ot">&lt;-</span> <span class="fu">tidy</span>(m1)[<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">tidy</span>(m1)[<span class="dv">2</span>,<span class="dv">2</span>]</span></code></pre></div>
+</div>
+<div id="part-b-1" class="section level3">
+<h3>Part b</h3>
+<p>The regression equation is given by <span class="math display">\[\hat{y}_i = 6.34 + 0.76x_i,\]</span> where <span class="math inline">\(y_i\)</span> is the length of stay in the
+hospital, and <span class="math inline">\(x_i\)</span> is the infection
+risk (average estimated probability of acquiring an infection).</p>
+</div>
+<div id="part-c-1" class="section level3">
+<h3>Part c</h3>
+<p>Intercept: For a hospital with an infection risk of 0, the average
+length of stay at the hospital is 6.34 days.</p>
+<p>Slope: For each percentage point increase in infection risk
+(probability of acquiring an infection), a hospital’s average length of
+stay increases by 0.76 days on average.</p>
+</div>
+<div id="part-d-1" class="section level3">
+<h3>Part d</h3>
+<p><span class="math display">\[H_0: \beta = 0\]</span> <span class="math display">\[H_A: \beta \neq 0\]</span></p>
+</div>
+<div id="part-e" class="section level3">
+<h3>Part e</h3>
+<p>The test statistic is 6.64, and the p-value is 1.1769612^{-9}.
+Therefore, there is sufficient evidence to reject <span class="math inline">\(H_0\)</span> and claim that infection risk is
+associated with length of stay.</p>
+</div>
+<div id="part-f" class="section level3">
+<h3>Part f</h3>
+<p>The test statistic is computed by <span class="math inline">\(t =
+\frac{\hat{\beta} - \beta_0}{\sqrt{\frac{MSE}{\sum_{i=1}^n(x_i -
+\bar{x})^2}}}\)</span>. Note that <span class="math inline">\(\beta_0 =
+0\)</span> (the value hypothesized in <span class="math inline">\(H_0\)</span> and <span class="math inline">\(\hat{\beta} = 0.76\)</span> from the above
+regression table. We can extract all the remaining relevant numbers from
+the following R code.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># raw output</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1<span class="sc">$</span>fit)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: length
+##                 Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## infection_risk   1 116.45 116.446   44.15 1.177e-09 ***
+## Residuals      111 292.76   2.638                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tidy output for extracting numbers with code</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">anova</span>(m1<span class="sc">$</span>fit))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
+##   term              df sumsq meansq statistic  p.value
+##   &lt;chr&gt;          &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 infection_risk     1  116. 116.        44.1  1.18e-9
+## 2 Residuals        111  293.   2.64      NA   NA</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">tidy</span>(<span class="fu">anova</span>(m1<span class="sc">$</span>fit))[<span class="dv">2</span>,<span class="dv">4</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># note the sum of squares (SS) in the denom in square root </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># of test statistic is simply the same numerator that </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># appears on the sample variance of x</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># so can use the following code to compute it</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(senic)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>SS <span class="ot">&lt;-</span> <span class="fu">var</span>(senic<span class="sc">$</span>infection_risk)<span class="sc">*</span>(n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>SS</span></code></pre></div>
+<pre><code>## [1] 201.3798</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternatively, to compute sum of squares (SS) &quot;manually&quot;: </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SS_alt <span class="ot">&lt;-</span> senic <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_sqrd =</span> (infection_risk <span class="sc">-</span> <span class="fu">mean</span>(infection_risk))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">SS =</span> <span class="fu">sum</span>(diff_sqrd)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(SS)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>SS_alt</span></code></pre></div>
+<pre><code>## [1] 201.3798</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> (beta_hat <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span><span class="fu">sqrt</span>(MSE<span class="sc">/</span>SS)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>T</span></code></pre></div>
+<pre><code>##   estimate
+## 1  6.64453</code></pre>
+<p>Therefore,</p>
+<p><span class="math display">\[\hat{\beta} = 0.76\]</span></p>
+<p><span class="math display">\[\beta_0  = 0\]</span></p>
+<p><span class="math display">\[MSE = 2.64\]</span> <span class="math display">\[\sum_{i=1}^n(x_i - \bar{x})^2 =
+201.38,\]</span></p>
+<p>so we have <span class="math display">\[T = \frac{0.76 -
+0}{\sqrt{\frac{2.64}{201.38}}} = 6.64\]</span></p>
+</div>
 </div>
 </div>
 
