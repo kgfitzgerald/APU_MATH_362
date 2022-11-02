@@ -1,0 +1,213 @@
+---
+title: "Problem Set 09"
+author: "SOLUTIONS"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+You can access the .Rmd for the solutions [here](https://github.com/kgfitzgerald/APU_MATH_362/blob/main/PROBLEM_SETS/SOLUTIONS/PS-09-SOLUTIONS.Rmd).
+
+## Summary / Reflection Prompts
+
+*RP1: What were the main concepts covered in this assignment?*
+
+
+*RP2: What's one thing you understand better after completing these problems?*
+
+
+*RP3: What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
+
+# By hand or typed
+
+## Exercise 1
+
+$$
+\begin{aligned}
+Q &= \sum_{i = 1}^k\frac{(Y_i - np_i)^2}{np_i}\\
+E(Q) &= E\left[\sum_{i = 1}^k\frac{(Y_i - np_i)^2}{np_i}\right]\\
+&= E\left[\sum_{i = 1}^k\frac{(Y_i^2 - 2np_iY_i + n^2p_i^2)}{np_i}\right]\\
+&= E\left[\sum_{i = 1}^k\frac{Y_i^2}{np_i} - 2\sum_{i = 1}^kY_i + n\sum_{i = 1}^kp_i\right]\\
+&= \sum_{i = 1}^k\frac{E(Y_i^2)}{np_i} - 2n + n \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*)\\
+&= \sum_{i = 1}^k\frac{np_i(1 - p_i + np_i)}{np_i} - n \ \ \  \ \ \ \ \ \ \ \ \ \  (**)\\
+&= \sum_{i = 1}^k(1 - p_i + np_i) -n\\
+&= \sum_{i = 1}^k1 - \sum_{i = 1}^kp_i + n\sum_{i = 1}^kp_i - n\\
+&= k -1
+\end{aligned}
+$$
+
+The step from (\*) to (\*\*) relies on the fact that $E(Y_i^2) = V(Y_i) + (E(Y_i))^2$, which is a simple rearrangement of the shortcut formula for the variance of a random variable: $V(X) = E(X^2) - (E(X))^2$. Here, since $Y_i binomial(n,p_i)$, we have $E(Y_i) = np_i$ and $V(Y_i) = np_i(1-p_i)$. Therefore, $E(Y_i^2) = np_i(1-p_i) + (np_i)^2 = np_i[1 - p_i +np_i],$ as in (\*\*). 
+
+Note that multiple steps in the proof above also rely on the fact that $\sum_{i = 1}^kp_i = 1$.
+
+We have shown that $E(Q) = k -1$, which is to be expected since $Q$ is a chi-square random variable with $k-1$ degrees of freedom.
+
+## Exercise 2
+
+### Part a
+
+The test statistic for a chi-square test with 4 categories is given by $$Q_3 = \sum_{i = 1}^4\frac{(Y_i - np_i)^2}{np_i} \sim \chi^2_3$$
+
+At $\alpha = 0.05$, we will reject $H_0$ when $Q_3 >$ `qchisq(.95, 3)` = `r round(qchisq(.95, 3), 2)`.
+
+### Part b
+
+Recall that $X_i \sim binomial(3, 0.5)$. To find the $p_i$'s under the null hypothesis, we can use the `dbinom` function:
+
+```{r}
+x <- c(0,1,2,3)
+p <- c(dbinom(x, size = 3, prob = 0.5))
+p
+```
+
+Therefore, the null hypothesis can be stated as 
+$$H_0: p_1 = `r p[1]`, p_2 =`r p[2]`, p_3 =`r p[3]`, p_4 =`r p[4]`$$
+$$H_A: \text{at least one } p_i \text{ differs from } H_0$$
+
+### Part c
+
+We can use the following R code to compute the expected counts and the test statistic
+
+```{r}
+y_obs <- c(5,17,24,6)
+y_exp <- 52*p
+Q <- sum((y_obs - y_exp)^2/y_exp)
+Q
+```
+
+The test statistic $Q = `r round(Q, 2)`$ does not exceed the critical value, so we fail to reject the null hypothesis; there is insufficient evidence to claim the data are inconsistent with a binomial distribution. 
+
+## Exercise 3
+
+Since we are testing whether $X \sim Poisson(\lambda = 0.5)$, we can use the `dpois` function to compute expected probabilities under $H_0$.  
+
+```{r}
+x_ex3 <- c(0,1,2,3,4)
+p_ex3 <- c(dpois(x_ex3, .5))
+p_ex3
+```
+
+We multiply those probabilities by the sample size $n = 150$ to get the expected counts of $Y$.
+```{r}
+n_ex3 <- 150
+y_exp_ex3 <- n_ex3*p_ex3
+y_exp_ex3
+```
+
+We can then compute the chi-squared test statistic $Q_4$. Note we use the subscript 4 to denote the 4 degrees of freedom that result from the 5 categories of X. 
+
+```{r}
+y_obs_ex3 <- c(92, 46, 8, 3, 1)
+Q_ex3 <- sum((y_obs_ex3 - y_exp_ex3)^2/(n_ex3*p_ex3))
+Q_ex3
+```
+
+For $\alpha = 0.01$, we compare this to the 99th percentile of the $\chi^2_4$ distribution. 
+
+```{r}
+qchisq(.99, 4)
+```
+
+Since our test statistic does not exceed the critical value, we fail to reject $H_0$. There is insufficient evidence to claim that $X$ does not follow a Poisson distribution with $\lambda = 0.5$. 
+
+# Typed
+
+## Exercise 4
+
+```{r}
+#Exercise 2
+chisq.test(x = y_obs, p = p, rescale.p = TRUE)
+
+#Exercise 3
+chisq.test(x = y_obs_ex3, p = p_ex3, rescale.p = TRUE)
+```
+
+## Exercise 5
+
+Each row in the `gilbert` data represents a hospital shift. It contains two columns, indicating whether or not Gilbert worked on the shift, and whether or not a death occured on the shift. 
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(infer)
+
+gilbert <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRCZs5ebB4Dlltr9rn7WG8YChPwmD-cNmS0k9wd6nNQOGTLbqP3yMiDMTyN4E-CXbjtZaUnHh9qq-fC/pub?output=csv")
+```
+
+```{r}
+#contingency table for observed data
+gilbert %>% 
+  count(gilbert_worked, death)
+```
+
+We can use the following code to compute the chi-squared test statistic for these data.
+
+```{r}
+#compute and store overall probability of death occuring
+#used to compute expected counts
+p_death <- sum(gilbert$death == "Death")/nrow(gilbert)
+#compute and store number of shifts gilbert worked
+#used to compute expected counts
+n_gilbert_worked <- sum(gilbert$gilbert_worked == "Yes")
+
+#compute the Q-statistic from the observed data
+Q_obs <- gilbert %>% count(gilbert_worked, death, name = "observed") %>% 
+  mutate(expected = case_when(gilbert_worked == "Yes" & death == "Death" ~ n_gilbert_worked*p_death,
+                              gilbert_worked == "Yes" & death == "NoDeath" ~ n_gilbert_worked*(1-p_death),
+                              gilbert_worked != "Yes" & death == "Death" ~ (nrow(gilbert) - n_gilbert_worked)*p_death,
+                              gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(gilbert) - n_gilbert_worked)*(1-p_death))) %>% 
+  summarize(Q = sum((observed - expected)^2/expected)) %>% 
+  pull(Q)
+Q_obs
+```
+
+One way to investigate whether an unusually high number of deaths occurred on Gilbert’s shifts (more than would be expected due to chance), is to simulate what would be expected simply due to chance. If Gilbert working on the shift and whether or not a death occurs are independent, we would expect the deaths to be evenly distributed among the shifts that Gilbert works and does not work. We can mimic this with simulations by randomly permuting (shuffling) the death column. The code below conducts these simulations. 
+
+Each iteration involves a random shuffle of the data and a computation of the test statistic, $Q$. Doing this 10,000 times and visualizing the sampling distribution will give us an understanding of what values of $Q$ could reasonably be expected if the two variables are in fact independent. 
+
+```{r}
+#create separate dataframe for each column to prep for random shuffle
+shift_data <- gilbert %>% 
+  select(gilbert_worked)
+
+death_data <- gilbert %>% 
+  select(death)
+
+#initialize empty Q vector
+Q <- c()
+
+#conduct for loop with 10000 iterations that generates a random shuffle
+#and computes and stores the Q-statistic at each iteration
+for(i in 1:10000){
+  
+  #generate random shuffle of deaths
+  random_shuffle <- sample_n(death_data, size = nrow(death_data), replace = FALSE)
+  
+  #bind random shuffle back to shift data, for a random combo of shifts & deaths
+  sample_i <- cbind(shift_data, random_shuffle)
+
+  #compute Q statistic from random shuffle data
+  Q[i] <- sample_i %>% 
+  count(gilbert_worked, death, name = "observed") %>% 
+  mutate(expected = case_when(gilbert_worked == "Yes" & death == "Death" ~ n_gilbert_worked*p_death,
+                              gilbert_worked == "Yes" & death == "NoDeath" ~ n_gilbert_worked*(1-p_death),
+                              gilbert_worked != "Yes" & death == "Death" ~ (nrow(shift_data) - n_gilbert_worked)*p_death,
+                              gilbert_worked != "Yes" & death == "NoDeath" ~ (nrow(shift_data) - n_gilbert_worked)*(1-p_death))) %>% 
+  summarize(Q = sum((observed - expected)^2/expected)) %>% 
+    pull(Q)
+  #print(i)
+}
+
+ggplot(data.frame(Q), aes(x = Q)) +
+  geom_histogram() +
+  geom_vline(xintercept = Q_obs, color = "blue")
+```
+
+Based on these simulations, there is clearly sufficient evidence to reject $H_0$ and claim that an unusually high number of deaths occurred on Gilbert's shifts. The observed $Q$ is very extreme compared to what would be expected if the deaths and the shifts were independent. 
