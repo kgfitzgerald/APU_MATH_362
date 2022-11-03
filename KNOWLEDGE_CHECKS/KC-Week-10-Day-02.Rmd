@@ -1,0 +1,35 @@
+---
+title: "Week 10 Day 02"
+subtitle: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "cosmo"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Student Questions
+
++ $W_i^2 = \frac{1}{n_i - 1}\sum_{j = 1}^{n_i}(X_{ij} - \overline{X}_{i\cdot})^2$. Where does this W come from? Where else is it used?
++ $W_i^2 \sim \chi^2_{n_i - 1}$. "Confused on how to interpret this degrees of freedom since $n$ is dependent on $i$."
++ "Based on a lot of the theorems and stuff we have learned, it is really important to take a random sample because it lets us assume a lot of different properties including independence."
++ How are they making the claim that the following is larger than $\sigma^2$?
+    $$\sigma^2 + \frac{1}{m-1}\sum_{i = 1}^mn_i(\mu_i - \overline{\mu})^2 > \sigma^2$$
++ "When the null hypothesis is true, we expect $F = \frac{MST}{MSE} \approx 1$"
+    + "Does this mean that the F-statistic is never less than one nor is it ever negative?"
++ "The F-statistic follows an F-distribution with $m-1$ numerator degrees of freedom and $n-m$ denominator degrees of freedom."
+    $$F = \frac{MST}{MSE} = \frac{SST/(m-1)}{SSE/(n-m)} \sim F(m-1, n-m)$$
+    + [Seeing-theory](https://seeing-theory.brown.edu/probability-distributions/index.html#section2) 
+    + [Wikipedia](https://en.wikipedia.org/wiki/F-distribution)
++ What are some of the "non-parametric" methods mentioned? How can you determine whether it is beneficial to use them?
++ "She evaluated $n = 120$ subjects in total, a subset of them were Holocaust survivors, a subset of them were documented as being depressed, and another subset of them were deemed healthy. (Of course, it's not at all obvious that these are mutually exclusive groups)."
+    + "Wait, if we cannot tell that these are mutually exclusive groups how can we apply the F-statistic to test the hypothesis since the first condition of independence seems to be broken? It's hard to see any in the way they did this example, but what are the repercussions of something like this on our hypothesis test?"
++ Confusion on proof of $E(SST)$
+
+
