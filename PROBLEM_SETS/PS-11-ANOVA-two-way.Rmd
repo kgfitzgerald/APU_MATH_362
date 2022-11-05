@@ -44,7 +44,7 @@ where:
 -   $(\tau\beta)_{ij}$ is the effect of the interaction betweeen $\tau_i$ and $\beta_j$
 -   $\epsilon_{ijk} \sim N(0, \sigma^2)$ is the random error term
 
-### Part a
+#### Part a
 
 Recall that $SSA = bn\sum_{i = 1}^a(\overline{y}_{i\cdot\cdot} - \overline{y}_{\cdot\cdot\cdot})^2 = \frac{1}{bn}\sum_{i = 1}^ay_{i\cdot\cdot}^2 - \frac{y_{\cdot\cdot\cdot}^2}{abn}$. Show that $E(SSA) = \sigma^2(a-1) + bn\sum_{i = 1}^a\tau_i^2$. You may use the following definitions/facts in your proof:
 
@@ -54,15 +54,15 @@ Recall that $SSA = bn\sum_{i = 1}^a(\overline{y}_{i\cdot\cdot} - \overline{y}_{\
 -   $y_{i\cdot\cdot} = \sum_{j = 1}^b\sum_{k = 1}^ny_{ijk}$
 -   $y_{\cdot\cdot\cdot} = \sum_{i = 1}^a\sum_{j = 1}^b\sum_{k = 1}^ny_{ijk}$
 
-### Part b
+#### Part b
 
 Use your results from (a) to show that $E(MSA) = \sigma^2 + \frac{bn}{a-1}\sum_{i = 1}^a\tau_i^2$
 
-### Part c
+#### Part c
 
 Articulate why $F = \frac{MSA}{MSE}$ is a good test statistic to test $H_0: \tau_1 = \tau_2 = \cdots = \tau_a = 0$.
 
-## Exercise 2
+### Exercise 2
 
 The following output was obtained from a computer program that performed a two-factor ANOVA on a factorial experiment.
 
@@ -82,7 +82,9 @@ c)  How many replicates of the experiment were performed?
 d)  Write out the 3 sets of hypotheses that were tested in this analysis
 e)  What conclusions would you draw about this experiment?
 
-## Exercise 3
+## Typed
+
+### Exercise 3
 
 The yield of a chemical process is being studied. The two most important variables are thought to be the pressure and the temperature. Three levels of each factor are selected, and a factorial experiment with two replicates is performed. The yield data are as follows:
 
