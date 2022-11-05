@@ -108,9 +108,9 @@ data %>%
 | Error   |     |     |     | NA  | NA      |
 | Total   |     |     | NA  | NA  | NA      |
 
-c. Write out the hypotheses, test statistic, critical region, and conclusion. Use $\alpha = 0.01$. Interpret your results. 
+c.  Write out the hypotheses, test statistic, critical region, and conclusion. Use $\alpha = 0.01$. Interpret your results.
 
-d. The function `aov()` can be used to conduct ANOVA tests in R. Use the code `aov(x_ij ~ species, data = data)` to conduct the analysis and confirm your by-hand calculations. You can use `tidy()` around an `aov()` object to print out the full ANOVA table.
+d.  The function `aov()` can be used to conduct ANOVA tests in R. Use the code `aov(x_ij ~ species, data = data)` to conduct the analysis and confirm your by-hand calculations. You can use `tidy()` around an `aov()` object to print out the full ANOVA table.
 
 ```{r, echo = FALSE, eval = FALSE}
 ggplot(data, aes(x = species, y = x_ij)) +
@@ -164,14 +164,12 @@ data_ex5 <- data.frame(perc_cotton = c(rep(15, 5),
                                         7, 10, 11, 15, 11))
 ```
 
-
 ```{r, echo = FALSE, eval = FALSE}
 tidy(aov(tensile_strength ~ perc_cotton, data_ex5))
 
 ggplot(data_ex5, aes(x = factor(perc_cotton), y = tensile_strength)) +
   geom_boxplot()
 ```
-
 
 ```{r, echo = FALSE , eval = FALSE}
 library(tidyverse)
