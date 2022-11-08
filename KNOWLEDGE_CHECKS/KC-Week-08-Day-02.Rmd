@@ -33,3 +33,15 @@ $$T = \frac{\hat{\beta} - \beta}{\sqrt{\frac{MSE}{\sum(x_i - \bar{x})^2}}}$$
 
 ## Knowledge Check
 
++ What does each symbol in the following formula mean? 
+$$Y_i = \alpha + \beta(x_i - \bar{x}) + \epsilon_i$$
++ Which of the above are the parameters of interest?
++ What is the traditional assumption for how $\epsilon_i$ is distributed? What does this imply about the distribution of $Y_i$?
++ Write out the hypotheses for testing the slope parameter.
++ What is the distribution of $\frac{\hat{\beta} - \beta}{\sqrt{\frac{MSE}{\sum_{i=1}^n(x_i - \bar{x})^2}}}$? Include degrees of freedom.
++ What code would you use to find an appropriate critical value for the above test statistic?
++ What code would you use to find the p-value for the above test statistic?
++ How do you conduct a hypothesis test for a slope in R? 
+
+
+

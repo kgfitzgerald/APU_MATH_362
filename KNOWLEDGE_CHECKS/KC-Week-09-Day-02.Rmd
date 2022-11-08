@@ -37,3 +37,5 @@ $$H_A: p_{M1} \neq p_{F1}, \text{ or  } p_{M2} \neq p_{F2}, \text{ or  } p_{M3} 
 + Why are we able to assume independence to calculate the pij for the chi-square statistic when we have yet to determine whether the two variables are truly independent or not?
 
 
+
+

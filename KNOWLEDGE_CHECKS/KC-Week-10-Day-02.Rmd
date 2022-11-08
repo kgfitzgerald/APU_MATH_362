@@ -32,4 +32,17 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
     + "Wait, if we cannot tell that these are mutually exclusive groups how can we apply the F-statistic to test the hypothesis since the first condition of independence seems to be broken? It's hard to see any in the way they did this example, but what are the repercussions of something like this on our hypothesis test?"
 + Confusion on proof of $E(SST)$
 
+## Knowledge Check
+
++ How is $\frac{SSE}{\sigma^2}$ distributed?
++ What is the expected value of MSE?
++ Explain what the following symbols mean
+    + $n_i$
+    + $m$
+    + $\bar{X}_{i\cdot}$
+    + $\bar{X}_{\cdot\cdot}$
+    + $\overline{\mu}$
++ Why is $F = \frac{MST}{MSE}$ a good test statistic?
++ What is $E(F)$ when $H_0$ is true?
+
 

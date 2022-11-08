@@ -204,7 +204,7 @@ Once you have completed all Exercises and written up your results in the Templat
 
 -   (RP3): *What problems gave you the most trouble? What was difficult about them/where did you get stuck?*
 
-Knit your document one final time, then upload your .html file to Problem Set 09 on Canvas.
+Knit your document one final time, then upload your .html file to Problem Set 11 on Canvas.
 
 ## Grading (50pts)
 
