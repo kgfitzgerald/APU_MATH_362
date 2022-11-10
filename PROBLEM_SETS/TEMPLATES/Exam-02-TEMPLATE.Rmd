@@ -1,0 +1,80 @@
+---
+title: "Exam 2"
+subtitle: "MATH 362"
+author: "YOUR NAME HERE"
+date: "due Thursday, Nov 17, 11:59pm"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "paper"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(broom)
+library(tidyverse)
+```
+
+
+# Problem 1
+
+
+
+# Problem 2
+
+
+
+# Problem 3
+
+### Part a
+
+```{r}
+
+```
+
+### Part b
+
+### Part c
+
+# Problem 4
+
+```{r}
+
+```
+
+
+### Part a
+
+### Part b
+
+### Part c
+
+### Part d
+
+### Part e
+
+### Part f
+
+# Problem 5
+
+### Part a
+
+### Part b
+
+### Part c
+
+i. 
+ii.
+iii.
+iv.
+v.
+vi.
+vii.
+
+### Part d
