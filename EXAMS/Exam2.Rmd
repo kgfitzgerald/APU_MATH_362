@@ -32,6 +32,8 @@ h1{
 }
 ```
 
+For any hypothesis tests on this exam, use $\alpha = 0.01$. 
+
 ## Problem 1
 
 Let $Y_1, Y_2, ..., Y_n$ be independent random variables from a distribution with mean $\mu$ and standard deviation $\sigma$. Suppose we are interested in estimating $\mu^2$. Let $\bar{Y} = \frac{\sum_{i = 1}^nY_i}{n}$ and $S^2 = \frac{\sum_{i =1 }^n(Y_i - \bar{Y})^2}{n-1}$ be the usual sample mean and sample variance estimators. Find a constant $k$ (possibly depending on $n$ but not on $\mu$ or $\sigma$) such that $\overline{Y}^2 -kS^2$ is an unbiased estimator of $\mu^2$.
@@ -127,7 +129,7 @@ tidy(aov(length ~ type, data))
 ```
 
 a. State the hypotheses to test whether there is evidence to support a claim that the type of car rented affects the length of the rental contract. 
-b. Conduct an ANOVA on these data.
+b. Conduct an ANOVA on these data. 
 c. Report the following values for this analysis (according to the PSU notation):
     i. $m$
     ii. $n$
