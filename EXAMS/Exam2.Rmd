@@ -1,0 +1,139 @@
+---
+title: "Exam 2"
+subtitle: "MATH 362"
+date: "due Thursday, November 17, 11:59pm"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "paper"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(infer)
+library(kableExtra)
+library(tidyverse)
+```
+
+```{css, echo = FALSE}
+/* Whole document: */
+body{
+  font-size: 16pt;
+}
+/* Headers */
+h1{
+  font-size: 24pt;
+}
+```
+
+## Problem 1
+
+Let $Y_1, Y_2, ..., Y_n$ be independent random variables from a distribution with mean $\mu$ and standard deviation $\sigma$. Suppose we are interested in estimating $\mu^2$. Let $\bar{Y} = \frac{\sum_{i = 1}^nY_i}{n}$ and $S^2 = \frac{\sum_{i =1 }^n(Y_i - \bar{Y})^2}{n-1}$ be the usual sample mean and sample variance estimators. Find a constant $k$ (possibly depending on $n$ but not on $\mu$ or $\sigma$) such that $\overline{Y}^2 -kS^2$ is an unbiased estimator of $\mu^2$.
+
+## Problem 2
+
+Let $Y_1, Y_2, ..., Y_n$ be independent random variables with pdf 
+$$f(y;\theta) = \theta(1-\theta)^y, \ \ \ y = 0,1, \dots; 0 < \theta < 1$$
+Find the MLE of $\theta$.
+
+## Problem 3
+
+Let $Y_1, Y_2, ..., Y_n$ denote independent random variables each with pdf $$f(y) = \lambda exp(-\lambda y), \ \ \ y>0;$$
+
+This is an exponential distribution with parameter $\lambda$. Let $\overline{Y} = \sum_{i = 1}^n \frac{Y_i}{n}$ and consider the random variable $$W = exp(-1/\overline{Y}).$$
+
+The distribution of $W$ is not known.
+
+a. Use simulations to estimate $E(W)$ when $n = 25$ and $\lambda = 3$. Some starter code is provided below.
+
+```{r, eval = FALSE}
+#initialize empty vector to store sample means
+ybar <- c()
+
+#for loop to generate and store a large number of 
+#random ybar values
+for(i in 1:___){
+  #generate random sample of size n 
+  #from exponential distribution with rate parameter lambda
+  sample_i <- rexp(n = ___, rate = ___)
+  #compute sample mean for ith sample
+  ybar[i] <- mean(sample_i)
+}
+
+#compute W
+
+#estimate expected value of W
+
+```
+
+b. Although the distribution of $W$ is unknown, a linear approximation method can be used to derive the following approximate formula $$E(W) \approx exp(-\lambda)\left[1 + \frac{\lambda^2 - 2\lambda}{2}\frac{1}{n}\right]$$ How does the approximation obtained from this formula compare to the approximation from your simulations in part a? 
+c. Compare the approximations from the two methods (i.e. simulations & the above formula) for $n = 5$ and again for $n = 250$. (*Note: this will involve running your simulations two more times*). Comment on your findings. 
+
+```{r, echo = FALSE, eval = FALSE}
+ybar <- c()
+for(i in 1:10000){
+  sample_i <- rexp(250, rate = 3)
+  ybar[i] <- mean(sample_i)
+}
+data <- data.frame(ybar, replicate = seq(1:length(ybar)))
+
+data <- data %>% 
+  mutate(W = exp(-1/ybar))
+
+mean(data$W)
+lambda <- 3
+n <- 250
+exp(-lambda)*(1 + (lambda^2 - 2*lambda)/2*1/n)
+```
+
+## Problem 4
+
+The director of admissions of a small college selected 120 students at random from the new freshman class in a study to determine whether a student's GPA at the end of freshman year can be predicted from their ACT score. The data from this study can be read in using the following code. 
+
+```{r, message = FALSE, warning = FALSE}
+data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQEj0DlMoCdeVSI9qEXv9GhFeemvXddhu7pjgJRAx-t7ljEpGilLLA3kEPrJO3_52ZIi_bPnv4ItZ2O/pub?gid=0&single=true&output=csv")
+```
+
+a. Fit a linear regression model to these data. 
+b. Write out the estimated regression model.
+c. Interpret the slope and intercept in context.
+d. Write out the hypotheses to test the slope parameter. 
+e. Report the relevant test statistic and the critical value it should be compared to.
+f. State your conclusion in context.
+
+## Problem 5
+
+A rental car company wants to investigate whether the type of car rented affects the length of the rental period. An experiment is run for one week at a particular location, and 12 rental contracts are selected at random for each car type. The data are provided below.
+
+```{r}
+data <- data.frame(length = c(3,5,3,7,6,5,3,2,1,6,5,3,
+                              1,3,4,7,5,6,3,2,1,7,6,1,
+                              4,1,3,5,7,1,2,4,2,7,2,4,
+                              3,5,7,5,10,3,4,7,2,7,9,7),
+                   type = c(rep("subcompact", 12),
+                            rep("compact", 12),
+                            rep("midsize", 12),
+                            rep("full size", 12)))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+tidy(aov(length ~ type, data))
+```
+
+a. State the hypotheses to test whether there is evidence to support a claim that the type of car rented affects the length of the rental contract. 
+b. Conduct an ANOVA on these data.
+c. Report the following values for this analysis (according to the PSU notation):
+    i. $m$
+    ii. $n$
+    iii. degrees of freedom for the $SSE$
+    iv. $SSB$ (sometimes called $SST$; B = between or T = treatment)
+    v. $MSE$
+    vi. $F$
+    vii. p-value
+d. What can be concluded from this analysis? Justify your conclusion. 

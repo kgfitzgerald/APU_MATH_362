@@ -1,0 +1,114 @@
+---
+title: "Exam 2 Review"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+    theme: "paper"
+---
+
+## Exam Info
+
++ 5 problems, 20 points each
+    + 1 biased/unbiased estimator problem
+    + 1 MLE problem
+    + 1 simulation problem
+    + 1 regression problem
+    + 1 ANOVA problem
+
+## Practice Problems
+
+### (Un)biased estimators
+
+Let $Y_1, Y_2$ be independent Poisson random variables with mean $\lambda$ and let $$\hat{\lambda}_1 = \frac{Y_1 + Y_2}{2}$$
+and 
+$$\hat{\lambda}_2 = \frac{(Y_1 - Y_2)^2}{2}$$
+denote two different estimators of $\lambda$. Show that $\hat{\lambda}_1$ and $\hat{\lambda}_2$ are both unbiased estimators of $\lambda$. 
+
+
+### Simulation
+
+Use simulations to demonstrate that the two above estimators are unbiased. Use $\lambda = 5$. Some starter code is provided.
+
+```{r, eval = FALSE}
+Y1 <- rpois(___, ___)
+Y2 <- rpois(___, ___)
+
+# compute lambda1_hat
+
+# compute lambda2_hat
+
+# estimate expected value of lambda1_hat
+
+# estimate expected value of lambda2_hat
+
+
+```
+
+```{r, eval = FALSE, echo = FALSE}
+Y1 <- rpois(10000, 5)
+Y2 <- rpois(10000, 5)
+
+# compute lambda1_hat
+lambda1_hat <- (Y1 + Y2)/2
+
+# compute lambda2_hat
+lambda2_hat <- (Y1 - Y2)^2/2
+
+# estimate expected value of lambda1_hat
+mean(lambda1_hat)
+
+# estimate expected value of lambda2_hat
+mean(lambda2_hat)
+
+```
+
+Use simulations to estimate the expected value of the sum of two Poisson random variables $W = Y_1 + Y_2$. 
+
+```{r, echo = FALSE, eval = FALSE}
+mean(lambda1_hat + lambda2_hat)
+```
+
+
+### MLE
+
+Let $Y_1, Y_2, ..., Y_n$ be independent random variables with pdf $$\lambda exp\{-\lambda y\}, \ \ \ y > 0,$$
+where $\lambda > 0$ is an unknown parameter. Find the MLE of $\lambda$.
+
+
+
+### Regression
+
+The `mtcars` dataset has data on design and performance of 32 cars from the 1974 *Motor Trend* US magazine. 
+
+a. Fit a regression model using weight (1000 lbs) to predict miles per gallon.   
+b. Write out the regression equation
+c. Conduct a hypothesis test for the slope parameter. Make sure to state the hypotheses, the test statistic, the p-value, and your conclusion. 
+d. What distribution is the test statistic being compared to? What is the appropriate critical value? 
+
+```{r, eval = FALSE, echo = FALSE}
+library(broom)
+library(tidyverse)
+fit <- lm(mpg ~ wt, data = mtcars)
+tidy(fit)
+```
+
+
+### ANOVA
+
+The following output was obtained from a computer program that performed a two-factor ANOVA on a factorial experiment.
+
+| Source      | DF                 | SS                 | MS                 | F                  | p-value            |
+|------------|------------|------------|------------|------------|------------|
+| Factor      | 3                 | 38.25              | \_\_\_\_\_\_\_\_\_ | \_\_\_\_\_\_\_\_\_ | \_\_\_\_\_\_\_\_\_ |
+| Error       | \_\_\_\_\_\_\_\_\_| \_\_\_\_\_\_\_\_\_  | \_\_\_\_\_\_\_\_\_|                    |                    |
+| Total       | 19                 | 196.04            |                    |                    |                    |
+
+: One-way ANOVA: y versus A
+
+a. Fill in the missing blanks
+b. Write out the hypothesis that is being tested
+c. What is the appropriate critical value to compare the test statistic to? 
+d. What is the appropriate conclusion from this analysis?
